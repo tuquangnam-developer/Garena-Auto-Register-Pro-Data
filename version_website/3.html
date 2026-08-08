@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 Garena Account Manager Pro v1.4.2</title>
+    <title>🎮 Garena Account Manager Pro v1.4.1</title>
     <style>
         /* ===== RESET & BASE ===== */
         * {
@@ -647,17 +647,6 @@
             background: #a78bfa;
         }
 
-        .btn-telegram {
-            background: #0088cc;
-            color: #fff;
-        }
-        .btn-telegram:hover {
-            background: #0099dd;
-        }
-        .btn-telegram.active {
-            background: #00aa55;
-        }
-
         .btn-theme {
             background: #30363d;
             color: #c9d1d9;
@@ -1187,72 +1176,6 @@
             background: #b0b8c0;
         }
 
-        /* ===== TELEGRAM MODAL ===== */
-        #telegramModal .modal {
-            max-width: 550px;
-        }
-
-        #telegramModal .telegram-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        #telegramModal .telegram-status.active {
-            background: rgba(63, 185, 80, 0.15);
-            border: 1px solid #238636;
-            color: #3fb950;
-        }
-
-        #telegramModal .telegram-status.inactive {
-            background: rgba(248, 81, 73, 0.15);
-            border: 1px solid #da3633;
-            color: #f85149;
-        }
-
-        #telegramModal .telegram-status .status-icon {
-            font-size: 20px;
-        }
-
-        .telegram-info {
-            background: #0d1117;
-            border-radius: 6px;
-            padding: 12px 16px;
-            margin: 10px 0;
-            border: 1px solid #30363d;
-            font-size: 13px;
-            color: #8b949e;
-        }
-
-        body.light-mode .telegram-info {
-            background: #f6f8fa;
-            border-color: #d0d7de;
-            color: #57606a;
-        }
-
-        .telegram-info strong {
-            color: #f0883e;
-        }
-
-        .btn-test-telegram {
-            background: #0088cc;
-            color: #fff;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            font-size: 13px;
-        }
-
-        .btn-test-telegram:hover {
-            background: #0099dd;
-        }
-
         /* ===== NOTIFICATION ===== */
         #notificationContainer {
             position: fixed;
@@ -1453,7 +1376,7 @@
             <div class="logo">
                 <h1>🎮 Garena Manager Pro</h1>
                 <p>Quản lý tài khoản Garena nâng cao</p>
-                <span class="version">v1.4.2</span>
+                <span class="version">v1.4.1</span>
                 <span class="time-status" id="timeStatus">🟢 Đang mở</span>
             </div>
 
@@ -1498,7 +1421,6 @@
                 <button class="btn btn-export" id="exportBtn">📥 Export CSV</button>
                 <button class="btn btn-export-txt" id="exportTxtBtn">📄 Export TXT</button>
                 <button class="btn btn-import" id="importBtn">📥 Import</button>
-                <button class="btn btn-telegram" id="telegramBtn">🤖 Telegram</button>
                 <button class="btn btn-danger" id="logoutBtn">🚪 Đăng xuất</button>
             </div>
         </div>
@@ -1590,58 +1512,6 @@
         </div>
     </div>
 
-    <!-- ===== TELEGRAM MODAL ===== -->
-    <div class="modal-overlay" id="telegramModal">
-        <div class="modal">
-            <h3>🤖 Cấu hình Telegram</h3>
-            <div id="telegramBody">
-                <div id="telegramStatus" class="telegram-status inactive">
-                    <span class="status-icon">⏳</span>
-                    <span>Chưa cấu hình</span>
-                </div>
-
-                <div class="form-group">
-                    <label>🤖 Bot Token</label>
-                    <input id="telegramBotToken" placeholder="Nhập Bot Token từ @BotFather">
-                    <small style="color:#8b949e;font-size:12px;display:block;margin-top:4px;">
-                        💡 Tạo bot tại <strong>@BotFather</strong> trên Telegram, sau đó lấy token
-                    </small>
-                </div>
-
-                <div class="form-group">
-                    <label>💬 Chat ID</label>
-                    <input id="telegramChatId" placeholder="Nhập Chat ID của bạn">
-                    <small style="color:#8b949e;font-size:12px;display:block;margin-top:4px;">
-                        💡 Lấy Chat ID tại <strong>@userinfobot</strong> trên Telegram
-                    </small>
-                </div>
-
-                <div class="form-group" style="margin-top:10px;">
-                    <label>
-                        <input type="checkbox" id="telegramEnabled"> 
-                        ✅ Bật thông báo Telegram
-                    </label>
-                </div>
-
-                <div class="telegram-info">
-                    <strong>📌 Lưu ý:</strong><br>
-                    • Bạn sẽ nhận được báo cáo tự động lúc <strong>19:00</strong> mỗi ngày<br>
-                    • Bot sẽ gửi <strong>đúng data</strong> của bạn, không phải của người khác<br>
-                    • Bạn có thể hỏi bot để <strong>xóa toàn bộ data</strong> trên website
-                </div>
-
-                <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
-                    <button class="btn-test-telegram" onclick="testTelegramConnection()">📨 Gửi test</button>
-                    <button class="btn btn-success" onclick="sendTelegramTestData()">📊 Gửi data test</button>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeTelegramModal()">❌ Hủy</button>
-                <button class="btn-confirm" onclick="saveTelegramConfig()">💾 Lưu cấu hình</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ===== NOTIFICATION CONTAINER ===== -->
     <div id="notificationContainer"></div>
 
@@ -1662,11 +1532,6 @@
             `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/(default)/documents`;
 
         // ============================================
-        // TELEGRAM CONFIG
-        // ============================================
-        const TELEGRAM_BOT_TOKEN = '8262952652:AAGtMZ0Zq5A7Gm2z2UFEbFSDj8PjpVewmOI';
-
-        // ============================================
         // ADMIN EMAIL
         // ============================================
         const ADMIN_EMAIL = 'tuquangnamht2007@gmail.com';
@@ -1682,7 +1547,6 @@
         let isLoading = false;
         let editingRow = null;
         let selectedAccounts = new Set();
-        let telegramConfig = null;
 
         // Cache
         let cache = {
@@ -1732,7 +1596,6 @@
         const modalBody = document.getElementById('modalBody');
         const modalConfirm = document.getElementById('modalConfirm');
         const modalCancel = document.getElementById('modalCancel');
-        const telegramBtn = document.getElementById('telegramBtn');
 
         // Popup Notification
         const popupNotification = document.getElementById('popupNotification');
@@ -1800,363 +1663,6 @@
                 timeRestriction.classList.remove('active');
                 loginPage.style.display = 'flex';
                 return true;
-            }
-        }
-
-        // ============================================
-        // TELEGRAM FUNCTIONS
-        // ============================================
-        async function getUserTelegramConfig(email) {
-            try {
-                const token = getToken();
-                if (!token) return null;
-
-                const url = `${FIRESTORE_URL}/telegram_configs/${email}?key=${FIREBASE_CONFIG.apiKey}`;
-                const response = await fetch(url, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-
-                if (response.status === 404) return null;
-                if (!response.ok) {
-                    const error = await response.text();
-                    console.error('Lỗi lấy config:', error);
-                    return null;
-                }
-
-                const data = await response.json();
-                const fields = data.fields || {};
-                return {
-                    botToken: fields.botToken?.stringValue || '',
-                    chatId: fields.chatId?.stringValue || '',
-                    enabled: fields.enabled?.booleanValue || false,
-                    updatedAt: fields.updatedAt?.stringValue || ''
-                };
-            } catch (error) {
-                console.error('Lỗi lấy Telegram config:', error);
-                return null;
-            }
-        }
-
-        async function saveUserTelegramConfig(email, config) {
-            try {
-                const token = getToken();
-                if (!token) return false;
-
-                const url = `${FIRESTORE_URL}/telegram_configs/${email}?key=${FIREBASE_CONFIG.apiKey}`;
-                const fields = {
-                    botToken: { stringValue: config.botToken || '' },
-                    chatId: { stringValue: config.chatId || '' },
-                    enabled: { booleanValue: config.enabled || false },
-                    updatedAt: { stringValue: new Date().toISOString() },
-                    userEmail: { stringValue: email }
-                };
-
-                const response = await fetch(url, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ fields })
-                });
-
-                if (!response.ok) {
-                    const error = await response.text();
-                    console.error('Lỗi lưu config:', error);
-                    return false;
-                }
-
-                return true;
-            } catch (error) {
-                console.error('Lỗi lưu Telegram config:', error);
-                return false;
-            }
-        }
-
-        async function sendTelegramMessage(chatId, message) {
-            try {
-                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-                return await response.json();
-            } catch (error) {
-                console.error('Lỗi gửi Telegram:', error);
-                return null;
-            }
-        }
-
-        async function sendTelegramFile(chatId, content, filename) {
-            try {
-                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`;
-                const formData = new FormData();
-                const blob = new Blob(['\uFEFF' + content], { type: 'text/plain;charset=utf-8' });
-                formData.append('chat_id', chatId);
-                formData.append('document', blob, filename);
-                formData.append('caption', `📦 File xuất: ${filename}`);
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: formData
-                });
-                return await response.json();
-            } catch (error) {
-                console.error('Lỗi gửi file Telegram:', error);
-                return null;
-            }
-        }
-
-        async function sendTelegramReportToUser(email) {
-            try {
-                const config = await getUserTelegramConfig(email);
-                if (!config || !config.enabled || !config.chatId) {
-                    console.log(`User ${email} chưa cấu hình Telegram`);
-                    return;
-                }
-
-                // Lấy data của user
-                const userData = await fetchUserAccounts(email);
-                if (!userData) return;
-
-                const total = userData.length;
-                const success = userData.filter(a => a.status === 'success').length;
-                const pending = userData.filter(a => a.status === 'pending').length;
-                const locked = userData.filter(a => a.status === 'locked').length;
-                const failed = userData.filter(a => a.status === 'failed').length;
-
-                // Tạo file txt username|password
-                let fileContent = '';
-                userData.forEach(acc => {
-                    fileContent += `${acc.username}|${acc.password}\n`;
-                });
-
-                // Gửi báo cáo
-                const report = `
-📊 <b>BÁO CÁO TÀI KHOẢN</b>
-📅 Ngày: ${new Date().toLocaleDateString('vi-VN')}
-🕐 Thời gian: ${new Date().toLocaleTimeString('vi-VN')}
-
-📦 <b>Tổng số:</b> ${total} tài khoản
-✅ Thành công: ${success}
-⏳ Pending: ${pending}
-🔒 Đã khóa: ${locked}
-❌ Thất bại: ${failed}
-
-📈 <b>Tỷ lệ thành công:</b> ${total > 0 ? Math.round(success/total*100) : 0}%
-
-💡 <b>Lưu ý:</b> File đính kèm chứa danh sách username|password
-🔄 Để xóa toàn bộ data, gửi lệnh: <code>/delete_all_data</code>
-                `;
-
-                await sendTelegramMessage(config.chatId, report);
-                await sendTelegramFile(config.chatId, fileContent, `accounts_${email}_${Date.now()}.txt`);
-
-                console.log(`✅ Đã gửi báo cáo Telegram cho ${email}`);
-            } catch (error) {
-                console.error('Lỗi gửi báo cáo:', error);
-            }
-        }
-
-        async function fetchUserAccounts(email) {
-            try {
-                const token = getToken();
-                if (!token) return null;
-
-                const collection = getUserCollection(email);
-                let allDocs = [];
-                let pageToken = null;
-                let hasMore = true;
-                const MAX_DOCS = 2000;
-                const BATCH_SIZE = 300;
-
-                while (hasMore && allDocs.length < MAX_DOCS) {
-                    let url = `${FIRESTORE_URL}/${collection}?pageSize=${BATCH_SIZE}`;
-                    if (pageToken) {
-                        url += `&pageToken=${pageToken}`;
-                    }
-
-                    const response = await fetch(url, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (!response.ok) {
-                        if (response.status === 404) {
-                            break;
-                        }
-                        break;
-                    }
-
-                    const data = await response.json();
-                    const docs = data.documents || [];
-
-                    for (const doc of docs) {
-                        const fields = doc.fields || {};
-                        const account = {
-                            docId: doc.name.split('/').pop(),
-                            username: fields.username?.stringValue || '',
-                            password: fields.password?.stringValue || '',
-                            email: fields.email?.stringValue || '',
-                            emailPassword: fields.emailPassword?.stringValue || '',
-                            registeredAt: fields.registeredAt?.stringValue || '',
-                            status: fields.status?.stringValue || 'success',
-                            note: fields.note?.stringValue || ''
-                        };
-                        allDocs.push(account);
-                    }
-
-                    pageToken = data.nextPageToken || null;
-                    hasMore = !!pageToken && allDocs.length < MAX_DOCS;
-                }
-
-                return allDocs;
-            } catch (error) {
-                console.error('Lỗi fetch user data:', error);
-                return null;
-            }
-        }
-
-        // ============================================
-        // TELEGRAM UI FUNCTIONS
-        // ============================================
-        async function showTelegramConfig() {
-            const config = await getUserTelegramConfig(currentUser.email);
-            telegramConfig = config || { botToken: '', chatId: '', enabled: false };
-
-            document.getElementById('telegramBotToken').value = telegramConfig.botToken || '';
-            document.getElementById('telegramChatId').value = telegramConfig.chatId || '';
-            document.getElementById('telegramEnabled').checked = telegramConfig.enabled || false;
-
-            updateTelegramStatus();
-            document.getElementById('telegramModal').classList.add('show');
-        }
-
-        function closeTelegramModal() {
-            document.getElementById('telegramModal').classList.remove('show');
-        }
-
-        function updateTelegramStatus() {
-            const statusEl = document.getElementById('telegramStatus');
-            const enabled = document.getElementById('telegramEnabled').checked;
-            const botToken = document.getElementById('telegramBotToken').value.trim();
-            const chatId = document.getElementById('telegramChatId').value.trim();
-
-            if (enabled && botToken && chatId) {
-                statusEl.className = 'telegram-status active';
-                statusEl.innerHTML = `
-                    <span class="status-icon">✅</span>
-                    <span>Đã kết nối Telegram! Bạn sẽ nhận báo cáo lúc 19:00 hàng ngày</span>
-                `;
-            } else if (enabled && (!botToken || !chatId)) {
-                statusEl.className = 'telegram-status inactive';
-                statusEl.innerHTML = `
-                    <span class="status-icon">⚠️</span>
-                    <span>Đã bật nhưng chưa nhập đầy đủ Bot Token và Chat ID</span>
-                `;
-            } else {
-                statusEl.className = 'telegram-status inactive';
-                statusEl.innerHTML = `
-                    <span class="status-icon">⏳</span>
-                    <span>Chưa cấu hình</span>
-                `;
-            }
-        }
-
-        // Thêm event listeners cho các input
-        document.getElementById('telegramBotToken').addEventListener('input', updateTelegramStatus);
-        document.getElementById('telegramChatId').addEventListener('input', updateTelegramStatus);
-        document.getElementById('telegramEnabled').addEventListener('change', updateTelegramStatus);
-
-        async function saveTelegramConfig() {
-            const botToken = document.getElementById('telegramBotToken').value.trim();
-            const chatId = document.getElementById('telegramChatId').value.trim();
-            const enabled = document.getElementById('telegramEnabled').checked;
-
-            if (enabled && (!botToken || !chatId)) {
-                showNotification('⚠️ Vui lòng nhập Bot Token và Chat ID!', 'warning');
-                return;
-            }
-
-            const config = { botToken, chatId, enabled };
-            const success = await saveUserTelegramConfig(currentUser.email, config);
-
-            if (success) {
-                telegramConfig = config;
-                closeTelegramModal();
-                showNotification('✅ Đã lưu cấu hình Telegram!', 'success');
-
-                // Test gửi tin nhắn nếu bật
-                if (enabled && chatId) {
-                    const testMsg = `
-✅ <b>Kết nối thành công!</b>
-👤 User: ${currentUser.email}
-🕐 Thời gian: ${new Date().toLocaleString()}
-
-📌 Bạn sẽ nhận báo cáo tự động lúc <b>19:00</b> mỗi ngày
-💡 Để xóa toàn bộ data, gửi lệnh: <code>/delete_all_data</code>
-                    `;
-                    await sendTelegramMessage(chatId, testMsg);
-                }
-            } else {
-                showNotification('❌ Lỗi lưu cấu hình!', 'error');
-            }
-        }
-
-        async function testTelegramConnection() {
-            const botToken = document.getElementById('telegramBotToken').value.trim();
-            const chatId = document.getElementById('telegramChatId').value.trim();
-
-            if (!botToken || !chatId) {
-                showNotification('⚠️ Vui lòng nhập Bot Token và Chat ID!', 'warning');
-                return;
-            }
-
-            try {
-                const result = await sendTelegramMessage(chatId, '✅ <b>Test kết nối thành công!</b>\n\n📌 Bạn đã cấu hình đúng!');
-                if (result && result.ok) {
-                    showNotification('✅ Gửi tin nhắn test thành công!', 'success');
-                } else {
-                    showNotification('❌ Lỗi: ' + (result?.description || 'Không xác định'), 'error');
-                }
-            } catch (error) {
-                showNotification('❌ Lỗi kết nối: ' + error.message, 'error');
-            }
-        }
-
-        async function sendTelegramTestData() {
-            const chatId = document.getElementById('telegramChatId').value.trim();
-            if (!chatId) {
-                showNotification('⚠️ Vui lòng nhập Chat ID trước!', 'warning');
-                return;
-            }
-
-            if (allAccounts.length === 0) {
-                showNotification('📭 Không có data để gửi!', 'warning');
-                return;
-            }
-
-            try {
-                let content = '';
-                allAccounts.slice(0, 10).forEach(acc => {
-                    content += `${acc.username}|${acc.password}\n`;
-                });
-
-                if (allAccounts.length > 10) {
-                    content += `\n... và ${allAccounts.length - 10} tài khoản khác`;
-                }
-
-                await sendTelegramFile(chatId, content, `test_data_${Date.now()}.txt`);
-                showNotification(`✅ Đã gửi ${Math.min(10, allAccounts.length)} tài khoản test!`, 'success');
-            } catch (error) {
-                showNotification('❌ Lỗi: ' + error.message, 'error');
             }
         }
 
@@ -2431,11 +1937,13 @@
                     timeText = '📅 ' + new Date().toLocaleString();
                 }
 
+                // Lưu thông báo
                 lastNotification = {
                     content: contentText,
                     time: timeText
                 };
 
+                // Chỉ hiển thị popup nếu chưa hiển thị lần nào
                 if (!notificationShown && contentText) {
                     showNotificationPopup(contentText, timeText);
                     notificationShown = true;
@@ -2452,6 +1960,7 @@
             popupNotification.classList.add('show');
         }
 
+        // Popup close handlers
         function closePopup() {
             popupNotification.classList.remove('show');
         }
@@ -2951,6 +2460,7 @@
                 return;
             }
 
+            // Chỉ xuất username|password
             let content = '';
             allAccounts.forEach(acc => {
                 content += `${acc.username || ''}|${acc.password || ''}\n`;
@@ -3315,22 +2825,8 @@
                 headerLeft.appendChild(btn);
             }
 
-            // Cập nhật trạng thái Telegram
-            await checkTelegramStatus();
-
             updateTimeStatus();
             await fetchAccounts();
-        }
-
-        async function checkTelegramStatus() {
-            const config = await getUserTelegramConfig(currentUser.email);
-            if (config && config.enabled) {
-                telegramBtn.textContent = '🤖 Telegram ✅';
-                telegramBtn.className = 'btn btn-telegram active';
-            } else {
-                telegramBtn.textContent = '🤖 Telegram';
-                telegramBtn.className = 'btn btn-telegram';
-            }
         }
 
         // ============================================
@@ -3380,8 +2876,6 @@
             if (e.target === modalOverlay) modalOverlay.classList.remove('show');
         });
 
-        telegramBtn.addEventListener('click', showTelegramConfig);
-
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'r') {
@@ -3392,7 +2886,6 @@
                 modalOverlay.classList.remove('show');
                 if (editingRow) cancelEdit();
                 closePopup();
-                closeTelegramModal();
             }
             if (e.ctrlKey && e.key === 'n') {
                 e.preventDefault();
@@ -3451,37 +2944,6 @@
         });
 
         // ============================================
-        // SEND DAILY REPORTS
-        // ============================================
-        async function sendDailyReports() {
-            console.log('📊 Đang gửi báo cáo hàng ngày...');
-
-            // Lấy danh sách user từ collection
-            const users = [
-                'hoangpho@gmail.com',
-                'kieenedau@gmail.com',
-                'manhcuongsteven@gmail.com',
-                'mndzaicuti@gmail.com',
-                'nguyenanhtuan001@gmail.com',
-                'qkhanh530494@gmail.com',
-                'tuanpath06170@gmail.com',
-                'tuquangnamht2007@gmail.com',
-                'yeahvi129058@gmail.com'
-            ];
-
-            for (const email of users) {
-                try {
-                    await sendTelegramReportToUser(email);
-                    await sleep(1000); // Chờ 1s giữa các lần gửi
-                } catch (error) {
-                    console.error(`Lỗi gửi báo cáo cho ${email}:`, error);
-                }
-            }
-
-            console.log('✅ Đã gửi báo cáo hàng ngày cho tất cả user!');
-        }
-
-        // ============================================
         // INIT
         // ============================================
         (function init() {
@@ -3507,7 +2969,6 @@
                 themeToggle.textContent = '☀️ Light';
             }
 
-            // Kiểm tra thời gian mỗi 60 giây
             setInterval(() => {
                 if (currentUser) {
                     const allowed = checkTimeRestriction(currentUser.email);
@@ -3522,30 +2983,13 @@
                 updateTimeStatus();
             }, 60000);
 
-            // Gửi báo cáo hàng ngày lúc 19:00
-            function checkAndSendDailyReport() {
-                const now = new Date();
-                if (now.getHours() === 19 && now.getMinutes() === 0) {
-                    sendDailyReports();
-                }
-            }
-
-            // Kiểm tra mỗi phút
-            setInterval(checkAndSendDailyReport, 60000);
-
-            // Chạy lần đầu sau 10 giây để đảm bảo mọi thứ sẵn sàng
-            setTimeout(checkAndSendDailyReport, 10000);
-
-            console.log('🎮 Garena Account Manager Pro v1.4.2 loaded!');
+            console.log('🎮 Garena Account Manager Pro v1.4.1 loaded!');
             console.log('📌 Cập nhật mới:');
             console.log('  ⏰ Giới hạn giờ truy cập: 10-13h & 19-21h');
             console.log('  👑 Admin: tuquangnamht2007@gmail.com (truy cập mọi lúc)');
-            console.log('  🤖 Tích hợp Telegram: Mỗi user tự cấu hình');
-            console.log('  📊 Báo cáo hàng ngày lúc 19:00');
             console.log('  📄 Export TXT: username|password');
             console.log('  📢 Thông báo Admin dạng Popup');
             console.log('  📊 Bảng hiển thị gọn gàng hơn');
-            console.log(`📋 Danh sách user: ${['hoangpho@gmail.com', 'kieenedau@gmail.com', 'manhcuongsteven@gmail.com', 'mndzaicuti@gmail.com', 'nguyenanhtuan001@gmail.com', 'qkhanh530494@gmail.com', 'tuanpath06170@gmail.com', 'tuquangnamht2007@gmail.com', 'yeahvi129058@gmail.com'].join(', ')}`);
         })();
     </script>
 
