@@ -1410,7 +1410,7 @@ export default class App {
 
     async loadAdminNotification() {
         try {
-            const url = 'https://raw.githubusercontent.com/tuquangnam-developer/Garena-Auto-Register-Pro-Data/refs/heads/main/Notification.html';
+            const url = 'https://raw.githubusercontent.com/tuquangnam-developer/Garena-Auto-Register-Pro-Data/refs/heads/main/Notification/index.html';
             const response = await fetch(url);
             if (!response.ok) throw new Error('Không thể tải thông báo');
 
