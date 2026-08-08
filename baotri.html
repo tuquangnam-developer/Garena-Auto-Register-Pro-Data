@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Đang bảo trì - Garena Account Manager Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Background animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(240, 136, 62, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(31, 111, 235, 0.08) 0%, transparent 60%),
+                #0d1117;
+            z-index: -1;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(240, 136, 62, 0.3);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 30px;
+            max-width: 600px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo / Icon */
+        .main-icon {
+            font-size: 80px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #f0883e;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #8b949e;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .subtitle span {
+            color: #f0883e;
+            font-weight: 600;
+        }
+
+        /* Maintenance card */
+        .maintenance-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 35px 30px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .maintenance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(240, 136, 62, 0.03), transparent, rgba(31, 111, 235, 0.03), transparent);
+            animation: rotateGlow 20s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .maintenance-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .maintenance-card .status-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .maintenance-card h2 {
+            color: #c9d1d9;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .maintenance-card p {
+            color: #8b949e;
+            font-size: 15px;
+            line-height: 1.7;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Countdown Timer */
+        .countdown-wrapper {
+            background: #0d1117;
+            border-radius: 12px;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #21262d;
+        }
+
+        .countdown-label {
+            font-size: 14px;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 8px 14px;
+            min-width: 65px;
+            text-align: center;
+        }
+
+        .countdown-item .number {
+            display: block;
+            font-size: 32px;
+            font-weight: 700;
+            color: #f0883e;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+        }
+
+        .countdown-item .label {
+            display: block;
+            font-size: 11px;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .countdown-separator {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 300;
+            color: #30363d;
+            padding: 0 2px;
+        }
+
+        /* Progress bar */
+        .progress-wrapper {
+            margin-top: 20px;
+            background: #0d1117;
+            border-radius: 8px;
+            height: 6px;
+            overflow: hidden;
+            border: 1px solid #21262d;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #f0883e, #e06b2a);
+            border-radius: 8px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        /* Features list */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .feature-item {
+            background: #161b22;
+            border: 1px solid #21262d;
+            border-radius: 10px;
+            padding: 14px 10px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .feature-item:hover {
+            border-color: #f0883e;
+            transform: translateY(-2px);
+        }
+
+        .feature-item .icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .feature-item .name {
+            font-size: 12px;
+            color: #8b949e;
+            font-weight: 500;
+        }
+
+        /* Notify button */
+        .notify-btn {
+            background: linear-gradient(135deg, #f0883e 0%, #e06b2a 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notify-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(240, 136, 62, 0.3);
+        }
+
+        .notify-btn:active {
+            transform: translateY(0);
+        }
+
+        .notify-btn .bell {
+            font-size: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            color: #484f58;
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .title {
+                font-size: 26px;
+            }
+            .subtitle {
+                font-size: 15px;
+            }
+            .maintenance-card {
+                padding: 25px 20px;
+            }
+            .countdown-item .number {
+                font-size: 24px;
+            }
+            .countdown-item {
+                min-width: 50px;
+                padding: 6px 10px;
+            }
+            .countdown-separator {
+                font-size: 20px;
+            }
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .main-icon {
+                font-size: 56px;
+            }
+            .notify-btn {
+                padding: 12px 28px;
+                font-size: 14px;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .countdown {
+                gap: 6px;
+            }
+            .countdown-item .number {
+                font-size: 20px;
+            }
+            .countdown-item {
+                min-width: 42px;
+                padding: 4px 8px;
+            }
+            .countdown-separator {
+                font-size: 16px;
+            }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #238636;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error {
+            background: #da3633;
+        }
+
+        /* Status badge - LIVE */
+        .live-badge {
+            display: inline-block;
+            background: rgba(63, 185, 80, 0.15);
+            color: #3fb950;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(63, 185, 80, 0.3);
+            animation: livePulse 2s ease-in-out infinite;
+            margin-top: 8px;
+        }
+
+        @keyframes livePulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .live-badge .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #3fb950;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: dotBlink 1.2s ease-in-out infinite;
+        }
+
+        @keyframes dotBlink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Icon -->
+        <div class="main-icon">🔧</div>
+
+        <!-- Title -->
+        <h1 class="title">Garena Manager Pro</h1>
+        <p class="subtitle">
+            Hệ thống đang được <span>nâng cấp</span> để phục vụ bạn tốt hơn
+        </p>
+
+        <!-- Maintenance Card -->
+        <div class="maintenance-card">
+            <span class="status-icon">🛠️</span>
+            <h2>Đang bảo trì hệ thống</h2>
+            <p>
+                Chúng tôi đang thực hiện nâng cấp cơ sở dữ liệu và tối ưu hiệu suất.
+                <br>
+                <strong style="color:#f0883e;">Xin lỗi vì sự bất tiện này!</strong>
+            </p>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown-wrapper">
+            <span class="countdown-label">⏳ Mở lại sau</span>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Giờ</span>
+                </div>
+                <span class="countdown-separator">:</span>
+                <div class="countdown-item">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Phút</span>
+                </div>
+                <span class="countdown-separator">:</span>
+                <div class="countdown-item">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Giây</span>
+                </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-wrapper">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="features">
+            <div class="feature-item">
+                <span class="icon">⚡</span>
+                <span class="name">Tối ưu hiệu suất</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🔒</span>
+                <span class="name">Bảo mật nâng cao</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">📊</span>
+                <span class="name">Giao diện mới</span>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🚀</span>
+                <span class="name">Tốc độ vượt trội</span>
+            </div>
+        </div>
+
+        <!-- Notify Button -->
+        <button class="notify-btn" id="notifyBtn">
+            <span class="bell">🔔</span>
+            Thông báo khi mở lại
+        </button>
+
+        <!-- Live Badge -->
+        <div style="margin-top: 16px;">
+            <span class="live-badge">
+                <span class="dot"></span>
+                Dự kiến mở lại 19:30
+            </span>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            © 2026 <a href="#">Garena Account Manager Pro</a> · Phiên bản 2.1.0
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIG
+        // ============================================
+        const TARGET_HOUR = 19;
+        const TARGET_MINUTE = 30;
+        const TARGET_SECOND = 0;
+
+        // ============================================
+        // DOM REFS
+        // ============================================
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const progressBar = document.getElementById('progressBar');
+        const toast = document.getElementById('toast');
+        const notifyBtn = document.getElementById('notifyBtn');
+
+        // ============================================
+        // PARTICLES
+        // ============================================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['#f0883e', '#58a6ff', '#3fb950', '#8b5cf6', '#d29922'];
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                particle.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ============================================
+        // COUNTDOWN
+        // ============================================
+        function getTargetTime() {
+            const now = new Date();
+            const target = new Date(now);
+            target.setHours(TARGET_HOUR, TARGET_MINUTE, TARGET_SECOND, 0);
+
+            // Nếu đã qua 19h30, đặt cho ngày mai
+            if (now > target) {
+                target.setDate(target.getDate() + 1);
+            }
+
+            return target;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const target = getTargetTime();
+            const diff = Math.max(0, target - now);
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            hoursEl.textContent = String(hours).padStart(2, '0');
+            minutesEl.textContent = String(minutes).padStart(2, '0');
+            secondsEl.textContent = String(seconds).padStart(2, '0');
+
+            // Progress bar
+            const totalMs = 24 * 60 * 60 * 1000; // 1 ngày tối đa
+            const progress = Math.min(100, (1 - diff / totalMs) * 100);
+            progressBar.style.width = progress + '%';
+
+            // Check if time is up
+            if (diff <= 0) {
+                clearInterval(countdownInterval);
+                showToast('🎉 Hệ thống đã được mở lại! Vui lòng tải lại trang.', 'success');
+                document.querySelector('.maintenance-card h2').textContent = '🎉 Hệ thống đã sẵn sàng!';
+                document.querySelector('.maintenance-card p').innerHTML =
+                    'Hệ thống đã được nâng cấp thành công. <br> <strong style="color:#3fb950;">Chào mừng bạn quay trở lại!</strong>';
+                document.querySelector('.status-icon').textContent = '🎉';
+                document.querySelector('.live-badge').innerHTML =
+                    '🟢 <span style="color:#3fb950;">Đã mở lại</span>';
+                document.querySelector('.notify-btn').innerHTML = '🚀 Vào hệ thống ngay';
+                document.querySelector('.notify-btn').style.background = 'linear-gradient(135deg, #238636 0%, #1a7a2e 100%)';
+                document.querySelector('.notify-btn').onclick = function() {
+                    window.location.reload();
+                };
+                return true;
+            }
+
+            return false;
+        }
+
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        let toastTimeout = null;
+
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type === 'error') {
+                toast.classList.add('error');
+            }
+            toast.classList.add('show');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // ============================================
+        // NOTIFY BUTTON
+        // ============================================
+        notifyBtn.addEventListener('click', function() {
+            // Đăng ký nhận thông báo (demo)
+            if ('Notification' in window && Notification.permission === 'granted') {
+                showToast('✅ Bạn sẽ nhận được thông báo khi hệ thống mở lại!', 'success');
+            } else if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        showToast('✅ Đã bật thông báo!', 'success');
+                    } else {
+                        showToast('⚠️ Vui lòng cho phép thông báo trong trình duyệt.', 'error');
+                    }
+                });
+            } else {
+                showToast('⚠️ Trình duyệt không hỗ trợ thông báo.', 'error');
+            }
+
+            // Hiệu ứng click
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+
+            // Lưu vào localStorage để nhớ
+            localStorage.setItem('notify_registered', 'true');
+        });
+
+        // ============================================
+        // CHECK NOTIFICATION PERMISSION ON LOAD
+        // ============================================
+        if ('Notification' in window && Notification.permission === 'granted') {
+            const registered = localStorage.getItem('notify_registered');
+            if (registered) {
+                // Kiểm tra thời gian mở lại
+                const checkInterval = setInterval(() => {
+                    const now = new Date();
+                    const target = getTargetTime();
+                    if (now >= target) {
+                        clearInterval(checkInterval);
+                        new Notification('🔔 Garena Manager Pro', {
+                            body: 'Hệ thống đã được mở lại! Vào ngay nào!',
+                            icon: '🔧'
+                        });
+                        localStorage.removeItem('notify_registered');
+                    }
+                }, 10000); // Kiểm tra mỗi 10 giây
+            }
+        }
+
+        // ============================================
+        // START COUNTDOWN
+        // ============================================
+        let countdownInterval = setInterval(() => {
+            const finished = updateCountdown();
+            if (finished) {
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+
+        // Initial update
+        updateCountdown();
+
+        // ============================================
+        // KEYBOARD SHORTCUTS (for fun)
+        // ============================================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' || e.key === 'R') {
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    showToast('🔄 Đang kiểm tra trạng thái hệ thống...', 'success');
+                    setTimeout(() => {
+                        const now = new Date();
+                        const target = getTargetTime();
+                        if (now >= target) {
+                            showToast('🎉 Hệ thống đã mở lại! Tải lại trang nhé!', 'success');
+                        } else {
+                            const diff = target - now;
+                            const h = Math.floor(diff / (1000 * 60 * 60));
+                            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                            showToast(`⏳ Còn ${h} giờ ${m} phút nữa`, 'success');
+                        }
+                    }, 500);
+                }
+            }
+
+            if (e.key === 'Enter') {
+                notifyBtn.click();
+            }
+        });
+
+        // ============================================
+        // CONSOLE WELCOME
+        // ============================================
+        console.log('%c🔧 Garena Manager Pro', 'font-size:24px; font-weight:bold; color:#f0883e;');
+        console.log('%cHệ thống đang bảo trì, quay lại lúc 19:30', 'font-size:14px; color:#8b949e;');
+        console.log('%c📌 Dự kiến nâng cấp: Tối ưu hiệu suất, bảo mật nâng cao, giao diện mới', 'font-size:12px; color:#58a6ff;');
+
+        console.log(' ');
+        console.log('🎮 Đội ngũ phát triển xin cảm ơn bạn đã kiên nhẫn chờ đợi!');
+
+        // ============================================
+        // BACKGROUND COLOR CHANGE (OPTIONAL)
+        // ============================================
+        // Thay đổi màu nền nhẹ nhàng theo thời gian
+        let hue = 30;
+        setInterval(() => {
+            hue = (hue + 0.1) % 360;
+            // Chỉ áp dụng nếu người dùng không tương tác
+        }, 100);
+
+        console.log('✅ Trang bảo trì đã sẵn sàng!');
+    </script>
+
+</body>
+</html>

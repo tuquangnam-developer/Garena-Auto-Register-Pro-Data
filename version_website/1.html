@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Garena Account Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+        }
+
+        /* ===== LOGIN PAGE ===== */
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+        }
+
+        .login-container {
+            background: #161b22;
+            padding: 40px 35px;
+            border-radius: 16px;
+            border: 1px solid #30363d;
+            width: 100%;
+            max-width: 420px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-container .logo h1 {
+            color: #f0883e;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .login-container .logo p {
+            color: #8b949e;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .login-container .logo .version {
+            display: inline-block;
+            background: #1f6feb;
+            color: #fff;
+            font-size: 11px;
+            padding: 2px 12px;
+            border-radius: 10px;
+            margin-top: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #c9d1d9;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: #c9d1d9;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #f0883e;
+            box-shadow: 0 0 0 3px rgba(240, 136, 62, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: #484f58;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #f0883e 0%, #e06b2a 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 6px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(240, 136, 62, 0.3);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-login.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .btn-login.loading::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .error-message {
+            color: #f85149;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(248, 81, 73, 0.1);
+            border-radius: 6px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #484f58;
+            font-size: 12px;
+        }
+
+        .footer-text span {
+            color: #f0883e;
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard {
+            display: none;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 16px 20px;
+            background: #161b22;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-header .left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dashboard-header .left h2 {
+            color: #f0883e;
+            font-size: 22px;
+        }
+
+        .dashboard-header .left .user-email {
+            color: #58a6ff;
+            font-size: 14px;
+            background: #0d1117;
+            padding: 4px 14px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+        }
+
+        .dashboard-header .right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-header .right .stats {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .dashboard-header .right .stats .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dashboard-header .right .stats .stat-item .num {
+            font-weight: bold;
+            color: #f0883e;
+        }
+
+        .btn-logout {
+            background: #da3633;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+
+        .btn-logout:hover {
+            background: #f85149;
+        }
+
+        .btn-refresh {
+            background: #1f6feb;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+
+        .btn-refresh:hover {
+            background: #388bfd;
+        }
+
+        .btn-refresh:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-export {
+            background: #238636;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+
+        .btn-export:hover {
+            background: #2ea043;
+        }
+
+        /* ===== FILTER ===== */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 12px 16px;
+            background: #161b22;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .filter-bar input,
+        .filter-bar select {
+            padding: 8px 14px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 13px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            outline: none;
+            border-color: #f0883e;
+        }
+
+        .filter-bar .filter-label {
+            color: #8b949e;
+            font-size: 13px;
+        }
+
+        /* ===== TABLE ===== */
+        .table-container {
+            background: #161b22;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: #0d1117;
+        }
+
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            color: #8b949e;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #30363d;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #21262d;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: #0d1117;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .username-cell {
+            color: #f0883e;
+            font-weight: 600;
+        }
+
+        .password-cell {
+            font-family: 'Courier New', monospace;
+            color: #58a6ff;
+        }
+
+        .email-cell {
+            color: #3fb950;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(63, 185, 80, 0.2);
+            color: #3fb950;
+        }
+
+        .badge-pending {
+            background: rgba(210, 153, 34, 0.2);
+            color: #d29922;
+        }
+
+        .badge-failed {
+            background: rgba(248, 81, 73, 0.2);
+            color: #f85149;
+        }
+
+        .copy-btn {
+            background: transparent;
+            color: #58a6ff;
+            border: 1px solid #30363d;
+            padding: 2px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #1f6feb;
+            color: #fff;
+            border-color: #1f6feb;
+        }
+
+        .empty-row td {
+            text-align: center;
+            padding: 40px;
+            color: #8b949e;
+            font-size: 16px;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #0d1117;
+            border-top: 1px solid #30363d;
+        }
+
+        .pagination .info {
+            color: #8b949e;
+            font-size: 13px;
+        }
+
+        .pagination .info span {
+            color: #c9d1d9;
+            font-weight: 600;
+        }
+
+        .pagination .controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .pagination .controls button {
+            padding: 6px 14px;
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+
+        .pagination .controls button:hover:not(:disabled) {
+            background: #30363d;
+        }
+
+        .pagination .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination .controls button.active {
+            background: #f0883e;
+            color: #fff;
+            border-color: #f0883e;
+        }
+
+        /* ===== LOADING SPINNER ===== */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            gap: 12px;
+            color: #8b949e;
+        }
+
+        .loading-spinner .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #30363d;
+            border-radius: 50%;
+            border-top-color: #f0883e;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dashboard-header .right {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .dashboard-header .right .stats {
+                flex-wrap: wrap;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+            }
+
+            .filter-bar input,
+            .filter-bar select {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .pagination {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            th,
+            td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .login-container {
+                padding: 24px 20px;
+                margin: 10px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== LOGIN PAGE ===== -->
+    <div class="login-page" id="loginPage">
+        <div class="login-container">
+            <div class="logo">
+                <h1>🎮 Garena Manager</h1>
+                <p>Quản lý tài khoản Garena đã đăng ký</p>
+                <span class="version">v1.0.0</span>
+            </div>
+
+            <div class="form-group">
+                <label>📧 Email</label>
+                <input type="email" id="loginEmail" placeholder="Nhập email của bạn" value="tuquangnamht2007@gmail.com">
+            </div>
+
+            <div class="form-group">
+                <label>🔑 Mật khẩu</label>
+                <input type="password" id="loginPassword" placeholder="Nhập mật khẩu" value="QNam2007@">
+            </div>
+
+            <button class="btn-login" id="loginBtn">🔐 Đăng nhập</button>
+
+            <div class="error-message" id="loginError"></div>
+
+            <div class="footer-text">
+                © 2026 <span>Garena Account Manager</span> | Bảo mật dữ liệu
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="dashboard" id="dashboard">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="left">
+                <h2>🎮 Garena Accounts</h2>
+                <span class="user-email" id="userEmailDisplay">loading...</span>
+            </div>
+            <div class="right">
+                <div class="stats">
+                    <div class="stat-item">📦 Tổng: <span class="num" id="totalCount">0</span></div>
+                    <div class="stat-item">✅ Thành công: <span class="num" id="successCount">0</span></div>
+                    <div class="stat-item">⏳ Pending: <span class="num" id="pendingCount">0</span></div>
+                </div>
+                <button class="btn-refresh" id="refreshBtn">🔄 Làm mới</button>
+                <button class="btn-export" id="exportBtn">📥 Export CSV</button>
+                <button class="btn-logout" id="logoutBtn">🚪 Đăng xuất</button>
+            </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter-bar">
+            <span class="filter-label">🔍 Tìm kiếm:</span>
+            <input type="text" id="searchInput" placeholder="Tìm username, email...">
+            <select id="statusFilter">
+                <option value="all">📊 Tất cả</option>
+                <option value="success">✅ Thành công</option>
+                <option value="pending">⏳ Đang xử lý</option>
+                <option value="failed">❌ Thất bại</option>
+            </select>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>👤 Username</th>
+                            <th>🔑 Password</th>
+                            <th>📧 Email</th>
+                            <th>🔐 Email Pass</th>
+                            <th>🌐 Proxy</th>
+                            <th>📅 Ngày tạo</th>
+                            <th>📊 Status</th>
+                            <th>⚡ Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr class="empty-row">
+                            <td colspan="9">
+                                <div class="loading-spinner">
+                                    <div class="spinner"></div>
+                                    <span>Đang tải dữ liệu...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="info">
+                    Hiển thị <span id="startIndex">0</span> - <span id="endIndex">0</span> / <span id="totalItems">0</span>
+                </div>
+                <div class="controls" id="paginationControls">
+                    <button id="prevPage" disabled>‹</button>
+                    <button id="nextPage">›</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // FIREBASE CONFIG
+        // ============================================
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyCYkHYveuBZAnbZt_qZD2iWWy8BkS49dsU",
+            authDomain: "garena-auto-register-pro.firebaseapp.com",
+            projectId: "garena-auto-register-pro",
+            storageBucket: "garena-auto-register-pro.firebasestorage.app",
+            messagingSenderId: "306207796959",
+            appId: "1:306207796959:web:a7037aba8234f8f357c36a"
+        };
+
+        const FIRESTORE_URL =
+            `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/(default)/documents`;
+
+        // ============================================
+        // STATE
+        // ============================================
+        let currentUser = null;
+        let allAccounts = [];
+        let filteredAccounts = [];
+        let currentPage = 1;
+        const PAGE_SIZE = 20;
+        let isLoading = false;
+        let cache = {
+            data: null,
+            timestamp: 0,
+            userEmail: null
+        };
+        const CACHE_TTL = 60000; // 1 phút cache
+
+        // ============================================
+        // DOM REFS
+        // ============================================
+        const loginPage = document.getElementById('loginPage');
+        const dashboard = document.getElementById('dashboard');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+
+        const userEmailDisplay = document.getElementById('userEmailDisplay');
+        const totalCount = document.getElementById('totalCount');
+        const successCount = document.getElementById('successCount');
+        const pendingCount = document.getElementById('pendingCount');
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const startIndex = document.getElementById('startIndex');
+        const endIndex = document.getElementById('endIndex');
+        const totalItems = document.getElementById('totalItems');
+        const prevPage = document.getElementById('prevPage');
+        const nextPage = document.getElementById('nextPage');
+
+        // ============================================
+        // AUTH FUNCTIONS
+        // ============================================
+        async function signIn(email, password) {
+            const url =
+                `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${FIREBASE_CONFIG.apiKey}`;
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    returnSecureToken: true
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error?.message || 'Đăng nhập thất bại');
+            }
+
+            const data = await response.json();
+
+            currentUser = {
+                email: data.email,
+                localId: data.localId,
+                idToken: data.idToken,
+                refreshToken: data.refreshToken,
+                expiresIn: data.expiresIn,
+                loginTime: Date.now()
+            };
+
+            // Lưu vào sessionStorage để giữ đăng nhập
+            sessionStorage.setItem('garena_user', JSON.stringify(currentUser));
+
+            return currentUser;
+        }
+
+        function getCurrentUser() {
+            const stored = sessionStorage.getItem('garena_user');
+            if (stored) {
+                try {
+                    const user = JSON.parse(stored);
+                    const expiresAt = user.loginTime + (parseInt(user.expiresIn) * 1000);
+                    if (Date.now() < expiresAt) {
+                        currentUser = user;
+                        return user;
+                    } else {
+                        sessionStorage.removeItem('garena_user');
+                    }
+                } catch (e) {}
+            }
+            return null;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('garena_user');
+            currentUser = null;
+            allAccounts = [];
+            filteredAccounts = [];
+            dashboard.classList.remove('active');
+            loginPage.style.display = 'flex';
+        }
+
+        function getToken() {
+            if (!currentUser) return null;
+            const expiresAt = currentUser.loginTime + (parseInt(currentUser.expiresIn) * 1000);
+            if (Date.now() >= expiresAt) {
+                logout();
+                return null;
+            }
+            return currentUser.idToken;
+        }
+
+        // ============================================
+        // GET USER COLLECTION
+        // ============================================
+        function getUserCollection(email) {
+            let sanitized = email
+                .replace(/@/g, '_at_')
+                .replace(/\./g, '_dot_')
+                .replace(/[^a-zA-Z0-9_]/g, '_');
+
+            if (sanitized.match(/^[0-9]/)) {
+                sanitized = '_' + sanitized;
+            }
+
+            if (sanitized.length > 100) {
+                sanitized = sanitized.substring(0, 100);
+            }
+
+            return `account_garena_${sanitized}`;
+        }
+
+        // ============================================
+        // FETCH ACCOUNTS (VỚI CACHE + PAGINATION)
+        // ============================================
+        async function fetchAccounts(forceRefresh = false) {
+            if (!currentUser) return;
+
+            const token = getToken();
+            if (!token) {
+                logout();
+                return;
+            }
+
+            // Kiểm tra cache
+            const now = Date.now();
+            if (!forceRefresh &&
+                cache.data &&
+                cache.userEmail === currentUser.email &&
+                (now - cache.timestamp) < CACHE_TTL) {
+                console.log('📦 Dùng cache (', cache.data.length, 'accounts)');
+                allAccounts = cache.data;
+                applyFilters();
+                return;
+            }
+
+            if (isLoading) return;
+            isLoading = true;
+            refreshBtn.disabled = true;
+            showLoading();
+
+            try {
+                const collection = getUserCollection(currentUser.email);
+                console.log('📂 Fetching collection:', collection);
+
+                // Đọc với limit để tránh quota
+                let allDocs = [];
+                let pageToken = null;
+                let hasMore = true;
+
+                // Đọc tối đa 1000 documents (vẫn trong quota an toàn)
+                const MAX_DOCS = 1000;
+                const BATCH_SIZE = 200;
+
+                while (hasMore && allDocs.length < MAX_DOCS) {
+                    let url =
+                        `${FIRESTORE_URL}/${collection}?pageSize=${BATCH_SIZE}`;
+                    if (pageToken) {
+                        url += `&pageToken=${pageToken}`;
+                    }
+
+                    const response = await fetch(url, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            // Collection chưa có
+                            break;
+                        }
+                        const errorText = await response.text();
+                        throw new Error(`HTTP ${response.status}: ${errorText}`);
+                    }
+
+                    const data = await response.json();
+                    const docs = data.documents || [];
+
+                    for (const doc of docs) {
+                        const fields = doc.fields || {};
+                        const account = {
+                            username: fields.username?.stringValue || '',
+                            password: fields.password?.stringValue || '',
+                            email: fields.email?.stringValue || '',
+                            emailPassword: fields.emailPassword?.stringValue || '',
+                            proxy: fields.proxy?.stringValue || 'direct',
+                            proxyIP: fields.proxyIP?.stringValue || '',
+                            registeredAt: fields.registeredAt?.stringValue || '',
+                            status: fields.status?.stringValue || 'success',
+                            deviceId: fields.deviceId?.stringValue || '',
+                            userEmail: fields.userEmail?.stringValue || currentUser.email
+                        };
+                        allDocs.push(account);
+                    }
+
+                    pageToken = data.nextPageToken || null;
+                    hasMore = !!pageToken && allDocs.length < MAX_DOCS;
+
+                    // Tránh rate limit
+                    await sleep(200);
+                }
+
+                console.log(`✅ Đã lấy ${allDocs.length} accounts`);
+
+                // Sắp xếp theo thời gian tạo (mới nhất lên đầu)
+                allDocs.sort((a, b) => {
+                    if (!a.registeredAt) return 1;
+                    if (!b.registeredAt) return -1;
+                    return new Date(b.registeredAt) - new Date(a.registeredAt);
+                });
+
+                allAccounts = allDocs;
+
+                // Cache
+                cache.data = allDocs;
+                cache.timestamp = now;
+                cache.userEmail = currentUser.email;
+
+                applyFilters();
+
+            } catch (error) {
+                console.error('❌ Lỗi fetch:', error);
+                showError('Không thể tải dữ liệu: ' + error.message);
+                // Dùng cache cũ nếu có
+                if (cache.data && cache.userEmail === currentUser.email) {
+                    allAccounts = cache.data;
+                    applyFilters();
+                }
+            } finally {
+                isLoading = false;
+                refreshBtn.disabled = false;
+            }
+        }
+
+        // ============================================
+        // FILTER + PAGINATION
+        // ============================================
+        function applyFilters() {
+            const search = searchInput.value.toLowerCase().trim();
+            const status = statusFilter.value;
+
+            filteredAccounts = allAccounts.filter(acc => {
+                // Search
+                if (search) {
+                    const username = (acc.username || '').toLowerCase();
+                    const email = (acc.email || '').toLowerCase();
+                    if (!username.includes(search) && !email.includes(search)) {
+                        return false;
+                    }
+                }
+
+                // Status
+                if (status !== 'all') {
+                    const accStatus = (acc.status || 'success').toLowerCase();
+                    if (accStatus !== status.toLowerCase()) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
+            currentPage = 1;
+            renderTable();
+            updateStats();
+            updatePagination();
+        }
+
+        function renderTable() {
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const end = Math.min(start + PAGE_SIZE, filteredAccounts.length);
+            const pageData = filteredAccounts.slice(start, end);
+
+            if (pageData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="empty-row">
+                        <td colspan="9">
+                            ${allAccounts.length === 0 ? '📭 Chưa có tài khoản nào được tạo' : '🔍 Không tìm thấy kết quả'}
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            pageData.forEach((acc, index) => {
+                const num = start + index + 1;
+                const statusBadge = getStatusBadge(acc.status);
+                const date = acc.registeredAt ? new Date(acc.registeredAt).toLocaleDateString('vi-VN') : '-';
+
+                html += `
+                    <tr>
+                        <td>${num}</td>
+                        <td class="username-cell">${escapeHtml(acc.username || '-')}</td>
+                        <td class="password-cell">${escapeHtml(acc.password || '-')}</td>
+                        <td class="email-cell">${escapeHtml(acc.email || '-')}</td>
+                        <td>${escapeHtml(acc.emailPassword || '-')}</td>
+                        <td>${escapeHtml(acc.proxy || 'direct')}</td>
+                        <td>${date}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <button class="copy-btn" onclick='copyText("${escapeHtml(acc.username)}:${escapeHtml(acc.password)}")'>📋 Copy</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tableBody.innerHTML = html;
+            updatePaginationInfo();
+        }
+
+        function updateStats() {
+            const total = allAccounts.length;
+            const success = allAccounts.filter(a => (a.status || 'success') === 'success').length;
+            const pending = allAccounts.filter(a => (a.status || '').toLowerCase() === 'pending').length;
+
+            totalCount.textContent = total;
+            successCount.textContent = success;
+            pendingCount.textContent = pending;
+        }
+
+        function updatePaginationInfo() {
+            const total = filteredAccounts.length;
+            const start = total === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+            const end = Math.min(currentPage * PAGE_SIZE, total);
+
+            startIndex.textContent = start;
+            endIndex.textContent = end;
+            totalItems.textContent = total;
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredAccounts.length / PAGE_SIZE);
+            prevPage.disabled = currentPage <= 1;
+            nextPage.disabled = currentPage >= totalPages || totalPages === 0;
+        }
+
+        function getStatusBadge(status) {
+            const s = (status || 'success').toLowerCase();
+            if (s === 'success') {
+                return '<span class="badge badge-success">✅ Thành công</span>';
+            } else if (s === 'pending') {
+                return '<span class="badge badge-pending">⏳ Pending</span>';
+            } else {
+                return '<span class="badge badge-failed">❌ Thất bại</span>';
+            }
+        }
+
+        // ============================================
+        // UTILITY
+        // ============================================
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Đã copy: ' + text);
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert('✅ Đã copy: ' + text);
+            });
+        }
+
+        function showLoading() {
+            tableBody.innerHTML = `
+                <tr class="empty-row">
+                    <td colspan="9">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <span>Đang tải dữ liệu...</span>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function showError(msg) {
+            // Hiển thị lỗi trong bảng
+            tableBody.innerHTML = `
+                <tr class="empty-row">
+                    <td colspan="9" style="color:#f85149;">
+                        ❌ ${msg}
+                    </td>
+                </tr>
+            `;
+        }
+
+        // ============================================
+        // EXPORT CSV
+        // ============================================
+        function exportCSV() {
+            if (allAccounts.length === 0) {
+                alert('Không có dữ liệu để xuất!');
+                return;
+            }
+
+            const headers = ['Username', 'Password', 'Email', 'EmailPassword', 'Proxy', 'ProxyIP', 'RegisteredAt', 'Status'];
+            const rows = allAccounts.map(acc => [
+                acc.username || '',
+                acc.password || '',
+                acc.email || '',
+                acc.emailPassword || '',
+                acc.proxy || '',
+                acc.proxyIP || '',
+                acc.registeredAt || '',
+                acc.status || ''
+            ]);
+
+            const content = headers.join(',') + '\n' + rows.map(row => row.join(',')).join('\n');
+            const blob = new Blob(['\uFEFF' + content], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `garena_accounts_${Date.now()}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+        }
+
+        // ============================================
+        // LOGIN HANDLER
+        // ============================================
+        async function handleLogin() {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+
+            if (!email || !password) {
+                showLoginError('Vui lòng nhập email và mật khẩu');
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.classList.add('loading');
+            hideLoginError();
+
+            try {
+                await signIn(email, password);
+                loginBtn.textContent = '✅ Thành công!';
+                await sleep(500);
+                showDashboard();
+            } catch (error) {
+                let msg = 'Đăng nhập thất bại';
+                if (error.message.includes('EMAIL_NOT_FOUND')) {
+                    msg = 'Email không tồn tại';
+                } else if (error.message.includes('INVALID_PASSWORD')) {
+                    msg = 'Mật khẩu không đúng';
+                } else if (error.message.includes('USER_DISABLED')) {
+                    msg = 'Tài khoản đã bị vô hiệu hóa';
+                } else if (error.message.includes('TOO_MANY_ATTEMPTS')) {
+                    msg = 'Quá nhiều lần thử, vui lòng thử lại sau';
+                } else {
+                    msg = error.message || 'Đăng nhập thất bại';
+                }
+                showLoginError(msg);
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.classList.remove('loading');
+                loginBtn.textContent = '🔐 Đăng nhập';
+            }
+        }
+
+        function showLoginError(msg) {
+            loginError.textContent = '❌ ' + msg;
+            loginError.classList.add('show');
+        }
+
+        function hideLoginError() {
+            loginError.classList.remove('show');
+        }
+
+        // ============================================
+        // SHOW DASHBOARD
+        // ============================================
+        async function showDashboard() {
+            loginPage.style.display = 'none';
+            dashboard.classList.add('active');
+            userEmailDisplay.textContent = currentUser.email;
+
+            await fetchAccounts();
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+
+        // Login
+        loginBtn.addEventListener('click', handleLogin);
+
+        loginEmail.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') loginPassword.focus();
+        });
+
+        loginPassword.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleLogin();
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                logout();
+                loginPage.style.display = 'flex';
+            }
+        });
+
+        // Refresh
+        refreshBtn.addEventListener('click', () => {
+            fetchAccounts(true);
+        });
+
+        // Export
+        exportBtn.addEventListener('click', exportCSV);
+
+        // Filter
+        searchInput.addEventListener('input', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+
+        // Pagination
+        prevPage.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+                updatePagination();
+            }
+        });
+
+        nextPage.addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredAccounts.length / PAGE_SIZE);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable();
+                updatePagination();
+            }
+        });
+
+        // ============================================
+        // KEYBOARD SHORTCUTS
+        // ============================================
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'r') {
+                e.preventDefault();
+                if (dashboard.classList.contains('active')) {
+                    fetchAccounts(true);
+                }
+            }
+        });
+
+        // ============================================
+        // INIT
+        // ============================================
+        (function init() {
+            // Kiểm tra đăng nhập từ session
+            const user = getCurrentUser();
+            if (user) {
+                showDashboard();
+            } else {
+                loginPage.style.display = 'flex';
+                dashboard.classList.remove('active');
+            }
+
+            // Pre-fill demo account
+            if (!loginEmail.value) {
+                loginEmail.value = 'tuquangnamht2007@gmail.com';
+                loginPassword.value = 'QNam2007@';
+            }
+        })();
+
+        console.log('🎮 Garena Account Manager v1.0.0 loaded!');
+        console.log('📌 Sử dụng cache để tránh vượt quota đọc');
+        console.log('📌 Cache TTL:', CACHE_TTL / 1000, 'giây');
+    </script>
+
+</body>
+</html>
