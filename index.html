@@ -200,9 +200,69 @@
 
                 <div class="form-group">
                     <label>🤖 Bot Token</label>
-                    <input id="telegramBotToken" placeholder="Nhập Bot Token từ @BotFather">
+                    <input id="telegramBotToken" placeholder="Nhập Bot Token từ @BotFather hoạc dùng token mặc định của website" value="8262952652:AAGtMZ0Zq5A7Gm2z2UFEbFSDj8PjpVewmOI">
                     <small style="color:#8b949e;font-size:12px;display:block;margin-top:4px;">
                         💡 Tạo bot tại <strong>@BotFather</strong> trên Telegram
+                    <p style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+    <span>Token mặc định của website:</span>
+    <strong id="defaultToken" style="
+        background: #1E1E2E;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 14px;
+        color: #89B4FA;
+        word-break: break-all;
+    ">8262952652:AAGtMZ0Zq5A7Gm2z2UFEbFSDj8PjpVewmOI</strong>
+    <button onclick="copyToken()" style="
+        padding: 6px 14px;
+        background: #89B4FA;
+        color: #1E1E2E;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+    " onmouseover="this.style.background='#74C7EC'; this.style.transform='scale(1.05)'" 
+       onmouseout="this.style.background='#89B4FA'; this.style.transform='scale(1)'">
+        <span>📋</span> Copy
+    </button>
+    <span id="copyMessage" style="
+        font-size: 13px;
+        color: #A6E3A1;
+        opacity: 0;
+        transition: all 0.3s;
+        font-weight: 500;
+    ">✅ Copied!</span>
+</p>
+
+<script>
+function copyToken() {
+    const token = document.getElementById('defaultToken').textContent;
+    
+    navigator.clipboard.writeText(token).then(() => {
+        const msg = document.getElementById('copyMessage');
+        msg.style.opacity = '1';
+        setTimeout(() => msg.style.opacity = '0', 2000);
+    }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = token;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const msg = document.getElementById('copyMessage');
+        msg.style.opacity = '1';
+        setTimeout(() => msg.style.opacity = '0', 2000);
+    });
+}
+</script>
+
                     </small>
                 </div>
 
