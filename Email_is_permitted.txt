@@ -3,4 +3,9 @@ tuquangnamht2007@gmail.com
 Hoangpho@gmail.com
 yeahvi129058@gmail.com
 kieenedau@gmail.com
+<<<<<<< HEAD
 Manhcuongsteven@gmail.com
+=======
+Manhcuongsteven@gmail.com
+khanh.linhart2004@gmail.com
+>>>>>>> 42fc2a0ad0bde52674a75fd2c16d8d1cf657a59d
