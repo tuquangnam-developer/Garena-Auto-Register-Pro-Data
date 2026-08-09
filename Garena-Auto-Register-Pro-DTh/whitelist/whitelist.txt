@@ -1,0 +1,7 @@
+# Danh sách Device ID được phép sử dụng extension
+# Mỗi dòng là một Device ID
+# Dòng bắt đầu bằng # là comment
+
+eb2559092637d0cd8e710ca3dd528a14
+2134b167c1675afc61deef7b43965f2b
+9401d253f9c17b083a43ee8748ad2ba4
