@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 Admin Dashboard - Garena Account Stats</title>
+    <title>📊 Admin Dashboard Pro - Garena Account Manager</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
     </script>
     <style>
-        /* ============================================
-           ADMIN DASHBOARD STYLES
-           ============================================ */
-
+        /* ===== COMPLETE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +27,6 @@
             color: #24292e;
         }
 
-        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -52,7 +48,6 @@
             background: #d0d7de;
         }
 
-        /* ===== ANIMATIONS ===== */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -88,7 +83,7 @@
             }
         }
 
-        /* ===== LOGIN PAGE ===== */
+        /* ===== LOGIN ===== */
         .login-page {
             display: flex;
             justify-content: center;
@@ -246,7 +241,7 @@
         .dashboard {
             display: none;
             padding: 20px;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
         .dashboard.active {
@@ -378,11 +373,24 @@
         body.light-mode .btn-theme:hover {
             background: #b0b8c0;
         }
+        .btn-view-detail {
+            background: #1f6feb;
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-view-detail:hover {
+            background: #388bfd;
+        }
 
         /* ===== STATS CARDS ===== */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -390,8 +398,9 @@
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 12px;
-            padding: 20px 24px;
+            padding: 18px 20px;
             transition: 0.3s;
+            cursor: pointer;
         }
         body.light-mode .stat-card {
             background: #ffffff;
@@ -402,22 +411,22 @@
             border-color: #f0883e;
         }
         .stat-card .stat-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 24px;
+            margin-bottom: 4px;
         }
         .stat-card .stat-number {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: #f0883e;
         }
         .stat-card .stat-label {
             color: #8b949e;
-            font-size: 14px;
-            margin-top: 4px;
+            font-size: 13px;
+            margin-top: 2px;
         }
         .stat-card .stat-change {
-            font-size: 13px;
-            margin-top: 6px;
+            font-size: 12px;
+            margin-top: 4px;
             padding: 2px 10px;
             border-radius: 10px;
             display: inline-block;
@@ -434,12 +443,11 @@
             color: #8b949e;
             background: rgba(139, 148, 158, 0.15);
         }
-
         .stat-card .stat-detail {
-            font-size: 13px;
+            font-size: 12px;
             color: #8b949e;
-            margin-top: 8px;
-            padding-top: 8px;
+            margin-top: 6px;
+            padding-top: 6px;
             border-top: 1px solid #30363d;
         }
         body.light-mode .stat-card .stat-detail {
@@ -472,17 +480,17 @@
         }
         .chart-box h3 {
             color: #c9d1d9;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 12px;
         }
         body.light-mode .chart-box h3 {
             color: #24292e;
         }
         .chart-box canvas {
-            max-height: 280px;
+            max-height: 250px;
         }
 
-        /* ===== USER ACCOUNTS TABLE ===== */
+        /* ===== USER TABLE ===== */
         .user-section {
             background: #161b22;
             border: 1px solid #30363d;
@@ -504,7 +512,7 @@
         }
         .user-section .section-header h3 {
             color: #f0883e;
-            font-size: 18px;
+            font-size: 17px;
         }
         .user-section .section-header .search-box {
             display: flex;
@@ -529,6 +537,13 @@
             outline: none;
             border-color: #f0883e;
         }
+        .user-section .section-header .stats-info {
+            color: #8b949e;
+            font-size: 13px;
+        }
+        .user-section .section-header .stats-info strong {
+            color: #f0883e;
+        }
 
         .user-table-wrapper {
             overflow-x: auto;
@@ -536,7 +551,7 @@
         .user-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13px;
         }
         .user-table thead {
             background: #0d1117;
@@ -545,11 +560,11 @@
             background: #f6f8fa;
         }
         .user-table th {
-            padding: 12px 16px;
+            padding: 10px 14px;
             text-align: left;
             color: #8b949e;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border-bottom: 1px solid #30363d;
@@ -560,7 +575,7 @@
             border-bottom-color: #d0d7de;
         }
         .user-table td {
-            padding: 10px 16px;
+            padding: 9px 14px;
             border-bottom: 1px solid #21262d;
             vertical-align: middle;
         }
@@ -576,6 +591,10 @@
         .user-table .user-email-cell {
             color: #58a6ff;
             font-weight: 500;
+            cursor: pointer;
+        }
+        .user-table .user-email-cell:hover {
+            text-decoration: underline;
         }
         .user-table .count-cell {
             font-weight: 600;
@@ -584,7 +603,7 @@
         .user-table .status-badge {
             padding: 2px 10px;
             border-radius: 10px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
         }
         .user-table .status-badge.success {
@@ -608,25 +627,188 @@
             text-align: center;
             padding: 40px;
             color: #8b949e;
-            font-size: 16px;
+            font-size: 15px;
         }
 
-        /* ===== LOADING ===== */
         .loading-spinner {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 60px;
+            padding: 40px;
             gap: 12px;
             color: #8b949e;
         }
         .loading-spinner .spinner {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             border: 3px solid #30363d;
             border-radius: 50%;
             border-top-color: #f0883e;
             animation: spin 0.8s linear infinite;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 1000px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        body.light-mode .modal {
+            background: #ffffff;
+            border-color: #d0d7de;
+        }
+        .modal .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #30363d;
+        }
+        body.light-mode .modal .modal-header {
+            border-bottom-color: #d0d7de;
+        }
+        .modal .modal-header h3 {
+            color: #f0883e;
+            font-size: 20px;
+            word-break: break-all;
+        }
+        .modal .modal-header .modal-close {
+            background: none;
+            border: none;
+            color: #8b949e;
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 0 8px;
+        }
+        .modal .modal-header .modal-close:hover {
+            color: #f85149;
+            transform: rotate(90deg);
+        }
+        .modal .modal-body {
+            color: #c9d1d9;
+        }
+        body.light-mode .modal .modal-body {
+            color: #24292e;
+        }
+
+        .modal .user-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .modal .user-stats-grid .mini-stat {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: center;
+        }
+        body.light-mode .modal .user-stats-grid .mini-stat {
+            background: #f6f8fa;
+            border-color: #d0d7de;
+        }
+        .modal .user-stats-grid .mini-stat .num {
+            font-size: 22px;
+            font-weight: 700;
+            color: #f0883e;
+        }
+        .modal .user-stats-grid .mini-stat .label {
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        .modal .account-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 12px;
+        }
+        .modal .account-list table {
+            width: 100%;
+            font-size: 13px;
+            border-collapse: collapse;
+        }
+        .modal .account-list table th {
+            background: #0d1117;
+            padding: 8px 12px;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #8b949e;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        body.light-mode .modal .account-list table th {
+            background: #f6f8fa;
+        }
+        .modal .account-list table td {
+            padding: 6px 12px;
+            border-bottom: 1px solid #21262d;
+        }
+        body.light-mode .modal .account-list table td {
+            border-bottom-color: #e1e4e8;
+        }
+        .modal .account-list table tr:hover td {
+            background: #0d1117;
+        }
+        body.light-mode .modal .account-list table tr:hover td {
+            background: #f6f8fa;
+        }
+
+        .modal .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        .modal .modal-actions button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+        .modal .modal-actions .btn-close-modal {
+            background: #30363d;
+            color: #c9d1d9;
+        }
+        .modal .modal-actions .btn-close-modal:hover {
+            background: #484f58;
+        }
+        body.light-mode .modal .modal-actions .btn-close-modal {
+            background: #d0d7de;
+            color: #24292e;
+        }
+        body.light-mode .modal .modal-actions .btn-close-modal:hover {
+            background: #b0b8c0;
         }
 
         /* ===== NOTIFICATION ===== */
@@ -706,7 +888,7 @@
         }
         @media (max-width: 768px) {
             .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             }
             .header {
                 flex-direction: column;
@@ -738,8 +920,12 @@
                 max-width: unset;
                 width: auto;
             }
-            .stat-card .stat-number {
-                font-size: 24px;
+            .modal {
+                padding: 20px;
+                width: 98%;
+            }
+            .modal .user-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -752,13 +938,13 @@
             <div class="logo">
                 <div class="icon">📊</div>
                 <h1>Admin Dashboard</h1>
-                <p>Thống kê tài khoản Garena</p>
+                <p>Quản lý tài khoản Garena</p>
                 <span class="badge">🔒 Admin Only</span>
             </div>
 
             <div class="form-group">
                 <label>📧 Email</label>
-                <input type="email" id="loginEmail" placeholder="Nhập email admin">
+                <input type="email" id="loginEmail" placeholder="Nhập email admin" value="tuquangnamht2007@gmail.com">
             </div>
 
             <div class="form-group">
@@ -800,6 +986,12 @@
                 <div class="stat-label">Tổng số tài khoản</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">👤</div>
+                <div class="stat-number" id="totalUsers">0</div>
+                <div class="stat-label">Người dùng</div>
+                <div class="stat-detail">Đã tạo tài khoản</div>
+            </div>
+            <div class="stat-card">
                 <div class="stat-icon">✅</div>
                 <div class="stat-number" id="todayAccounts">0</div>
                 <div class="stat-label">Hôm nay</div>
@@ -809,33 +1001,19 @@
                 <div class="stat-icon">📅</div>
                 <div class="stat-number" id="yesterdayAccounts">0</div>
                 <div class="stat-label">Hôm qua</div>
-                <div class="stat-detail">
-                    📊 Tỷ lệ: <span id="yesterdayRate">0%</span>
-                </div>
+                <div class="stat-detail">Tỷ lệ thành công: <span id="yesterdayRate">0%</span></div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📈</div>
                 <div class="stat-number" id="weekAccounts">0</div>
                 <div class="stat-label">7 ngày qua</div>
-                <div class="stat-detail">
-                    Trung bình: <span id="weekAverage">0</span>/ngày
-                </div>
+                <div class="stat-detail">Trung bình: <span id="weekAverage">0</span>/ngày</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📊</div>
                 <div class="stat-number" id="monthAccounts">0</div>
                 <div class="stat-label">30 ngày qua</div>
-                <div class="stat-detail">
-                    Trung bình: <span id="monthAverage">0</span>/ngày
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">👤</div>
-                <div class="stat-number" id="userCount">0</div>
-                <div class="stat-label">Người dùng đã tạo acc</div>
-                <div class="stat-detail">
-                    Tổng cộng <span id="totalUsers">0</span> người
-                </div>
+                <div class="stat-detail">Trung bình: <span id="monthAverage">0</span>/ngày</div>
             </div>
         </div>
 
@@ -857,8 +1035,13 @@
                 <h3>📋 Danh sách người dùng & số lượng tài khoản</h3>
                 <div class="search-box">
                     <input type="text" id="searchUser" placeholder="🔍 Tìm kiếm người dùng...">
+                    <button class="btn btn-success" id="loadAllBtn">🚀 Load All Data</button>
                     <button class="btn btn-primary" id="exportStatsBtn">📥 Export Stats</button>
                 </div>
+            </div>
+            <div style="color:#8b949e;font-size:13px;margin-bottom:12px;">
+                📌 <strong id="userCountInfo">0</strong> người dùng · 
+                <span id="accountCountInfo">0</span> tài khoản
             </div>
             <div class="user-table-wrapper">
                 <table class="user-table">
@@ -874,14 +1057,16 @@
                             <th>📅 Hôm nay</th>
                             <th>📅 Hôm qua</th>
                             <th>📈 7 ngày</th>
+                            <th>⚡ Action</th>
                         </tr>
                     </thead>
                     <tbody id="userTableBody">
                         <tr class="empty-row">
-                            <td colspan="10">
-                                <div class="loading-spinner">
-                                    <div class="spinner"></div>
-                                    <span>Đang tải dữ liệu...</span>
+                            <td colspan="11">
+                                <div style="text-align:center;padding:40px;">
+                                    <div style="font-size:48px;margin-bottom:16px;">🚀</div>
+                                    <div style="font-size:18px;font-weight:600;color:#f0883e;">Nhấn "Load All Data"</div>
+                                    <div style="color:#8b949e;margin-top:8px;">Để tải dữ liệu từ tất cả người dùng</div>
                                 </div>
                             </td>
                         </tr>
@@ -890,11 +1075,29 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <div style="text-align:center;color:#484f58;font-size:12px;padding:20px 0;">
             © 2026 Garena Account Manager Pro | Admin Dashboard v2.0
-            <br>
-            Dữ liệu được cập nhật tự động
+        </div>
+    </div>
+
+    <!-- ===== USER DETAIL MODAL ===== -->
+    <div class="modal-overlay" id="userDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalUserTitle">👤 Chi tiết người dùng</h3>
+                <button class="modal-close" id="modalCloseBtn">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div id="modalContent">
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                        <span>Đang tải...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-close-modal" id="modalCloseActionBtn">❌ Đóng</button>
+            </div>
         </div>
     </div>
 
@@ -919,17 +1122,20 @@
             },
             app: {
                 adminEmail: "tuquangnamht2007@gmail.com",
-                version: "2.0.0",
-                cacheTTL: 60000
+                version: "2.0.0"
             },
+            // Danh sách user từ Firestore
             users: [
                 "hoangpho@gmail.com",
+                "khanh.linhart2004@gmail.com",
                 "kieenedau@gmail.com",
                 "manhcuongsteven@gmail.com",
                 "mndzaicuti@gmail.com",
                 "nguyenanhtuan001@gmail.com",
+                "nguyentuan834897@gmail.com",
                 "qkhanh530494@gmail.com",
                 "tuanpath06170@gmail.com",
+                "tuquangnam@gmail.com",
                 "tuquangnamht2007@gmail.com",
                 "yeahvi129058@gmail.com"
             ]
@@ -1019,7 +1225,8 @@
                 return user.idToken;
             }
 
-            getUserCollection(email) {
+            // Tạo collection name từ email
+            getCollectionName(email) {
                 let sanitized = email
                     .replace(/@/g, '_at_')
                     .replace(/\./g, '_dot_')
@@ -1034,7 +1241,8 @@
                 return `account_garena_${sanitized}`;
             }
 
-            async fetchAllAccounts(collection, maxAccounts = 5000) {
+            // Lấy dữ liệu từ collection với batch
+            async fetchAccounts(collection, maxAccounts = 5000) {
                 const token = this.getToken();
                 if (!token) {
                     this.logout();
@@ -1084,7 +1292,7 @@
                     hasMore = !!pageToken && allDocs.length < maxAccounts;
 
                     if (hasMore) {
-                        await new Promise(resolve => setTimeout(resolve, 150));
+                        await new Promise(resolve => setTimeout(resolve, 100));
                     }
                 }
 
@@ -1114,7 +1322,8 @@
                 this.initTheme();
                 this.initUser();
 
-                console.log('📊 Admin Dashboard v2.0 loaded!');
+                console.log('📊 Admin Dashboard Pro v2.0 loaded!');
+                console.log(`👥 ${CONFIG.users.length} users configured`);
             }
 
             initDOM() {
@@ -1129,12 +1338,11 @@
                     userEmailDisplay: document.getElementById('userEmailDisplay'),
 
                     totalAccounts: document.getElementById('totalAccounts'),
+                    totalUsers: document.getElementById('totalUsers'),
                     todayAccounts: document.getElementById('todayAccounts'),
                     yesterdayAccounts: document.getElementById('yesterdayAccounts'),
                     weekAccounts: document.getElementById('weekAccounts'),
                     monthAccounts: document.getElementById('monthAccounts'),
-                    userCount: document.getElementById('userCount'),
-                    totalUsers: document.getElementById('totalUsers'),
                     todayChange: document.getElementById('todayChange'),
                     yesterdayRate: document.getElementById('yesterdayRate'),
                     weekAverage: document.getElementById('weekAverage'),
@@ -1142,14 +1350,23 @@
 
                     userTableBody: document.getElementById('userTableBody'),
                     searchUser: document.getElementById('searchUser'),
+                    userCountInfo: document.getElementById('userCountInfo'),
+                    accountCountInfo: document.getElementById('accountCountInfo'),
 
                     refreshBtn: document.getElementById('refreshBtn'),
+                    loadAllBtn: document.getElementById('loadAllBtn'),
                     logoutBtn: document.getElementById('logoutBtn'),
                     themeToggle: document.getElementById('themeToggle'),
                     exportStatsBtn: document.getElementById('exportStatsBtn'),
 
                     weeklyChart: document.getElementById('weeklyChart'),
                     statusChart: document.getElementById('statusChart'),
+
+                    userDetailModal: document.getElementById('userDetailModal'),
+                    modalUserTitle: document.getElementById('modalUserTitle'),
+                    modalContent: document.getElementById('modalContent'),
+                    modalCloseBtn: document.getElementById('modalCloseBtn'),
+                    modalCloseActionBtn: document.getElementById('modalCloseActionBtn'),
 
                     notificationContainer: document.getElementById('notificationContainer')
                 };
@@ -1172,8 +1389,9 @@
                     }
                 });
 
-                // Refresh
-                this.dom.refreshBtn.addEventListener('click', () => this.fetchAllData(true));
+                // Load All
+                this.dom.loadAllBtn.addEventListener('click', () => this.fetchAllData());
+                this.dom.refreshBtn.addEventListener('click', () => this.fetchAllData());
 
                 // Theme
                 this.dom.themeToggle.addEventListener('click', () => this.toggleTheme());
@@ -1184,16 +1402,23 @@
                 // Export
                 this.dom.exportStatsBtn.addEventListener('click', () => this.exportStats());
 
+                // Modal
+                this.dom.modalCloseBtn.addEventListener('click', () => this.closeUserDetail());
+                this.dom.modalCloseActionBtn.addEventListener('click', () => this.closeUserDetail());
+                this.dom.userDetailModal.addEventListener('click', (e) => {
+                    if (e.target === this.dom.userDetailModal) this.closeUserDetail();
+                });
+
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
                     if (e.ctrlKey && e.key === 'r') {
                         e.preventDefault();
                         if (this.dom.dashboard.classList.contains('active')) {
-                            this.fetchAllData(true);
+                            this.fetchAllData();
                         }
                     }
                     if (e.key === 'Escape') {
-                        // Close any open modals
+                        this.closeUserDetail();
                     }
                 });
             }
@@ -1283,7 +1508,6 @@
                 this.dom.dashboard.classList.remove('active');
                 this.dom.loginPage.style.display = 'flex';
 
-                // Destroy charts
                 if (this.weeklyChart) {
                     this.weeklyChart.destroy();
                     this.weeklyChart = null;
@@ -1302,17 +1526,37 @@
                 this.dom.loginPage.style.display = 'none';
                 this.dom.dashboard.classList.add('active');
                 this.dom.userEmailDisplay.textContent = this.currentUser.email;
-                this.fetchAllData();
+                // Không tự động load, đợi user nhấn nút
+                this.showInitialState();
+            }
+
+            showInitialState() {
+                this.dom.userTableBody.innerHTML = `
+                    <tr class="empty-row">
+                        <td colspan="11">
+                            <div style="text-align:center;padding:40px;">
+                                <div style="font-size:48px;margin-bottom:16px;">🚀</div>
+                                <div style="font-size:18px;font-weight:600;color:#f0883e;">Nhấn "Load All Data"</div>
+                                <div style="color:#8b949e;margin-top:8px;">Để tải dữ liệu từ tất cả ${CONFIG.users.length} người dùng</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                this.dom.userCountInfo.textContent = '0';
+                this.dom.accountCountInfo.textContent = '0';
             }
 
             // ============================================
             // DATA FETCHING
             // ============================================
 
-            async fetchAllData(forceRefresh = false) {
+            async fetchAllData() {
                 if (this.isLoading) return;
                 this.isLoading = true;
+                this.dom.loadAllBtn.disabled = true;
                 this.dom.refreshBtn.disabled = true;
+                this.dom.loadAllBtn.textContent = '⏳ Đang tải...';
+
                 this.showLoading();
 
                 try {
@@ -1322,40 +1566,52 @@
                         return;
                     }
 
-                    const userData = {};
+                    const totalUsers = CONFIG.users.length;
+                    let loaded = 0;
+                    let totalAccounts = 0;
 
-                    // Fetch data for each user
+                    this.showNotification(`🔄 Đang tải dữ liệu từ ${totalUsers} người dùng...`, 'info');
+
+                    // Fetch từng user một (có delay để tránh rate limit)
                     for (const email of CONFIG.users) {
                         try {
-                            const collection = this.firebase.getUserCollection(email);
-                            const accounts = await this.firebase.fetchAllAccounts(collection);
+                            const collection = this.firebase.getCollectionName(email);
+                            const accounts = await this.firebase.fetchAccounts(collection);
+                            this.allUsersData[email] = accounts || [];
+                            loaded++;
+                            totalAccounts += accounts.length;
 
-                            userData[email] = accounts.map(acc => ({
-                                ...acc,
-                                registeredAt: acc.registeredAt || new Date().toISOString()
-                            }));
+                            // Cập nhật progress
+                            this.dom.loadAllBtn.textContent = `⏳ Đang tải ${loaded}/${totalUsers}...`;
+
+                            // Delay nhẹ giữa các request
+                            await this.sleep(200);
                         } catch (e) {
-                            console.warn(`Không thể lấy data cho ${email}:`, e);
-                            userData[email] = [];
+                            console.warn(`Lỗi fetch ${email}:`, e);
+                            this.allUsersData[email] = [];
+                            loaded++;
                         }
-
-                        // Small delay để tránh rate limit
-                        await this.sleep(100);
                     }
 
-                    this.allUsersData = userData;
+                    // Render dữ liệu
                     this.renderDashboard();
                     this.renderCharts();
                     this.renderUserTable();
 
-                    this.showNotification(`✅ Đã tải dữ liệu thành công!`, 'success');
+                    this.dom.userCountInfo.textContent = Object.keys(this.allUsersData).filter(e => this.allUsersData[e]
+                        .length > 0).length;
+                    this.dom.accountCountInfo.textContent = totalAccounts;
+
+                    this.showNotification(`✅ Đã tải ${totalAccounts} tài khoản từ ${loaded} người dùng!`, 'success');
 
                 } catch (error) {
                     console.error('❌ Lỗi fetch:', error);
                     this.showNotification('❌ Không thể tải dữ liệu: ' + error.message, 'error');
                 } finally {
                     this.isLoading = false;
+                    this.dom.loadAllBtn.disabled = false;
                     this.dom.refreshBtn.disabled = false;
+                    this.dom.loadAllBtn.textContent = '🚀 Load All Data';
                 }
             }
 
@@ -1366,8 +1622,8 @@
             renderDashboard() {
                 const allAccounts = this.getAllAccounts();
                 const total = allAccounts.length;
+                const userCount = Object.keys(this.allUsersData).filter(email => this.allUsersData[email].length > 0).length;
 
-                // Thống kê theo ngày
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
@@ -1402,12 +1658,6 @@
                     return date >= monthAgo;
                 });
 
-                // Users who created accounts
-                const usersWithAccounts = Object.keys(this.allUsersData).filter(email =>
-                    this.allUsersData[email].length > 0
-                );
-
-                // Stats
                 const success = allAccounts.filter(a => (a.status || 'success') === 'success').length;
                 const pending = allAccounts.filter(a => (a.status || '').toLowerCase() === 'pending').length;
                 const locked = allAccounts.filter(a => (a.status || '').toLowerCase() === 'locked').length;
@@ -1415,12 +1665,11 @@
 
                 // Update DOM
                 this.dom.totalAccounts.textContent = total.toLocaleString();
+                this.dom.totalUsers.textContent = userCount;
                 this.dom.todayAccounts.textContent = todayAccounts.length.toLocaleString();
                 this.dom.yesterdayAccounts.textContent = yesterdayAccounts.length.toLocaleString();
                 this.dom.weekAccounts.textContent = weekAccounts.length.toLocaleString();
                 this.dom.monthAccounts.textContent = monthAccounts.length.toLocaleString();
-                this.dom.userCount.textContent = usersWithAccounts.length;
-                this.dom.totalUsers.textContent = CONFIG.users.length;
 
                 // Today change
                 const change = todayAccounts.length - yesterdayAccounts.length;
@@ -1437,29 +1686,19 @@
                 }
 
                 // Yesterday rate
-                const totalYesterday = allAccounts.filter(acc => {
-                    const date = new Date(acc.registeredAt);
-                    date.setHours(0, 0, 0, 0);
-                    return date.getTime() === yesterday.getTime();
-                }).length;
-
                 const yesterdaySuccess = allAccounts.filter(acc => {
                     const date = new Date(acc.registeredAt);
                     date.setHours(0, 0, 0, 0);
                     return date.getTime() === yesterday.getTime() && (acc.status || 'success') === 'success';
                 }).length;
 
-                this.dom.yesterdayRate.textContent = totalYesterday > 0 ?
-                    `${Math.round(yesterdaySuccess / totalYesterday * 100)}%` :
+                this.dom.yesterdayRate.textContent = yesterdayAccounts.length > 0 ?
+                    `${Math.round(yesterdaySuccess / yesterdayAccounts.length * 100)}%` :
                     '0%';
 
-                // Week average
                 this.dom.weekAverage.textContent = Math.round(weekAccounts.length / 7);
-
-                // Month average
                 this.dom.monthAverage.textContent = Math.round(monthAccounts.length / 30);
 
-                // Store data for charts
                 this.chartData = {
                     allAccounts,
                     todayAccounts,
@@ -1470,7 +1709,7 @@
                     pending,
                     locked,
                     failed,
-                    usersWithAccounts
+                    userCount
                 };
             }
 
@@ -1486,12 +1725,10 @@
             renderWeeklyChart() {
                 const ctx = this.dom.weeklyChart.getContext('2d');
 
-                // Destroy existing chart
                 if (this.weeklyChart) {
                     this.weeklyChart.destroy();
                 }
 
-                // Get last 7 days
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
@@ -1513,7 +1750,6 @@
                     data.push(count);
                 }
 
-                // Determine if dark mode
                 const isDark = !document.body.classList.contains('light-mode');
                 const textColor = isDark ? '#c9d1d9' : '#24292e';
                 const gridColor = isDark ? '#30363d' : '#d0d7de';
@@ -1537,32 +1773,18 @@
                         maintainAspectRatio: true,
                         plugins: {
                             legend: {
-                                labels: {
-                                    color: textColor,
-                                    font: { size: 12 }
-                                }
+                                labels: { color: textColor, font: { size: 12 } }
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                ticks: {
-                                    color: textColor,
-                                    stepSize: 1,
-                                    font: { size: 11 }
-                                },
-                                grid: {
-                                    color: gridColor
-                                }
+                                ticks: { color: textColor, stepSize: 1, font: { size: 11 } },
+                                grid: { color: gridColor }
                             },
                             x: {
-                                ticks: {
-                                    color: textColor,
-                                    font: { size: 11 }
-                                },
-                                grid: {
-                                    color: gridColor
-                                }
+                                ticks: { color: textColor, font: { size: 11 } },
+                                grid: { color: gridColor }
                             }
                         }
                     }
@@ -1597,12 +1819,7 @@
                                 'rgba(248, 81, 73, 0.8)',
                                 'rgba(248, 81, 73, 0.5)'
                             ],
-                            borderColor: [
-                                '#3fb950',
-                                '#d29922',
-                                '#f85149',
-                                '#f85149'
-                            ],
+                            borderColor: ['#3fb950', '#d29922', '#f85149', '#f85149'],
                             borderWidth: 2,
                             hoverOffset: 8
                         }]
@@ -1613,11 +1830,7 @@
                         plugins: {
                             legend: {
                                 position: 'bottom',
-                                labels: {
-                                    color: textColor,
-                                    font: { size: 12 },
-                                    padding: 16
-                                }
+                                labels: { color: textColor, font: { size: 12 }, padding: 16 }
                             }
                         },
                         cutout: '65%'
@@ -1633,7 +1846,6 @@
                 const searchTerm = this.dom.searchUser.value.toLowerCase().trim();
                 const tbody = this.dom.userTableBody;
 
-                // Get all users with data
                 const users = Object.keys(this.allUsersData)
                     .filter(email => this.allUsersData[email].length > 0)
                     .filter(email => !searchTerm || email.toLowerCase().includes(searchTerm));
@@ -1641,9 +1853,9 @@
                 if (users.length === 0) {
                     tbody.innerHTML = `
                         <tr class="empty-row">
-                            <td colspan="10">
+                            <td colspan="11">
                                 ${Object.keys(this.allUsersData).length === 0 ? 
-                                    '📭 Chưa có dữ liệu' : 
+                                    '📭 Chưa có dữ liệu. Nhấn "Load All Data" để tải.' : 
                                     '🔍 Không tìm thấy người dùng'}
                             </td>
                         </tr>
@@ -1690,7 +1902,7 @@
                     html += `
                         <tr>
                             <td>${index + 1}</td>
-                            <td class="user-email-cell">${this.escapeHtml(email)}</td>
+                            <td class="user-email-cell" onclick="window.app.showUserDetail('${email}')">${this.escapeHtml(email)}</td>
                             <td class="count-cell">${total}</td>
                             <td><span class="status-badge success">${success}</span></td>
                             <td><span class="status-badge pending">${pending}</span></td>
@@ -1699,6 +1911,9 @@
                             <td><strong style="color:#f0883e;">${todayCount}</strong></td>
                             <td>${yesterdayCount}</td>
                             <td>${weekCount}</td>
+                            <td>
+                                <button class="btn-view-detail" onclick="window.app.showUserDetail('${email}')">📊 Chi tiết</button>
+                            </td>
                         </tr>
                     `;
                 });
@@ -1707,8 +1922,184 @@
             }
 
             // ============================================
-            // EXPORT STATS
+            // USER DETAIL MODAL
             // ============================================
+
+            showUserDetail(email) {
+                const accounts = this.allUsersData[email] || [];
+                if (accounts.length === 0) {
+                    this.showNotification('📭 Không có dữ liệu cho người dùng này', 'warning');
+                    return;
+                }
+
+                const total = accounts.length;
+                const success = accounts.filter(a => (a.status || 'success') === 'success').length;
+                const pending = accounts.filter(a => (a.status || '').toLowerCase() === 'pending').length;
+                const locked = accounts.filter(a => (a.status || '').toLowerCase() === 'locked').length;
+                const failed = accounts.filter(a => (a.status || '').toLowerCase() === 'failed').length;
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const todayCount = accounts.filter(acc => {
+                    const date = new Date(acc.registeredAt);
+                    date.setHours(0, 0, 0, 0);
+                    return date.getTime() === today.getTime();
+                }).length;
+
+                const yesterday = new Date(today);
+                yesterday.setDate(yesterday.getDate() - 1);
+
+                const yesterdayCount = accounts.filter(acc => {
+                    const date = new Date(acc.registeredAt);
+                    date.setHours(0, 0, 0, 0);
+                    return date.getTime() === yesterday.getTime();
+                }).length;
+
+                // Sort by registeredAt descending
+                const sortedAccounts = [...accounts].sort((a, b) => {
+                    if (!a.registeredAt) return 1;
+                    if (!b.registeredAt) return -1;
+                    return new Date(b.registeredAt) - new Date(a.registeredAt);
+                });
+
+                this.dom.modalUserTitle.textContent = `👤 ${email} - ${total} tài khoản`;
+
+                let html = `
+                    <div class="user-stats-grid">
+                        <div class="mini-stat">
+                            <div class="num">${total}</div>
+                            <div class="label">📦 Tổng</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="num" style="color:#3fb950;">${success}</div>
+                            <div class="label">✅ Thành công</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="num" style="color:#d29922;">${pending}</div>
+                            <div class="label">⏳ Pending</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="num" style="color:#f85149;">${locked}</div>
+                            <div class="label">🔒 Đã khóa</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="num" style="color:#f85149;">${failed}</div>
+                            <div class="label">❌ Thất bại</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="num" style="color:#f0883e;">${todayCount}</div>
+                            <div class="label">📅 Hôm nay</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="num">${yesterdayCount}</div>
+                            <div class="label">📅 Hôm qua</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="num">${Math.round(success/total*100)}%</div>
+                            <div class="label">📊 Tỷ lệ thành công</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                        <h4 style="color:#f0883e;">📋 Danh sách tài khoản (${total})</h4>
+                        <div>
+                            <button class="btn btn-success" onclick="window.app.exportUserData('${email}')" style="padding:4px 14px;font-size:12px;">
+                                📥 Export
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="account-list">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>👤 Username</th>
+                                    <th>🔑 Password</th>
+                                    <th>📧 Email</th>
+                                    <th>📅 Ngày tạo</th>
+                                    <th>📊 Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                sortedAccounts.slice(0, 200).forEach((acc, idx) => {
+                    const status = acc.status || 'success';
+                    const statusLabel = {
+                        'success': '✅ Thành công',
+                        'pending': '⏳ Pending',
+                        'locked': '🔒 Đã khóa',
+                        'failed': '❌ Thất bại'
+                    } [status] || status;
+
+                    const date = acc.registeredAt ?
+                        new Date(acc.registeredAt).toLocaleString('vi-VN') :
+                        '-';
+
+                    html += `
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td><strong>${this.escapeHtml(acc.username || '-')}</strong></td>
+                            <td style="font-family:monospace;color:#58a6ff;">${this.escapeHtml(acc.password || '-')}</td>
+                            <td>${this.escapeHtml(acc.email || '-')}</td>
+                            <td style="font-size:12px;">${date}</td>
+                            <td><span class="status-badge ${status}">${statusLabel}</span></td>
+                        </tr>
+                    `;
+                });
+
+                if (sortedAccounts.length > 200) {
+                    html += `
+                        <tr>
+                            <td colspan="6" style="text-align:center;color:#8b949e;padding:12px;">
+                                ... và ${sortedAccounts.length - 200} tài khoản khác
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                this.dom.modalContent.innerHTML = html;
+                this.dom.userDetailModal.classList.add('show');
+            }
+
+            closeUserDetail() {
+                this.dom.userDetailModal.classList.remove('show');
+            }
+
+            // ============================================
+            // EXPORT FUNCTIONS
+            // ============================================
+
+            exportUserData(email) {
+                const accounts = this.allUsersData[email] || [];
+                if (accounts.length === 0) {
+                    this.showNotification('📭 Không có dữ liệu để export', 'warning');
+                    return;
+                }
+
+                let content = `📊 DỮ LIỆU TÀI KHOẢN - ${email}\n`;
+                content += `📅 Ngày xuất: ${new Date().toLocaleString('vi-VN')}\n`;
+                content += `${'='.repeat(50)}\n\n`;
+                content += `Tổng số: ${accounts.length}\n\n`;
+                content += `Username|Password|Email|EmailPassword|Status|CreatedAt\n`;
+                content += `${'-'.repeat(60)}\n`;
+
+                accounts.forEach(acc => {
+                    content +=
+                        `${acc.username || ''}|${acc.password || ''}|${acc.email || ''}|${acc.emailPassword || ''}|${acc.status || 'success'}|${acc.registeredAt || ''}\n`;
+                });
+
+                this.downloadFile(content, `user_${email}_${Date.now()}.txt`, 'text/plain');
+                this.showNotification(`✅ Đã export ${accounts.length} tài khoản của ${email}!`, 'success');
+            }
 
             exportStats() {
                 const allAccounts = this.getAllAccounts();
@@ -1743,6 +2134,7 @@
 
                 Object.keys(this.allUsersData)
                     .filter(e => this.allUsersData[e].length > 0)
+                    .sort((a, b) => this.allUsersData[b].length - this.allUsersData[a].length)
                     .forEach(email => {
                         const accounts = this.allUsersData[email];
                         content += `👤 ${email}\n`;
@@ -1797,15 +2189,13 @@
                 const isDark = !document.body.classList.contains('light-mode');
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
                 this.dom.themeToggle.textContent = isDark ? '🌙 Dark' : '☀️ Light';
-
-                // Re-render charts with new theme
                 this.renderCharts();
             }
 
             showLoading() {
                 this.dom.userTableBody.innerHTML = `
                     <tr class="empty-row">
-                        <td colspan="10">
+                        <td colspan="11">
                             <div class="loading-spinner">
                                 <div class="spinner"></div>
                                 <span>Đang tải dữ liệu...</span>
@@ -1831,7 +2221,7 @@
                         notif.style.animation = 'slideOutNotif 0.3s ease';
                         setTimeout(() => notif.remove(), 300);
                     }
-                }, 4000);
+                }, 5000);
             }
         }
 
@@ -1842,8 +2232,9 @@
         const app = new App();
         window.app = app;
 
-        console.log('🚀 Admin Dashboard initialized!');
-        console.log('👑 Only admin can access this dashboard');
+        console.log('🚀 Admin Dashboard Pro initialized!');
+        console.log(`👥 ${CONFIG.users.length} users configured`);
+        console.log('👑 Admin: tuquangnamht2007@gmail.com');
     </script>
 </body>
 </html>
