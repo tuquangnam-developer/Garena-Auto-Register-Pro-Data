@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 Garena Account Manager Pro v3.0</title>
+    <title>🎮 Garena Account Manager Pro v4.0</title>
     <style>
         /* ============================================
-           ALL STYLES IN ONE FILE - v3.0
+           ALL STYLES IN ONE FILE - v4.0
            ============================================ */
 
         /* ===== RESET & BASE ===== */
@@ -18,46 +18,48 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0d1117;
+            background: #0a0e17;
             color: #c9d1d9;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
 
         body.light-mode {
-            background: #f0f6fc;
-            color: #24292e;
+            background: #f0f4f8;
+            color: #1a2332;
         }
 
         /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #0d1117;
+            background: #0a0e17;
         }
         ::-webkit-scrollbar-thumb {
-            background: #30363d;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #484f58;
+            background: linear-gradient(180deg, #f0883e, #e06b2a);
+            border-radius: 10px;
         }
         body.light-mode ::-webkit-scrollbar-track {
-            background: #f0f6fc;
+            background: #f0f4f8;
         }
         body.light-mode ::-webkit-scrollbar-thumb {
-            background: #d0d7de;
+            background: linear-gradient(180deg, #f0883e, #e06b2a);
         }
 
         /* ===== ANIMATIONS ===== */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(240, 136, 62, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(240, 136, 62, 0.4); }
         }
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn {
@@ -67,21 +69,33 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        @keyframes slideInNotif {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        @keyframes slideOutNotif {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
         }
         @keyframes confettiFall {
-            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            0% { transform: translateY(-10px) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg) scale(0); opacity: 0; }
         }
-        @keyframes progressBar {
-            from { width: 0%; }
-            to { width: 100%; }
+        @keyframes slideInNotif {
+            from { transform: translateX(100%) scale(0.8); opacity: 0; }
+            to { transform: translateX(0) scale(1); opacity: 1; }
+        }
+        @keyframes slideOutNotif {
+            from { transform: translateX(0) scale(1); opacity: 1; }
+            to { transform: translateX(100%) scale(0.8); opacity: 0; }
+        }
+        @keyframes borderGlow {
+            0%, 100% { border-color: #f0883e; }
+            50% { border-color: #e06b2a; }
+        }
+        @keyframes progressPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
         /* ===== TIME RESTRICTION OVERLAY ===== */
@@ -90,7 +104,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            background: linear-gradient(135deg, #0a0e17 0%, #141b2d 100%);
             text-align: center;
             padding: 20px;
             z-index: 10001;
@@ -101,23 +115,30 @@
             height: 100%;
         }
         body.light-mode .time-restriction {
-            background: linear-gradient(135deg, #f0f6fc 0%, #e1e8f0 100%);
+            background: linear-gradient(135deg, #f0f4f8 0%, #e1e8f0 100%);
         }
         .time-restriction.active { display: flex; }
         .time-restriction .card {
-            background: #161b22;
+            background: rgba(22, 27, 34, 0.95);
+            backdrop-filter: blur(20px);
             padding: 50px 40px;
-            border-radius: 20px;
+            border-radius: 24px;
             border: 2px solid #f0883e;
             max-width: 550px;
             width: 100%;
-            animation: pulse 2s infinite;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 20px 60px rgba(240, 136, 62, 0.15);
         }
         body.light-mode .time-restriction .card {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.95);
             border-color: #f0883e;
         }
-        .time-restriction .card .icon { font-size: 72px; margin-bottom: 20px; }
+        .time-restriction .card .icon { 
+            font-size: 72px; 
+            margin-bottom: 20px;
+            display: block;
+            animation: pulse 2s infinite;
+        }
         .time-restriction .card h2 {
             color: #f0883e;
             font-size: 28px;
@@ -136,262 +157,27 @@
             flex-wrap: wrap;
         }
         .time-restriction .card .time-slots .slot {
-            background: #0d1117;
-            padding: 10px 20px;
-            border-radius: 10px;
+            background: rgba(13, 17, 23, 0.8);
+            padding: 12px 24px;
+            border-radius: 12px;
             border: 1px solid #30363d;
             color: #f0883e;
             font-weight: 600;
+            font-size: 15px;
+            backdrop-filter: blur(10px);
         }
         body.light-mode .time-restriction .card .time-slots .slot {
-            background: #f6f8fa;
+            background: rgba(246, 248, 250, 0.8);
             border-color: #d0d7de;
         }
         .time-restriction .card .admin-note {
             margin-top: 15px;
             color: #58a6ff;
             font-size: 14px;
-            padding: 10px;
+            padding: 12px;
             background: rgba(88, 166, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        /* ===== POPUP NOTIFICATION ===== */
-        #popupNotification {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 99999;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-        #popupNotification.show { display: flex; }
-        .popup-content {
-            background: #161b22;
-            border: 2px solid #f0883e;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            animation: slideUp 0.4s ease;
-            position: relative;
-        }
-        body.light-mode .popup-content {
-            background: #ffffff;
-            border-color: #f0883e;
-        }
-        .popup-content .popup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 15px;
-        }
-        body.light-mode .popup-content .popup-header {
-            border-bottom-color: #d0d7de;
-        }
-        .popup-content .popup-header h3 {
-            color: #f0883e;
-            font-size: 22px;
-        }
-        .popup-content .popup-header .popup-close {
-            background: none;
-            border: none;
-            color: #8b949e;
-            font-size: 28px;
-            cursor: pointer;
-            transition: 0.3s;
-            padding: 0 8px;
-        }
-        .popup-content .popup-header .popup-close:hover {
-            color: #f85149;
-            transform: rotate(90deg);
-        }
-        .popup-content .popup-body {
-            color: #c9d1d9;
-            font-size: 15px;
-            line-height: 1.8;
-            padding: 10px 0;
-        }
-        body.light-mode .popup-content .popup-body {
-            color: #24292e;
-        }
-        .popup-content .popup-body .popup-time {
-            color: #8b949e;
-            font-size: 13px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #30363d;
-        }
-        body.light-mode .popup-content .popup-body .popup-time {
-            border-top-color: #d0d7de;
-            color: #57606a;
-        }
-        .popup-content .popup-footer {
-            margin-top: 20px;
-            text-align: right;
-        }
-        .popup-content .popup-footer .btn-close-popup {
-            padding: 10px 30px;
-            background: #f0883e;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            font-size: 15px;
-        }
-        .popup-content .popup-footer .btn-close-popup:hover {
-            background: #e06b2a;
-            transform: scale(1.05);
-        }
-
-        /* ===== CONFIRM DELETE MODAL ===== */
-        #confirmDeleteModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(6px);
-            z-index: 99998;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-        #confirmDeleteModal.show { display: flex; }
-        .confirm-delete-content {
-            background: #161b22;
-            border: 2px solid #f85149;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 550px;
-            width: 90%;
-            animation: slideUp 0.4s ease;
-        }
-        body.light-mode .confirm-delete-content {
-            background: #ffffff;
-        }
-        .confirm-delete-content .icon {
-            font-size: 60px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .confirm-delete-content h3 {
-            color: #f85149;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .confirm-delete-content p {
-            color: #8b949e;
-            font-size: 15px;
-            text-align: center;
-            line-height: 1.8;
-            margin-bottom: 10px;
-        }
-        .confirm-delete-content .highlight {
-            color: #f0883e;
-            font-weight: 600;
-            font-size: 18px;
-        }
-        .confirm-delete-content .file-info {
-            background: #0d1117;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin: 12px 0;
-            border: 1px solid #30363d;
-            font-size: 13px;
-            color: #8b949e;
-            text-align: center;
-        }
-        body.light-mode .confirm-delete-content .file-info {
-            background: #f6f8fa;
-            border-color: #d0d7de;
-            color: #57606a;
-        }
-        .confirm-delete-content .file-info strong {
-            color: #3fb950;
-        }
-        .confirm-delete-content .actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-        .confirm-delete-content .actions button {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 15px;
-        }
-        .confirm-delete-content .actions .btn-yes {
-            background: #da3633;
-            color: #fff;
-        }
-        .confirm-delete-content .actions .btn-yes:hover {
-            background: #f85149;
-            transform: scale(1.05);
-        }
-        .confirm-delete-content .actions .btn-no {
-            background: #30363d;
-            color: #c9d1d9;
-        }
-        .confirm-delete-content .actions .btn-no:hover {
-            background: #484f58;
-        }
-        body.light-mode .confirm-delete-content .actions .btn-no {
-            background: #d0d7de;
-            color: #24292e;
-        }
-        body.light-mode .confirm-delete-content .actions .btn-no:hover {
-            background: #b0b8c0;
-        }
-        .confirm-delete-content .progress-container {
-            margin-top: 20px;
-            display: none;
-        }
-        .confirm-delete-content .progress-container.show {
-            display: block;
-        }
-        .confirm-delete-content .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #30363d;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        body.light-mode .confirm-delete-content .progress-bar {
-            background: #d0d7de;
-        }
-        .confirm-delete-content .progress-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f0883e, #f85149);
-            border-radius: 4px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        .confirm-delete-content .progress-text {
-            color: #8b949e;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(88, 166, 255, 0.2);
         }
 
         /* ===== LOGIN PAGE ===== */
@@ -400,23 +186,52 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            background: linear-gradient(135deg, #0a0e17 0%, #141b2d 50%, #1a2332 100%);
+            position: relative;
+            overflow: hidden;
         }
         body.light-mode .login-page {
-            background: linear-gradient(135deg, #f0f6fc 0%, #e1e8f0 100%);
+            background: linear-gradient(135deg, #f0f4f8 0%, #e1e8f0 50%, #d5dce6 100%);
+        }
+        .login-page::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(240, 136, 62, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 6s ease-in-out infinite;
+        }
+        .login-page::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(88, 166, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite reverse;
         }
         .login-container {
-            background: #161b22;
-            padding: 40px 35px;
-            border-radius: 16px;
-            border: 1px solid #30363d;
+            background: rgba(22, 27, 34, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 45px 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(48, 54, 61, 0.5);
             width: 100%;
             max-width: 420px;
-            animation: slideUp 0.5s ease;
+            animation: slideUp 0.6s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
         body.light-mode .login-container {
-            background: #ffffff;
-            border-color: #d0d7de;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(208, 215, 222, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
         }
         .login-container .logo {
             text-align: center;
@@ -424,32 +239,35 @@
         }
         .login-container .logo h1 {
             color: #f0883e;
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
         .login-container .logo p {
             color: #8b949e;
             font-size: 14px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .login-container .logo .version {
             display: inline-block;
-            background: #1f6feb;
+            background: linear-gradient(135deg, #f0883e, #e06b2a);
             color: #fff;
             font-size: 11px;
-            padding: 2px 12px;
-            border-radius: 10px;
-            margin-top: 6px;
+            padding: 3px 14px;
+            border-radius: 12px;
+            margin-top: 8px;
+            font-weight: 600;
         }
         .login-container .logo .time-status {
             display: inline-block;
             background: #238636;
             color: #fff;
             font-size: 11px;
-            padding: 2px 12px;
-            border-radius: 10px;
-            margin-top: 6px;
+            padding: 3px 14px;
+            border-radius: 12px;
+            margin-top: 8px;
             margin-left: 6px;
+            font-weight: 600;
         }
         .login-container .logo .time-status.closed {
             background: #da3633;
@@ -461,38 +279,39 @@
         .form-group label {
             display: block;
             color: #c9d1d9;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             margin-bottom: 6px;
         }
         body.light-mode .form-group label {
-            color: #24292e;
+            color: #1a2332;
         }
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
             padding: 12px 16px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 8px;
+            background: rgba(13, 17, 23, 0.8);
+            border: 2px solid rgba(48, 54, 61, 0.5);
+            border-radius: 12px;
             color: #c9d1d9;
             font-size: 15px;
-            transition: 0.3s;
+            transition: all 0.3s;
         }
         body.light-mode .form-group input,
         body.light-mode .form-group select,
         body.light-mode .form-group textarea {
-            background: #f6f8fa;
-            border-color: #d0d7de;
-            color: #24292e;
+            background: rgba(246, 248, 250, 0.8);
+            border-color: rgba(208, 215, 222, 0.5);
+            color: #1a2332;
         }
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: #f0883e;
-            box-shadow: 0 0 0 3px rgba(240, 136, 62, 0.15);
+            box-shadow: 0 0 0 4px rgba(240, 136, 62, 0.15);
+            transform: translateY(-1px);
         }
 
         .btn-login {
@@ -501,16 +320,21 @@
             background: linear-gradient(135deg, #f0883e 0%, #e06b2a 100%);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 17px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
             margin-top: 6px;
+            position: relative;
+            overflow: hidden;
         }
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(240, 136, 62, 0.3);
+            box-shadow: 0 8px 30px rgba(240, 136, 62, 0.4);
+        }
+        .btn-login:active {
+            transform: translateY(0);
         }
         .btn-login:disabled {
             opacity: 0.6;
@@ -518,7 +342,6 @@
             transform: none;
         }
         .btn-login.loading {
-            position: relative;
             color: transparent;
         }
         .btn-login.loading::after {
@@ -540,9 +363,10 @@
             font-size: 14px;
             text-align: center;
             margin-top: 12px;
-            padding: 10px;
+            padding: 12px;
             background: rgba(248, 81, 73, 0.1);
-            border-radius: 6px;
+            border-radius: 10px;
+            border: 1px solid rgba(248, 81, 73, 0.2);
             display: none;
         }
         .error-message.show { display: block; }
@@ -551,7 +375,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 12px;
+            margin-top: 14px;
             flex-wrap: wrap;
             gap: 8px;
         }
@@ -564,16 +388,15 @@
         }
         .login-options a:hover {
             color: #f0883e;
-            text-decoration: underline;
         }
 
         .footer-text {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 24px;
             color: #484f58;
             font-size: 12px;
         }
-        .footer-text span { color: #f0883e; }
+        .footer-text span { color: #f0883e; font-weight: 600; }
 
         /* ===== DASHBOARD ===== */
         .dashboard {
@@ -581,10 +404,10 @@
             padding: 20px;
             max-width: 1600px;
             margin: 0 auto;
+            animation: fadeIn 0.5s ease;
         }
         .dashboard.active {
             display: block;
-            animation: fadeIn 0.5s ease;
         }
 
         /* ===== HEADER ===== */
@@ -594,15 +417,17 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            padding: 16px 20px;
-            background: #161b22;
-            border-radius: 12px;
-            border: 1px solid #30363d;
+            padding: 20px 24px;
+            background: rgba(22, 27, 34, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(48, 54, 61, 0.5);
             margin-bottom: 20px;
+            animation: slideUp 0.5s ease;
         }
         body.light-mode .dashboard-header {
-            background: #ffffff;
-            border-color: #d0d7de;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(208, 215, 222, 0.5);
         }
         .dashboard-header .left {
             display: flex;
@@ -613,38 +438,50 @@
         .dashboard-header .left h2 {
             color: #f0883e;
             font-size: 22px;
+            font-weight: 800;
         }
         .dashboard-header .left .user-email {
             color: #58a6ff;
             font-size: 14px;
-            background: #0d1117;
-            padding: 4px 14px;
+            background: rgba(13, 17, 23, 0.6);
+            padding: 5px 16px;
             border-radius: 12px;
-            border: 1px solid #30363d;
+            border: 1px solid rgba(48, 54, 61, 0.3);
+            font-weight: 500;
         }
         body.light-mode .dashboard-header .left .user-email {
-            background: #f6f8fa;
-            border-color: #d0d7de;
+            background: rgba(246, 248, 250, 0.8);
+            border-color: rgba(208, 215, 222, 0.3);
             color: #0969da;
         }
         .dashboard-header .left .admin-badge {
-            background: #f0883e;
+            background: linear-gradient(135deg, #f0883e, #e06b2a);
             color: #fff;
             font-size: 11px;
-            padding: 2px 12px;
+            padding: 3px 14px;
             border-radius: 10px;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .dashboard-header .right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .dashboard-header .right .stats {
             display: flex;
             gap: 16px;
             font-size: 14px;
+            background: rgba(13, 17, 23, 0.4);
+            padding: 6px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(48, 54, 61, 0.2);
+        }
+        body.light-mode .dashboard-header .right .stats {
+            background: rgba(246, 248, 250, 0.6);
+            border-color: rgba(208, 215, 222, 0.2);
         }
         .dashboard-header .right .stats .stat-item {
             display: flex;
@@ -652,71 +489,75 @@
             gap: 6px;
         }
         .dashboard-header .right .stats .stat-item .num {
-            font-weight: bold;
+            font-weight: 700;
             color: #f0883e;
         }
 
         /* ===== BUTTONS ===== */
         .btn {
-            padding: 8px 18px;
+            padding: 9px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s;
             font-size: 13px;
             color: #fff;
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            position: relative;
+            overflow: hidden;
         }
-        .btn:hover { transform: translateY(-1px); }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
+            transform: none !important;
+            box-shadow: none !important;
         }
 
-        .btn-danger { background: #da3633; }
-        .btn-danger:hover { background: #f85149; }
-        .btn-primary { background: #1f6feb; }
-        .btn-primary:hover { background: #388bfd; }
-        .btn-success { background: #238636; }
-        .btn-success:hover { background: #2ea043; }
-        .btn-warning { background: #d29922; }
-        .btn-warning:hover { background: #e3b341; }
-        .btn-refresh { background: #1f6feb; color: #fff; }
-        .btn-refresh:hover { background: #388bfd; }
-        .btn-export { background: #238636; color: #fff; }
-        .btn-export:hover { background: #2ea043; }
-        .btn-export-txt { background: #8b5cf6; color: #fff; }
-        .btn-export-txt:hover { background: #a78bfa; }
-        .btn-import { background: #8b5cf6; color: #fff; }
-        .btn-import:hover { background: #a78bfa; }
-        .btn-telegram { background: #0088cc; color: #fff; }
-        .btn-telegram:hover { background: #0099dd; }
-        .btn-telegram.active { background: #00aa55; }
-        .btn-gemini { background: #6f42c1; color: #fff; }
-        .btn-gemini:hover { background: #7c3aed; }
-        .btn-logout { background: #da3633; color: #fff; }
-        .btn-logout:hover { background: #f85149; }
+        .btn-danger { background: linear-gradient(135deg, #da3633, #f85149); }
+        .btn-danger:hover { box-shadow: 0 6px 20px rgba(248, 81, 73, 0.4); }
+        .btn-primary { background: linear-gradient(135deg, #1f6feb, #388bfd); }
+        .btn-primary:hover { box-shadow: 0 6px 20px rgba(56, 139, 253, 0.4); }
+        .btn-success { background: linear-gradient(135deg, #238636, #2ea043); }
+        .btn-success:hover { box-shadow: 0 6px 20px rgba(46, 160, 67, 0.4); }
+        .btn-warning { background: linear-gradient(135deg, #d29922, #e3b341); }
+        .btn-warning:hover { box-shadow: 0 6px 20px rgba(227, 179, 65, 0.4); }
+        .btn-refresh { background: linear-gradient(135deg, #1f6feb, #388bfd); }
+        .btn-refresh:hover { box-shadow: 0 6px 20px rgba(56, 139, 253, 0.4); }
+        .btn-export { background: linear-gradient(135deg, #238636, #2ea043); }
+        .btn-export:hover { box-shadow: 0 6px 20px rgba(46, 160, 67, 0.4); }
+        .btn-export-txt { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .btn-export-txt:hover { box-shadow: 0 6px 20px rgba(167, 139, 250, 0.4); }
+        .btn-import { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .btn-import:hover { box-shadow: 0 6px 20px rgba(167, 139, 250, 0.4); }
+        .btn-logout { background: linear-gradient(135deg, #da3633, #f85149); }
+        .btn-logout:hover { box-shadow: 0 6px 20px rgba(248, 81, 73, 0.4); }
         .btn-theme {
-            background: #30363d;
+            background: rgba(48, 54, 61, 0.6);
             color: #c9d1d9;
+            backdrop-filter: blur(10px);
         }
-        .btn-theme:hover { background: #484f58; }
+        .btn-theme:hover { background: rgba(48, 54, 61, 0.8); }
         body.light-mode .btn-theme {
-            background: #d0d7de;
-            color: #24292e;
+            background: rgba(208, 215, 222, 0.6);
+            color: #1a2332;
         }
-        body.light-mode .btn-theme:hover { background: #b0b8c0; }
+        body.light-mode .btn-theme:hover { background: rgba(208, 215, 222, 0.8); }
         .btn-download {
-            background: #1f6feb;
-            color: #fff;
+            background: linear-gradient(135deg, #f0883e, #e06b2a);
+            animation: glow 2s ease-in-out infinite;
         }
-        .btn-download:hover { background: #388bfd; }
+        .btn-download:hover { box-shadow: 0 6px 30px rgba(240, 136, 62, 0.5); }
         .btn-download.loading {
-            position: relative;
             color: transparent;
         }
         .btn-download.loading::after {
@@ -733,86 +574,103 @@
             animation: spin 0.8s linear infinite;
         }
 
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
         /* ===== FILTER BAR ===== */
         .filter-bar {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            padding: 12px 16px;
-            background: #161b22;
-            border-radius: 10px;
-            border: 1px solid #30363d;
+            padding: 16px 20px;
+            background: rgba(22, 27, 34, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 14px;
+            border: 1px solid rgba(48, 54, 61, 0.5);
             margin-bottom: 16px;
             align-items: center;
+            animation: slideUp 0.5s ease 0.1s both;
         }
         body.light-mode .filter-bar {
-            background: #ffffff;
-            border-color: #d0d7de;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(208, 215, 222, 0.5);
+        }
+        .filter-bar .filter-label {
+            color: #8b949e;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
         }
         .filter-bar input,
         .filter-bar select {
-            padding: 8px 14px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 6px;
+            padding: 10px 16px;
+            background: rgba(13, 17, 23, 0.6);
+            border: 2px solid rgba(48, 54, 61, 0.3);
+            border-radius: 10px;
             color: #c9d1d9;
             font-size: 13px;
             flex: 1;
-            min-width: 130px;
+            min-width: 140px;
+            transition: all 0.3s;
         }
         body.light-mode .filter-bar input,
         body.light-mode .filter-bar select {
-            background: #f6f8fa;
-            border-color: #d0d7de;
-            color: #24292e;
+            background: rgba(246, 248, 250, 0.8);
+            border-color: rgba(208, 215, 222, 0.3);
+            color: #1a2332;
         }
         .filter-bar input:focus,
         .filter-bar select:focus {
             outline: none;
             border-color: #f0883e;
-        }
-        .filter-bar .filter-label {
-            color: #8b949e;
-            font-size: 13px;
-            white-space: nowrap;
+            box-shadow: 0 0 0 3px rgba(240, 136, 62, 0.15);
         }
 
         /* ===== BATCH TOOLBAR ===== */
         .batch-toolbar {
             display: none;
-            padding: 10px 16px;
-            background: #161b22;
-            border-radius: 10px;
-            border: 1px solid #30363d;
+            padding: 14px 20px;
+            background: rgba(22, 27, 34, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 14px;
+            border: 1px solid rgba(240, 136, 62, 0.3);
             margin-bottom: 16px;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
+            animation: slideUp 0.3s ease;
         }
         body.light-mode .batch-toolbar {
-            background: #ffffff;
-            border-color: #d0d7de;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(240, 136, 62, 0.3);
         }
         .batch-toolbar.show { display: flex; }
         .batch-toolbar .selected-info {
             color: #8b949e;
             font-size: 14px;
+            font-weight: 500;
         }
         .batch-toolbar .selected-info span {
             color: #f0883e;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 18px;
         }
 
         /* ===== TABLE ===== */
         .table-container {
-            background: #161b22;
-            border-radius: 12px;
-            border: 1px solid #30363d;
+            background: rgba(22, 27, 34, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(48, 54, 61, 0.5);
             overflow: hidden;
+            animation: slideUp 0.5s ease 0.2s both;
         }
         body.light-mode .table-container {
-            background: #ffffff;
-            border-color: #d0d7de;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(208, 215, 222, 0.5);
         }
         .table-wrapper {
             overflow-x: auto;
@@ -825,53 +683,57 @@
             font-size: 14px;
         }
         thead {
-            background: #0d1117;
+            background: rgba(13, 17, 23, 0.8);
             position: sticky;
             top: 0;
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
         body.light-mode thead {
-            background: #f6f8fa;
+            background: rgba(246, 248, 250, 0.8);
         }
         th {
-            padding: 14px 16px;
+            padding: 14px 18px;
             text-align: left;
             color: #8b949e;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 1px solid #30363d;
+            border-bottom: 2px solid rgba(48, 54, 61, 0.3);
             white-space: nowrap;
         }
         body.light-mode th {
             color: #57606a;
-            border-bottom-color: #d0d7de;
+            border-bottom-color: rgba(208, 215, 222, 0.3);
         }
         td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #21262d;
+            padding: 12px 18px;
+            border-bottom: 1px solid rgba(33, 38, 45, 0.3);
             vertical-align: middle;
         }
         body.light-mode td {
-            border-bottom-color: #e1e4e8;
+            border-bottom-color: rgba(225, 228, 232, 0.3);
+        }
+        tr {
+            transition: background 0.3s;
         }
         tr:hover td {
-            background: #0d1117;
+            background: rgba(13, 17, 23, 0.4);
         }
         body.light-mode tr:hover td {
-            background: #f6f8fa;
+            background: rgba(246, 248, 250, 0.4);
         }
         tr:last-child td { border-bottom: none; }
-        tr.editing td { background: rgba(240, 136, 62, 0.1); }
 
         .username-cell {
             color: #f0883e;
-            font-weight: 600;
+            font-weight: 700;
         }
         .password-cell {
             font-family: 'Courier New', monospace;
             color: #58a6ff;
+            font-weight: 500;
         }
         .email-cell { color: #3fb950; }
         .note-cell {
@@ -884,100 +746,29 @@
         }
         .row-checkbox {
             cursor: pointer;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
+            accent-color: #f0883e;
+            transition: all 0.3s;
+        }
+        .row-checkbox:hover {
+            transform: scale(1.1);
         }
 
-        .copy-btn {
-            background: transparent;
-            color: #58a6ff;
-            border: 1px solid #30363d;
-            padding: 2px 10px;
-            border-radius: 4px;
-            cursor: pointer;
+        .action-btns {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .action-btns .btn {
+            padding: 4px 10px;
             font-size: 11px;
-            transition: 0.3s;
-        }
-        .copy-btn:hover {
-            background: #1f6feb;
-            color: #fff;
-            border-color: #1f6feb;
-        }
-        .edit-btn {
-            background: transparent;
-            color: #d29922;
-            border: 1px solid #30363d;
-            padding: 2px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            transition: 0.3s;
-            margin-right: 4px;
-        }
-        .edit-btn:hover {
-            background: #d29922;
-            color: #fff;
-            border-color: #d29922;
-        }
-        .delete-btn {
-            background: transparent;
-            color: #f85149;
-            border: 1px solid #30363d;
-            padding: 2px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            transition: 0.3s;
-        }
-        .delete-btn:hover {
-            background: #f85149;
-            color: #fff;
-            border-color: #f85149;
-        }
-        .save-edit-btn {
-            background: #238636;
-            color: #fff;
-            border: none;
-            padding: 2px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            transition: 0.3s;
-        }
-        .save-edit-btn:hover { background: #2ea043; }
-        .cancel-edit-btn {
-            background: #da3633;
-            color: #fff;
-            border: none;
-            padding: 2px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            transition: 0.3s;
-        }
-        .cancel-edit-btn:hover { background: #f85149; }
-
-        .edit-input {
-            background: #0d1117;
-            border: 1px solid #f0883e;
-            border-radius: 4px;
-            color: #c9d1d9;
-            padding: 4px 8px;
-            width: 100%;
-            font-size: 13px;
-        }
-        body.light-mode .edit-input {
-            background: #ffffff;
-            color: #24292e;
-        }
-        .edit-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(240, 136, 62, 0.3);
+            border-radius: 6px;
         }
 
         .empty-row td {
             text-align: center;
-            padding: 40px;
+            padding: 50px;
             color: #8b949e;
             font-size: 16px;
         }
@@ -989,13 +780,13 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            padding: 14px 16px;
-            background: #0d1117;
-            border-top: 1px solid #30363d;
+            padding: 16px 20px;
+            background: rgba(13, 17, 23, 0.6);
+            border-top: 1px solid rgba(48, 54, 61, 0.3);
         }
         body.light-mode .pagination {
-            background: #f6f8fa;
-            border-top-color: #d0d7de;
+            background: rgba(246, 248, 250, 0.6);
+            border-top-color: rgba(208, 215, 222, 0.3);
         }
         .pagination .info {
             color: #8b949e;
@@ -1003,10 +794,10 @@
         }
         .pagination .info span {
             color: #c9d1d9;
-            font-weight: 600;
+            font-weight: 700;
         }
         body.light-mode .pagination .info span {
-            color: #24292e;
+            color: #1a2332;
         }
         .pagination .controls {
             display: flex;
@@ -1014,39 +805,43 @@
             align-items: center;
         }
         .pagination .controls button {
-            padding: 6px 14px;
-            background: #21262d;
+            padding: 8px 16px;
+            background: rgba(33, 38, 45, 0.6);
             color: #c9d1d9;
-            border: 1px solid #30363d;
-            border-radius: 4px;
+            border: 1px solid rgba(48, 54, 61, 0.3);
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
             font-size: 13px;
+            font-weight: 600;
         }
         body.light-mode .pagination .controls button {
-            background: #ffffff;
-            border-color: #d0d7de;
-            color: #24292e;
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(208, 215, 222, 0.3);
+            color: #1a2332;
         }
         .pagination .controls button:hover:not(:disabled) {
-            background: #30363d;
+            background: rgba(48, 54, 61, 0.8);
+            transform: translateY(-1px);
         }
         body.light-mode .pagination .controls button:hover:not(:disabled) {
-            background: #f0f6fc;
+            background: rgba(240, 244, 248, 0.8);
         }
         .pagination .controls button:disabled {
-            opacity: 0.4;
+            opacity: 0.3;
             cursor: not-allowed;
+            transform: none !important;
         }
         .pagination .controls button.active {
-            background: #f0883e;
+            background: linear-gradient(135deg, #f0883e, #e06b2a);
             color: #fff;
             border-color: #f0883e;
         }
         .pagination .controls .page-info {
-            padding: 6px 12px;
+            padding: 6px 14px;
             color: #8b949e;
             font-size: 13px;
+            font-weight: 600;
         }
 
         /* ===== LOADING ===== */
@@ -1054,14 +849,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px;
-            gap: 12px;
+            padding: 50px;
+            gap: 14px;
             color: #8b949e;
         }
         .loading-spinner .spinner {
-            width: 30px;
-            height: 30px;
-            border: 3px solid #30363d;
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(48, 54, 61, 0.3);
             border-radius: 50%;
             border-top-color: #f0883e;
             animation: spin 0.8s linear infinite;
@@ -1076,62 +871,70 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(10px);
             z-index: 999;
             justify-content: center;
             align-items: center;
             animation: fadeIn 0.3s ease;
+            padding: 20px;
         }
         .modal-overlay.show { display: flex; }
         .modal {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
+            background: rgba(22, 27, 34, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 550px;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp 0.3s ease;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
         body.light-mode .modal {
-            background: #ffffff;
-            border-color: #d0d7de;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(208, 215, 222, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
         }
         .modal h3 {
             color: #f0883e;
-            margin-bottom: 20px;
-            font-size: 20px;
+            margin-bottom: 24px;
+            font-size: 22px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .modal .form-group { margin-bottom: 14px; }
+        .modal .form-group { margin-bottom: 16px; }
         .modal .form-group label {
             display: block;
             color: #c9d1d9;
             font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 4px;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
         body.light-mode .modal .form-group label {
-            color: #24292e;
+            color: #1a2332;
         }
         .modal .form-group input,
         .modal .form-group select,
         .modal .form-group textarea {
             width: 100%;
-            padding: 10px 14px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 6px;
+            padding: 11px 16px;
+            background: rgba(13, 17, 23, 0.6);
+            border: 2px solid rgba(48, 54, 61, 0.3);
+            border-radius: 10px;
             color: #c9d1d9;
             font-size: 14px;
-            transition: 0.3s;
+            transition: all 0.3s;
         }
         body.light-mode .modal .form-group input,
         body.light-mode .modal .form-group select,
         body.light-mode .modal .form-group textarea {
-            background: #f6f8fa;
-            border-color: #d0d7de;
-            color: #24292e;
+            background: rgba(246, 248, 250, 0.8);
+            border-color: rgba(208, 215, 222, 0.3);
+            color: #1a2332;
         }
         .modal .form-group input:focus,
         .modal .form-group select:focus,
@@ -1147,123 +950,162 @@
         }
         .modal .modal-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 24px;
             justify-content: flex-end;
         }
         .modal .modal-actions button {
-            padding: 10px 24px;
+            padding: 11px 28px;
             border: none;
-            border-radius: 6px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
             font-size: 14px;
         }
         .modal .modal-actions .btn-confirm {
-            background: #f0883e;
+            background: linear-gradient(135deg, #f0883e, #e06b2a);
             color: #fff;
         }
-        .modal .modal-actions .btn-confirm:hover { background: #e06b2a; }
+        .modal .modal-actions .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(240, 136, 62, 0.4);
+        }
         .modal .modal-actions .btn-cancel {
-            background: #30363d;
+            background: rgba(48, 54, 61, 0.6);
             color: #c9d1d9;
         }
-        .modal .modal-actions .btn-cancel:hover { background: #484f58; }
+        .modal .modal-actions .btn-cancel:hover {
+            background: rgba(48, 54, 61, 0.8);
+            transform: translateY(-2px);
+        }
         body.light-mode .modal .modal-actions .btn-cancel {
-            background: #d0d7de;
-            color: #24292e;
+            background: rgba(208, 215, 222, 0.6);
+            color: #1a2332;
         }
         body.light-mode .modal .modal-actions .btn-cancel:hover {
-            background: #b0b8c0;
+            background: rgba(208, 215, 222, 0.8);
         }
 
-        /* ===== FORGOT PASSWORD MODAL ===== */
+        /* ===== FORGOT PASSWORD ===== */
         #forgotPasswordModal .modal { max-width: 450px; }
-        #forgotPasswordModal .reset-success {
+        .reset-success {
             background: rgba(35, 134, 54, 0.15);
             border: 1px solid #238636;
-            border-radius: 8px;
-            padding: 16px;
+            border-radius: 10px;
+            padding: 14px 18px;
             color: #3fb950;
             text-align: center;
             margin: 10px 0;
+            font-weight: 500;
         }
 
-        /* ===== TELEGRAM MODAL ===== */
-        #telegramModal .modal { max-width: 550px; }
-        #telegramModal .telegram-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+        /* ===== CONFIRM DELETE MODAL ===== */
+        #confirmDeleteModal .modal {
+            max-width: 500px;
+            border-color: rgba(248, 81, 73, 0.3);
         }
-        #telegramModal .telegram-status.active {
-            background: rgba(63, 185, 80, 0.15);
-            border: 1px solid #238636;
-            color: #3fb950;
-        }
-        #telegramModal .telegram-status.inactive {
-            background: rgba(248, 81, 73, 0.15);
-            border: 1px solid #da3633;
+        #confirmDeleteModal .modal h3 {
             color: #f85149;
         }
-        #telegramModal .telegram-status .status-icon { font-size: 20px; }
-        .telegram-info {
-            background: #0d1117;
-            border-radius: 6px;
-            padding: 12px 16px;
-            margin: 10px 0;
-            border: 1px solid #30363d;
+        .confirm-delete-content .icon {
+            font-size: 56px;
+            text-align: center;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .confirm-delete-content .highlight {
+            color: #f0883e;
+            font-weight: 700;
+            font-size: 22px;
+        }
+        .confirm-delete-content .file-info {
+            background: rgba(13, 17, 23, 0.6);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 14px 0;
+            border: 1px solid rgba(48, 54, 61, 0.3);
             font-size: 13px;
             color: #8b949e;
+            text-align: center;
         }
-        body.light-mode .telegram-info {
-            background: #f6f8fa;
-            border-color: #d0d7de;
+        body.light-mode .confirm-delete-content .file-info {
+            background: rgba(246, 248, 250, 0.6);
+            border-color: rgba(208, 215, 222, 0.3);
             color: #57606a;
         }
-        .telegram-info strong { color: #f0883e; }
-        .btn-test-telegram {
-            background: #0088cc;
-            color: #fff;
+        .confirm-delete-content .file-info strong {
+            color: #3fb950;
+        }
+        .confirm-delete-content .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .confirm-delete-content .actions button {
+            padding: 12px 30px;
             border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            font-size: 13px;
+            transition: all 0.3s;
+            font-size: 14px;
         }
-        .btn-test-telegram:hover { background: #0099dd; }
-
-        /* ===== GEMINI CHAT ===== */
-        #geminiChatContainer { scroll-behavior: smooth; }
-        #geminiChatContainer .user-msg {
-            text-align: right;
-            margin: 8px 0;
-            padding: 8px 12px;
-            background: #1f6feb;
-            border-radius: 8px;
+        .confirm-delete-content .actions .btn-yes {
+            background: linear-gradient(135deg, #da3633, #f85149);
             color: #fff;
         }
-        #geminiChatContainer .ai-msg {
-            text-align: left;
-            margin: 8px 0;
-            padding: 8px 12px;
-            background: #238636;
-            border-radius: 8px;
-            color: #fff;
+        .confirm-delete-content .actions .btn-yes:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(248, 81, 73, 0.4);
         }
-        #geminiChatContainer .loading-msg {
-            text-align: left;
-            margin: 8px 0;
-            padding: 8px 12px;
-            background: #30363d;
-            border-radius: 8px;
+        .confirm-delete-content .actions .btn-no {
+            background: rgba(48, 54, 61, 0.6);
+            color: #c9d1d9;
+        }
+        .confirm-delete-content .actions .btn-no:hover {
+            transform: translateY(-2px);
+            background: rgba(48, 54, 61, 0.8);
+        }
+        body.light-mode .confirm-delete-content .actions .btn-no {
+            background: rgba(208, 215, 222, 0.6);
+            color: #1a2332;
+        }
+        body.light-mode .confirm-delete-content .actions .btn-no:hover {
+            background: rgba(208, 215, 222, 0.8);
+        }
+        .confirm-delete-content .progress-container {
+            margin-top: 18px;
+            display: none;
+        }
+        .confirm-delete-content .progress-container.show {
+            display: block;
+        }
+        .confirm-delete-content .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(48, 54, 61, 0.3);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        body.light-mode .confirm-delete-content .progress-bar {
+            background: rgba(208, 215, 222, 0.3);
+        }
+        .confirm-delete-content .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f0883e, #f85149);
+            border-radius: 6px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .confirm-delete-content .progress-text {
             color: #8b949e;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 8px;
+            font-weight: 500;
         }
 
         /* ===== NOTIFICATION ===== */
@@ -1274,34 +1116,37 @@
             z-index: 10000;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-width: 380px;
+            gap: 10px;
+            max-width: 400px;
             width: 100%;
         }
         .notification {
-            padding: 14px 20px;
-            border-radius: 8px;
+            padding: 16px 22px;
+            border-radius: 14px;
             color: #fff;
-            font-weight: 500;
-            animation: slideInNotif 0.4s ease;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            animation: slideInNotif 0.5s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .notification.success { background: #238636; }
-        .notification.error { background: #da3633; }
-        .notification.info { background: #1f6feb; }
-        .notification.warning { background: #d29922; }
+        .notification.success { background: linear-gradient(135deg, #238636, #2ea043); }
+        .notification.error { background: linear-gradient(135deg, #da3633, #f85149); }
+        .notification.info { background: linear-gradient(135deg, #1f6feb, #388bfd); }
+        .notification.warning { background: linear-gradient(135deg, #d29922, #e3b341); }
         .notification .notif-close-btn {
             background: none;
             border: none;
             color: #fff;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
             opacity: 0.7;
             padding: 0 4px;
+            transition: 0.3s;
         }
         .notification .notif-close-btn:hover { opacity: 1; }
 
@@ -1313,54 +1158,7 @@
             pointer-events: none;
             z-index: 9999;
             animation: confettiFall linear forwards;
-        }
-
-        /* ===== TOOLTIP ===== */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: help;
-        }
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 200px;
-            background: #161b22;
-            color: #c9d1d9;
-            text-align: center;
-            border-radius: 6px;
-            padding: 8px 12px;
-            position: absolute;
-            z-index: 100;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: 0.3s;
-            border: 1px solid #30363d;
-            font-size: 12px;
-            font-weight: normal;
-        }
-        body.light-mode .tooltip .tooltip-text {
-            background: #ffffff;
-            border-color: #d0d7de;
-            color: #24292e;
-        }
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        .tooltip .tooltip-text::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #161b22 transparent transparent transparent;
-        }
-        body.light-mode .tooltip .tooltip-text::after {
-            border-color: #ffffff transparent transparent transparent;
+            border-radius: 2px;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -1368,16 +1166,19 @@
             .dashboard-header {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 16px;
             }
             .dashboard-header .right {
                 width: 100%;
                 flex-wrap: wrap;
             }
             .dashboard-header .right .stats {
-                flex-wrap: wrap;
+                width: 100%;
+                justify-content: space-around;
             }
             .filter-bar {
                 flex-direction: column;
+                padding: 14px 16px;
             }
             .filter-bar input,
             .filter-bar select {
@@ -1389,11 +1190,11 @@
                 align-items: center;
             }
             th, td {
-                padding: 8px 10px;
+                padding: 8px 12px;
                 font-size: 12px;
             }
             .login-container {
-                padding: 24px 20px;
+                padding: 30px 20px;
                 margin: 10px;
             }
             .batch-toolbar {
@@ -1401,7 +1202,7 @@
                 align-items: stretch;
             }
             .modal {
-                padding: 20px;
+                padding: 24px 20px;
                 margin: 10px;
                 width: 95%;
             }
@@ -1412,20 +1213,42 @@
                 max-width: unset;
                 width: auto;
             }
+            .time-restriction .card {
+                padding: 30px 20px;
+            }
             .time-restriction .card .time-slots {
                 flex-direction: column;
                 align-items: center;
-            }
-            .popup-content {
-                padding: 20px;
-                margin: 10px;
             }
             .login-options {
                 flex-direction: column;
                 align-items: center;
             }
-            .confirm-delete-content {
-                padding: 25px;
+            .confirm-delete-content .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            .confirm-delete-content .actions button {
+                width: 100%;
+            }
+            .dashboard-header .left h2 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-header .right .stats .stat-item {
+                font-size: 12px;
+            }
+            .btn {
+                font-size: 12px;
+                padding: 7px 14px;
+            }
+            .login-container .logo h1 {
+                font-size: 24px;
+            }
+            .modal h3 {
+                font-size: 18px;
             }
         }
     </style>
@@ -1435,7 +1258,7 @@
     <!-- ===== TIME RESTRICTION OVERLAY ===== -->
     <div class="time-restriction" id="timeRestriction">
         <div class="card">
-            <div class="icon">⏰</div>
+            <span class="icon">⏰</span>
             <h2>Hệ thống đang đóng</h2>
             <p>Website chỉ mở vào các khung giờ:</p>
             <div class="time-slots">
@@ -1447,51 +1270,36 @@
         </div>
     </div>
 
-    <!-- ===== POPUP NOTIFICATION ===== -->
-    <div id="popupNotification">
-        <div class="popup-content">
-            <div class="popup-header">
-                <h3>📢 Thông báo từ Admin</h3>
-                <button class="popup-close" id="popupCloseBtn">×</button>
-            </div>
-            <div class="popup-body">
-                <div id="popupContent">Đang tải thông báo...</div>
-                <div class="popup-time" id="popupTime"></div>
-            </div>
-            <div class="popup-footer">
-                <button class="btn-close-popup" id="popupConfirmBtn">✅ Đã đọc</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ===== CONFIRM DELETE MODAL ===== -->
-    <div id="confirmDeleteModal">
-        <div class="confirm-delete-content">
-            <div class="icon">📥</div>
-            <h3>Đã tải về thành công!</h3>
-            <p>
-                Bạn vừa tải về <span class="highlight" id="deleteCount">0</span> tài khoản.
-            </p>
-            <div class="file-info">
-                📄 File đã được tải về: <strong id="fileName">garena_accounts_xxx.txt</strong>
-                <br>
-                <span style="font-size:12px;">✅ File đã được lưu vào thư mục tải về của bạn</span>
-            </div>
-            <p style="font-size:14px;color:#f0883e;">
-                Bạn có muốn <strong style="color:#f85149;">xóa</strong> toàn bộ số tài khoản vừa tải trên Firestore?
-            </p>
-            <p style="font-size:13px;color:#8b949e;">
-                ⚠️ Hành động này không thể hoàn tác! Chỉ xóa trên database, file vẫn giữ nguyên.
-            </p>
-            <div class="progress-container" id="deleteProgressContainer">
-                <div class="progress-bar">
-                    <div class="fill" id="deleteProgressFill"></div>
+    <div class="modal-overlay" id="confirmDeleteModal">
+        <div class="modal">
+            <div class="confirm-delete-content">
+                <span class="icon">📥</span>
+                <h3 style="text-align:center;">Đã tải về thành công!</h3>
+                <p style="text-align:center;color:#8b949e;">
+                    Bạn vừa tải về <span class="highlight" id="deleteCount">0</span> tài khoản.
+                </p>
+                <div class="file-info">
+                    📄 File đã được tải về: <strong id="fileName">garena_accounts_xxx.txt</strong>
+                    <br>
+                    <span style="font-size:12px;">✅ File đã được lưu vào thư mục tải về của bạn</span>
                 </div>
-                <div class="progress-text" id="deleteProgressText">Đang xóa... 0%</div>
-            </div>
-            <div class="actions">
-                <button class="btn-yes" id="confirmDeleteYes">🗑️ Xóa trên database</button>
-                <button class="btn-no" id="confirmDeleteNo">⏭️ Giữ lại</button>
+                <p style="text-align:center;font-size:14px;color:#f0883e;">
+                    Bạn có muốn <strong style="color:#f85149;">xóa</strong> toàn bộ số tài khoản vừa tải trên Firestore?
+                </p>
+                <p style="text-align:center;font-size:13px;color:#8b949e;">
+                    ⚠️ Hành động này không thể hoàn tác! Chỉ xóa trên database, file vẫn giữ nguyên.
+                </p>
+                <div class="progress-container" id="deleteProgressContainer">
+                    <div class="progress-bar">
+                        <div class="fill" id="deleteProgressFill"></div>
+                    </div>
+                    <div class="progress-text" id="deleteProgressText">Đang xóa... 0%</div>
+                </div>
+                <div class="actions">
+                    <button class="btn-yes" id="confirmDeleteYes">🗑️ Xóa trên database</button>
+                    <button class="btn-no" id="confirmDeleteNo">⏭️ Giữ lại</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1501,8 +1309,8 @@
         <div class="login-container">
             <div class="logo">
                 <h1>🎮 Garena Manager Pro</h1>
-                <p>Quản lý tài khoản Garena nâng cao v3.0</p>
-                <span class="version">v3.0</span>
+                <p>Quản lý tài khoản Garena nâng cao v4.0</p>
+                <span class="version">v4.0</span>
                 <span class="time-status" id="timeStatus">🟢 Đang mở</span>
             </div>
 
@@ -1525,7 +1333,7 @@
             <div class="error-message" id="loginError"></div>
 
             <div class="footer-text">
-                © 2026 <span>Garena Account Manager Pro v3.0</span> | Bảo mật dữ liệu
+                © 2026 <span>Garena Account Manager Pro v4.0</span> | Bảo mật dữ liệu
             </div>
         </div>
     </div>
@@ -1543,17 +1351,12 @@
             <div class="right">
                 <div class="stats">
                     <div class="stat-item">📦 Tổng: <span class="num" id="totalCount">0</span></div>
-                    <div class="stat-item">✅ Thành công: <span class="num" id="successCount">0</span></div>
-                    <div class="stat-item">⏳ Pending: <span class="num" id="pendingCount">0</span></div>
-                    <div class="stat-item">🔒 Đã khóa: <span class="num" id="lockedCount">0</span></div>
                 </div>
-                <button class="btn btn-download" id="downloadBtn">📥 Tải 500 acc</button>
+                <button class="btn btn-download" id="downloadBtn">📥 Tải & Xuất</button>
                 <button class="btn btn-refresh" id="refreshBtn">🔄 Làm mới</button>
                 <button class="btn btn-export" id="exportBtn">📥 Export CSV</button>
                 <button class="btn btn-export-txt" id="exportTxtBtn">📄 Export TXT</button>
                 <button class="btn btn-import" id="importBtn">📥 Import</button>
-                <button class="btn btn-telegram" id="telegramBtn">🤖 Telegram</button>
-                <button class="btn btn-gemini" id="geminiBtn">🧠 Gemini</button>
                 <button class="btn btn-danger" id="logoutBtn">🚪 Đăng xuất</button>
             </div>
         </div>
@@ -1562,32 +1365,15 @@
         <div class="filter-bar">
             <span class="filter-label">🔍 Tìm kiếm:</span>
             <input type="text" id="searchInput" placeholder="Tìm username, email...">
-
-            <span class="filter-label">📊 Status:</span>
-            <select id="statusFilter">
-                <option value="all">📊 Tất cả</option>
-                <option value="success">✅ Thành công</option>
-                <option value="pending">⏳ Pending</option>
-                <option value="failed">❌ Thất bại</option>
-                <option value="locked">🔒 Đã khóa</option>
-            </select>
-
-            <span class="filter-label">📅 Ngày tạo:</span>
-            <input type="date" id="dateFrom" placeholder="Từ ngày">
-            <input type="date" id="dateTo" placeholder="Đến ngày">
-            <button class="btn btn-primary" id="dateFilterBtn">📅 Lọc</button>
-            <button class="btn btn-warning" id="clearDateBtn">🧹 Xóa</button>
+            <button class="btn btn-primary btn-sm" id="clearFilterBtn">🧹 Xóa</button>
         </div>
 
         <!-- Batch Toolbar -->
         <div class="batch-toolbar" id="batchToolbar">
             <span class="selected-info">Đã chọn: <span id="selectedCount">0</span> tài khoản</span>
-            <button class="btn btn-success" id="batchCopyBtn">📋 Copy</button>
-            <button class="btn btn-warning" id="batchLockBtn">🔒 Khóa</button>
-            <button class="btn btn-success" id="batchUnlockBtn">🔓 Mở khóa</button>
-            <button class="btn btn-danger" id="batchDeleteBtn">🗑️ Xóa</button>
-            <button class="btn btn-danger" id="batchDeleteDateBtn">🗑️ Xóa theo ngày</button>
-            <button class="btn btn-danger" id="batchDeleteAllBtn">🗑️ Xóa tất cả</button>
+            <button class="btn btn-success btn-sm" id="batchCopyBtn">📋 Copy</button>
+            <button class="btn btn-danger btn-sm" id="batchDeleteBtn">🗑️ Xóa</button>
+            <button class="btn btn-danger btn-sm" id="batchDeleteAllBtn">🗑️ Xóa tất cả</button>
         </div>
 
         <!-- Table -->
@@ -1634,14 +1420,44 @@
         </div>
     </div>
 
-    <!-- ===== MODAL ===== -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal" id="modalContent">
-            <h3 id="modalTitle">📝 Chỉnh sửa tài khoản</h3>
-            <div id="modalBody"></div>
+    <!-- ===== EXPORT MODAL ===== -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal">
+            <h3>📤 Xuất tài khoản</h3>
+            <div id="exportBody">
+                <div class="form-group">
+                    <label>📅 Lọc theo ngày tạo</label>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <input type="date" id="exportDateFrom" style="flex:1;min-width:120px;">
+                        <span style="color:#8b949e;display:flex;align-items:center;">→</span>
+                        <input type="date" id="exportDateTo" style="flex:1;min-width:120px;">
+                    </div>
+                    <small style="color:#8b949e;font-size:12px;display:block;margin-top:4px;">
+                        💡 Để trống nếu muốn xuất tất cả
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label>📄 Định dạng xuất</label>
+                    <select id="exportFormat">
+                        <option value="simple">Dạng 1: username|password</option>
+                        <option value="full">Dạng 2: username|password|email|emailPassword</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="exportDeleteAfter">
+                        🗑️ Xóa trên database sau khi xuất
+                    </label>
+                    <small style="color:#f85149;font-size:12px;display:block;margin-top:4px;">
+                        ⚠️ Hành động này không thể hoàn tác!
+                    </small>
+                </div>
+            </div>
             <div class="modal-actions">
-                <button class="btn-cancel" id="modalCancel">❌ Hủy</button>
-                <button class="btn-confirm" id="modalConfirm">💾 Lưu</button>
+                <button class="btn-cancel" id="exportCancelBtn">❌ Hủy</button>
+                <button class="btn-confirm" id="exportConfirmBtn">📤 Xuất file</button>
             </div>
         </div>
     </div>
@@ -1665,91 +1481,11 @@
         </div>
     </div>
 
-    <!-- ===== TELEGRAM MODAL ===== -->
-    <div class="modal-overlay" id="telegramModal">
-        <div class="modal">
-            <h3>🤖 Cấu hình Telegram</h3>
-            <div id="telegramBody">
-                <div id="telegramStatus" class="telegram-status inactive">
-                    <span class="status-icon">⏳</span>
-                    <span>Chưa cấu hình</span>
-                </div>
-
-                <div class="form-group">
-                    <label>🤖 Bot Token</label>
-                    <input id="telegramBotToken" placeholder="Nhập Bot Token từ @BotFather">
-                </div>
-
-                <div class="form-group">
-                    <label>💬 Chat ID</label>
-                    <input id="telegramChatId" placeholder="Nhập Chat ID của bạn">
-                    <small style="color:#8b949e;font-size:12px;display:block;margin-top:4px;">
-                        💡 Lấy Chat ID tại <strong>@userinfobot</strong> trên Telegram
-                    </small>
-                </div>
-
-                <div class="form-group" style="margin-top:10px;">
-                    <label>
-                        <input type="checkbox" id="telegramEnabled">
-                        ✅ Bật thông báo Telegram
-                    </label>
-                </div>
-
-                <div class="telegram-info">
-                    <strong>📌 Lưu ý:</strong><br>
-                    • Bạn sẽ nhận báo cáo tự động lúc <strong>19:00</strong> mỗi ngày<br>
-                    • Bot gửi <strong>đúng data</strong> của bạn<br>
-                    • Hỏi bot để <strong>xóa toàn bộ</strong> data
-                </div>
-
-                <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
-                    <button class="btn-test-telegram" id="testTelegramBtn">📨 Gửi test</button>
-                    <button class="btn btn-success" id="testDataTelegramBtn">📊 Gửi data test</button>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-cancel" id="telegramCancelBtn">❌ Hủy</button>
-                <button class="btn-confirm" id="telegramSaveBtn">💾 Lưu cấu hình</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== GEMINI CHAT MODAL ===== -->
-    <div class="modal-overlay" id="geminiModal">
-        <div class="modal" style="max-width:700px;">
-            <h3>🧠 Chat với Gemini AI</h3>
-            <div id="geminiBody">
-                <div style="display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap;">
-                    <select id="geminiModelSelect" style="flex:1;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;">
-                    </select>
-                    <button class="btn btn-warning" id="geminiResetBtn">🔄 Reset</button>
-                </div>
-
-                <div id="geminiChatContainer" style="max-height:400px;overflow-y:auto;margin-bottom:15px;padding:10px;background:#0d1117;border-radius:8px;border:1px solid #30363d;">
-                    <div style="text-align:center;color:#8b949e;padding:20px;">
-                        💬 Hỏi Gemini bất kỳ điều gì về Garena, game, hoặc cuộc sống
-                    </div>
-                </div>
-
-                <div style="display:flex;gap:10px;">
-                    <input type="text" id="geminiInput" placeholder="Nhập câu hỏi..." style="flex:1;padding:10px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;">
-                    <button class="btn btn-primary" id="geminiSendBtn">Gửi</button>
-                </div>
-                <div style="margin-top:10px;font-size:12px;color:#8b949e;">
-                    💡 Chat tự nhiên với AI, hỏi bất kỳ điều gì bạn muốn
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-cancel" id="geminiCloseBtn">❌ Đóng</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ===== NOTIFICATION CONTAINER ===== -->
     <div id="notificationContainer"></div>
 
     <!-- ============================================ -->
-    <!-- ALL JAVASCRIPT IN ONE FILE - v3.0 -->
+    <!-- ALL JAVASCRIPT IN ONE FILE - v4.0 -->
     <!-- ============================================ -->
     <script>
         // ============================================
@@ -1764,31 +1500,13 @@
                 messagingSenderId: "306207796959",
                 appId: "1:306207796959:web:a7037aba8234f8f357c36a"
             },
-            gemini: {
-                apiKey: "AQ.Ab8RN6KSVvygX6BjDogYlSE3VtsklQwfzhplwqIYjZgGJaPxAg",
-                defaultModel: "gemini-2.5-flash",
-                availableModels: [
-                    { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash" },
-                    { id: "gemini-flash-latest", name: "Gemini Flash Latest" },
-                    { id: "gemini-flash-lite-latest", name: "Gemini Flash-Lite Latest" },
-                    { id: "gemini-2.5-flash-lite", name: "Gemini 2.5 Flash-Lite" },
-                    { id: "gemini-3-flash-preview", name: "Gemini 3 Flash Preview" },
-                    { id: "gemini-3.1-flash-lite-preview", name: "Gemini 3.1 Flash Lite Preview" },
-                    { id: "gemini-3.1-flash-lite", name: "Gemini 3.1 Flash Lite" },
-                    { id: "gemini-3.5-flash", name: "Gemini 3.5 Flash" },
-                    { id: "gemini-3.5-flash-lite", name: "Gemini 3.5 Flash Lite" },
-                    { id: "gemini-3.6-flash", name: "Gemini 3.6 Flash" }
-                ]
-            },
             app: {
-                version: "3.0.0",
+                version: "4.0.0",
                 name: "Garena Account Manager Pro",
                 adminEmail: "tuquangnamht2007@gmail.com",
                 cacheTTL: 30000,
                 pageSize: 100,
-                downloadBatchSize: 500,
-                reportHour: 19,
-                reportMinute: 0
+                downloadBatchSize: 500
             },
             timeSlots: [
                 { start: 10, end: 13 },
@@ -2046,6 +1764,46 @@
                 return accounts;
             }
 
+            async fetchAccountsByDate(collection, fromDate, toDate, onProgress = null) {
+                let allAccounts = [];
+                let pageToken = null;
+                let hasMore = true;
+                const BATCH_SIZE = 100;
+                let pageCount = 0;
+
+                while (hasMore) {
+                    const result = await this.fetchAccounts(collection, BATCH_SIZE, pageToken);
+                    if (!result || result.accounts.length === 0) break;
+
+                    const filtered = result.accounts.filter(acc => {
+                        if (!acc.registeredAt) return false;
+                        const date = acc.registeredAt.split('T')[0];
+                        if (fromDate && date < fromDate) return false;
+                        if (toDate && date > toDate) return false;
+                        return true;
+                    });
+
+                    allAccounts = allAccounts.concat(filtered);
+                    pageToken = result.nextPageToken;
+                    hasMore = !!pageToken;
+                    pageCount++;
+
+                    if (onProgress) {
+                        onProgress({
+                            loaded: allAccounts.length,
+                            page: pageCount,
+                            hasMore: hasMore
+                        });
+                    }
+
+                    if (hasMore) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    }
+                }
+
+                return allAccounts;
+            }
+
             async saveData(collection, docId, data) {
                 const token = this.getToken();
                 if (!token) {
@@ -2132,290 +1890,25 @@
 
                 return deleted;
             }
-
-            async getUserTelegramConfig(email) {
-                try {
-                    const token = this.getToken();
-                    if (!token) return null;
-
-                    const url =
-                        `${this.FIRESTORE_URL}/telegram_configs/${email}?key=${CONFIG.firebase.apiKey}`;
-                    const response = await fetch(url, {
-                        headers: { 'Authorization': `Bearer ${token}` }
-                    });
-
-                    if (response.status === 404) return null;
-                    if (!response.ok) return null;
-
-                    const data = await response.json();
-                    const fields = data.fields || {};
-                    return {
-                        botToken: fields.botToken?.stringValue || '',
-                        chatId: fields.chatId?.stringValue || '',
-                        enabled: fields.enabled?.booleanValue || false,
-                        updatedAt: fields.updatedAt?.stringValue || ''
-                    };
-                } catch (error) {
-                    console.error('Lỗi lấy Telegram config:', error);
-                    return null;
-                }
-            }
-
-            async saveUserTelegramConfig(email, config) {
-                try {
-                    const token = this.getToken();
-                    if (!token) return false;
-
-                    const url =
-                        `${this.FIRESTORE_URL}/telegram_configs/${email}?key=${CONFIG.firebase.apiKey}`;
-                    const fields = {
-                        botToken: { stringValue: config.botToken || '' },
-                        chatId: { stringValue: config.chatId || '' },
-                        enabled: { booleanValue: config.enabled || false },
-                        updatedAt: { stringValue: new Date().toISOString() },
-                        userEmail: { stringValue: email }
-                    };
-
-                    const response = await fetch(url, {
-                        method: 'PATCH',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ fields })
-                    });
-
-                    return response.ok;
-                } catch (error) {
-                    console.error('Lỗi lưu Telegram config:', error);
-                    return false;
-                }
-            }
         }
 
         // ============================================
-        // GEMINI HANDLER
-        // ============================================
-        class GeminiHandler {
-            constructor(apiKey = CONFIG.gemini.apiKey) {
-                this.apiKey = apiKey;
-                this.currentModel = CONFIG.gemini.defaultModel;
-                this.history = [];
-                this.maxHistory = 100;
-                this.availableModels = CONFIG.gemini.availableModels;
-                this.systemPrompt = `Bạn là trợ lý ảo thông minh của Garena Account Manager Pro v3.0. 
-        Bạn có thể giúp người dùng:
-        1. Quản lý tài khoản Garena
-        2. Hỗ trợ các vấn đề về đăng nhập, bảo mật
-        3. Tư vấn về game Garena
-        4. Hỗ trợ kỹ thuật
-        5. Giải đáp thắc mắc về game và công nghệ
-
-        Hãy trả lời lịch sự, chuyên nghiệp, chi tiết và hữu ích. Nếu không biết, hãy nói thẳng.`;
-            }
-
-            setModel(modelId) {
-                const available = this.availableModels.map(m => m.id);
-                if (!available.includes(modelId)) {
-                    throw new Error(`Model "${modelId}" không có sẵn.`);
-                }
-                this.currentModel = modelId;
-                return this.currentModel;
-            }
-
-            getAvailableModels() {
-                return this.availableModels;
-            }
-
-            getCurrentModel() {
-                return this.currentModel;
-            }
-
-            async chat(message, model = null) {
-                if (model) {
-                    this.setModel(model);
-                }
-
-                try {
-                    this.history.push({ role: 'user', content: message });
-
-                    if (this.history.length > this.maxHistory) {
-                        this.history = this.history.slice(-this.maxHistory);
-                    }
-
-                    const conversation = this.history.map(msg =>
-                        `${msg.role === 'user' ? 'Người dùng' : 'Trợ lý'}: ${msg.content}`
-                    ).join('\n');
-
-                    const fullPrompt = `${this.systemPrompt}\n\nLịch sử hội thoại:\n${conversation}\n\nTrợ lý:`;
-
-                    const url =
-                        `https://generativelanguage.googleapis.com/v1beta/models/${this.currentModel}:generateContent?key=${this.apiKey}`;
-
-                    const payload = {
-                        contents: [{
-                            parts: [{ text: fullPrompt }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            maxOutputTokens: 2048,
-                            topP: 0.9,
-                            topK: 40
-                        }
-                    };
-
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const error = await response.json();
-                        throw new Error(error.error?.message || 'Lỗi gọi Gemini API');
-                    }
-
-                    const data = await response.json();
-                    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text ||
-                        'Xin lỗi, tôi không thể xử lý yêu cầu này.';
-
-                    this.history.push({ role: 'assistant', content: reply });
-
-                    return {
-                        success: true,
-                        message: reply,
-                        model: this.currentModel,
-                        history: this.history
-                    };
-                } catch (error) {
-                    console.error('❌ Lỗi Gemini:', error);
-                    return {
-                        success: false,
-                        error: error.message,
-                        model: this.currentModel
-                    };
-                }
-            }
-
-            resetHistory() {
-                this.history = [];
-                return { success: true, message: 'Đã reset lịch sử' };
-            }
-
-            getHistory() {
-                return [...this.history];
-            }
-        }
-
-        // ============================================
-        // TELEGRAM HELPER
-        // ============================================
-        class TelegramHelper {
-            constructor(botToken = null) {
-                this.botToken = botToken || '';
-                this.apiUrl = `https://api.telegram.org/bot${this.botToken}`;
-            }
-
-            setBotToken(token) {
-                this.botToken = token;
-                this.apiUrl = `https://api.telegram.org/bot${this.botToken}`;
-            }
-
-            async sendMessage(chatId, text, options = {}) {
-                if (!this.botToken) {
-                    throw new Error('Chưa cấu hình Bot Token');
-                }
-
-                try {
-                    const url = `${this.apiUrl}/sendMessage`;
-                    const payload = {
-                        chat_id: chatId,
-                        text: text,
-                        parse_mode: options.parse_mode || 'HTML',
-                        disable_web_page_preview: options.disable_web_page_preview || true
-                    };
-
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const error = await response.json();
-                        throw new Error(error.description || 'Lỗi gửi tin nhắn');
-                    }
-
-                    return await response.json();
-                } catch (error) {
-                    console.error('❌ Lỗi gửi tin nhắn:', error);
-                    throw error;
-                }
-            }
-
-            async sendFile(chatId, content, filename, caption = '') {
-                if (!this.botToken) {
-                    throw new Error('Chưa cấu hình Bot Token');
-                }
-
-                try {
-                    const url = `${this.apiUrl}/sendDocument`;
-                    const formData = new FormData();
-                    const blob = new Blob(['\uFEFF' + content], { type: 'text/plain;charset=utf-8' });
-                    formData.append('chat_id', chatId);
-                    formData.append('document', blob, filename);
-                    if (caption) {
-                        formData.append('caption', caption);
-                    }
-
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    if (!response.ok) {
-                        const error = await response.json();
-                        throw new Error(error.description || 'Lỗi gửi file');
-                    }
-
-                    return await response.json();
-                } catch (error) {
-                    console.error('❌ Lỗi gửi file:', error);
-                    throw error;
-                }
-            }
-
-            async testConnection(chatId) {
-                try {
-                    const result = await this.sendMessage(chatId, '✅ <b>Test kết nối thành công!</b>');
-                    return result && result.ok;
-                } catch (error) {
-                    console.error('❌ Lỗi test kết nối:', error);
-                    return false;
-                }
-            }
-        }
-
-        // ============================================
-        // MAIN APPLICATION - v3.0
+        // MAIN APPLICATION - v4.0
         // ============================================
         class App {
             constructor() {
                 this.firebase = new FirebaseHelper();
-                this.gemini = new GeminiHandler();
-                this.telegram = new TelegramHelper();
 
                 this.currentUser = null;
                 this.allAccounts = [];
                 this.filteredAccounts = [];
                 this.currentPage = 1;
                 this.selectedAccounts = new Set();
-                this.editingRow = null;
                 this.isLoading = false;
-                this.notificationShown = false;
                 this.cache = { data: null, timestamp: 0, userEmail: null };
                 this.isDownloading = false;
                 this.pendingDeleteAccounts = [];
+                this.deleteProgress = 0;
 
                 this.dom = {};
                 this.init();
@@ -2427,10 +1920,8 @@
                 this.initTheme();
                 this.initUser();
                 this.initTimeCheck();
-                this.initGeminiModels();
 
                 console.log(`🎮 ${CONFIG.app.name} v${CONFIG.app.version} loaded!`);
-                console.log(`📌 Download batch size: ${CONFIG.app.downloadBatchSize} accounts`);
             }
 
             initDOM() {
@@ -2447,17 +1938,10 @@
                     userEmailDisplay: document.getElementById('userEmailDisplay'),
                     adminBadge: document.getElementById('adminBadge'),
                     totalCount: document.getElementById('totalCount'),
-                    successCount: document.getElementById('successCount'),
-                    pendingCount: document.getElementById('pendingCount'),
-                    lockedCount: document.getElementById('lockedCount'),
 
                     tableBody: document.getElementById('tableBody'),
                     searchInput: document.getElementById('searchInput'),
-                    statusFilter: document.getElementById('statusFilter'),
-                    dateFrom: document.getElementById('dateFrom'),
-                    dateTo: document.getElementById('dateTo'),
-                    dateFilterBtn: document.getElementById('dateFilterBtn'),
-                    clearDateBtn: document.getElementById('clearDateBtn'),
+                    clearFilterBtn: document.getElementById('clearFilterBtn'),
 
                     downloadBtn: document.getElementById('downloadBtn'),
                     refreshBtn: document.getElementById('refreshBtn'),
@@ -2466,8 +1950,6 @@
                     importBtn: document.getElementById('importBtn'),
                     logoutBtn: document.getElementById('logoutBtn'),
                     themeToggle: document.getElementById('themeToggle'),
-                    telegramBtn: document.getElementById('telegramBtn'),
-                    geminiBtn: document.getElementById('geminiBtn'),
 
                     startIndex: document.getElementById('startIndex'),
                     endIndex: document.getElementById('endIndex'),
@@ -2492,12 +1974,6 @@
                     resetCancelBtn: document.getElementById('resetCancelBtn'),
                     resetMessage: document.getElementById('resetMessage'),
 
-                    popupNotification: document.getElementById('popupNotification'),
-                    popupContent: document.getElementById('popupContent'),
-                    popupTime: document.getElementById('popupTime'),
-                    popupCloseBtn: document.getElementById('popupCloseBtn'),
-                    popupConfirmBtn: document.getElementById('popupConfirmBtn'),
-
                     confirmDeleteModal: document.getElementById('confirmDeleteModal'),
                     deleteCount: document.getElementById('deleteCount'),
                     fileName: document.getElementById('fileName'),
@@ -2507,31 +1983,18 @@
                     confirmDeleteYes: document.getElementById('confirmDeleteYes'),
                     confirmDeleteNo: document.getElementById('confirmDeleteNo'),
 
-                    telegramModal: document.getElementById('telegramModal'),
-                    telegramStatus: document.getElementById('telegramStatus'),
-                    telegramBotToken: document.getElementById('telegramBotToken'),
-                    telegramChatId: document.getElementById('telegramChatId'),
-                    telegramEnabled: document.getElementById('telegramEnabled'),
-
-                    geminiModal: document.getElementById('geminiModal'),
-                    geminiModelSelect: document.getElementById('geminiModelSelect'),
-                    geminiChatContainer: document.getElementById('geminiChatContainer'),
-                    geminiInput: document.getElementById('geminiInput'),
-                    geminiSendBtn: document.getElementById('geminiSendBtn'),
-                    geminiResetBtn: document.getElementById('geminiResetBtn'),
-                    geminiCloseBtn: document.getElementById('geminiCloseBtn'),
+                    exportModal: document.getElementById('exportModal'),
+                    exportDateFrom: document.getElementById('exportDateFrom'),
+                    exportDateTo: document.getElementById('exportDateTo'),
+                    exportFormat: document.getElementById('exportFormat'),
+                    exportDeleteAfter: document.getElementById('exportDeleteAfter'),
+                    exportCancelBtn: document.getElementById('exportCancelBtn'),
+                    exportConfirmBtn: document.getElementById('exportConfirmBtn'),
 
                     notificationContainer: document.getElementById('notificationContainer'),
                     batchCopyBtn: document.getElementById('batchCopyBtn'),
-                    batchLockBtn: document.getElementById('batchLockBtn'),
-                    batchUnlockBtn: document.getElementById('batchUnlockBtn'),
                     batchDeleteBtn: document.getElementById('batchDeleteBtn'),
-                    batchDeleteDateBtn: document.getElementById('batchDeleteDateBtn'),
                     batchDeleteAllBtn: document.getElementById('batchDeleteAllBtn'),
-                    testTelegramBtn: document.getElementById('testTelegramBtn'),
-                    testDataTelegramBtn: document.getElementById('testDataTelegramBtn'),
-                    telegramCancelBtn: document.getElementById('telegramCancelBtn'),
-                    telegramSaveBtn: document.getElementById('telegramSaveBtn'),
                     forgotPasswordLink: document.getElementById('forgotPasswordLink')
                 };
             }
@@ -2565,15 +2028,12 @@
                 this.dom.refreshBtn.addEventListener('click', () => this.fetchAllAccounts(true));
 
                 // Download
-                this.dom.downloadBtn.addEventListener('click', () => this.downloadBatch());
+                this.dom.downloadBtn.addEventListener('click', () => this.showExportModal());
 
                 // Filter
                 this.dom.searchInput.addEventListener('input', () => this.applyFilters());
-                this.dom.statusFilter.addEventListener('change', () => this.applyFilters());
-                this.dom.dateFilterBtn.addEventListener('click', () => this.applyFilters());
-                this.dom.clearDateBtn.addEventListener('click', () => {
-                    this.dom.dateFrom.value = '';
-                    this.dom.dateTo.value = '';
+                this.dom.clearFilterBtn.addEventListener('click', () => {
+                    this.dom.searchInput.value = '';
                     this.applyFilters();
                 });
 
@@ -2609,17 +2069,11 @@
                     this.updateBatchToolbar();
                 });
 
-                // Modal
-                this.dom.modalCancel.addEventListener('click', () => this.closeModal());
-                this.dom.modalOverlay.addEventListener('click', (e) => {
-                    if (e.target === this.dom.modalOverlay) this.closeModal();
-                });
-
-                // Popup
-                this.dom.popupCloseBtn.addEventListener('click', () => this.closePopup());
-                this.dom.popupConfirmBtn.addEventListener('click', () => this.closePopup());
-                this.dom.popupNotification.addEventListener('click', (e) => {
-                    if (e.target === this.dom.popupNotification) this.closePopup();
+                // Export Modal
+                this.dom.exportCancelBtn.addEventListener('click', () => this.closeExportModal());
+                this.dom.exportConfirmBtn.addEventListener('click', () => this.handleExport());
+                this.dom.exportModal.addEventListener('click', (e) => {
+                    if (e.target === this.dom.exportModal) this.closeExportModal();
                 });
 
                 // Confirm Delete
@@ -2627,25 +2081,6 @@
                 this.dom.confirmDeleteYes.addEventListener('click', () => this.executeDeleteBatch());
                 this.dom.confirmDeleteModal.addEventListener('click', (e) => {
                     if (e.target === this.dom.confirmDeleteModal) this.closeConfirmDelete();
-                });
-
-                // Telegram
-                this.dom.telegramBtn.addEventListener('click', () => this.showTelegramConfig());
-                this.dom.telegramCancelBtn.addEventListener('click', () => this.closeTelegramModal());
-                this.dom.telegramSaveBtn.addEventListener('click', () => this.saveTelegramConfig());
-                this.dom.testTelegramBtn.addEventListener('click', () => this.testTelegramConnection());
-                this.dom.testDataTelegramBtn.addEventListener('click', () => this.sendTelegramTestData());
-
-                // Gemini
-                this.dom.geminiBtn.addEventListener('click', () => this.showGeminiChat());
-                this.dom.geminiCloseBtn.addEventListener('click', () => this.closeGeminiModal());
-                this.dom.geminiSendBtn.addEventListener('click', () => this.sendGeminiMessage());
-                this.dom.geminiResetBtn.addEventListener('click', () => this.resetGeminiChat());
-                this.dom.geminiInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') this.sendGeminiMessage();
-                });
-                this.dom.geminiModelSelect.addEventListener('change', (e) => {
-                    this.gemini.setModel(e.target.value);
                 });
 
                 // Export
@@ -2658,16 +2093,8 @@
 
                 // Batch operations
                 this.dom.batchCopyBtn.addEventListener('click', () => this.batchCopy());
-                this.dom.batchLockBtn.addEventListener('click', () => this.batchLock());
-                this.dom.batchUnlockBtn.addEventListener('click', () => this.batchUnlock());
                 this.dom.batchDeleteBtn.addEventListener('click', () => this.batchDelete());
-                this.dom.batchDeleteDateBtn.addEventListener('click', () => this.showDeleteByDateModal());
                 this.dom.batchDeleteAllBtn.addEventListener('click', () => this.batchDeleteAll());
-
-                // Telegram inputs
-                this.dom.telegramBotToken.addEventListener('input', () => this.updateTelegramStatus());
-                this.dom.telegramChatId.addEventListener('input', () => this.updateTelegramStatus());
-                this.dom.telegramEnabled.addEventListener('change', () => this.updateTelegramStatus());
 
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
@@ -2678,22 +2105,14 @@
                         }
                     }
                     if (e.key === 'Escape') {
-                        this.closeModal();
-                        this.closePopup();
-                        this.closeTelegramModal();
-                        this.closeGeminiModal();
+                        this.closeExportModal();
                         this.closeForgotPasswordModal();
                         this.closeConfirmDelete();
-                        if (this.editingRow) this.cancelEdit();
-                    }
-                    if (e.ctrlKey && e.key === 'n') {
-                        e.preventDefault();
-                        this.showAddModal();
                     }
                     if (e.ctrlKey && e.key === 'd') {
                         e.preventDefault();
                         if (this.dom.dashboard.classList.contains('active')) {
-                            this.downloadBatch();
+                            this.showExportModal();
                         }
                     }
                 });
@@ -2738,23 +2157,6 @@
                     }
                     this.updateTimeStatus();
                 }, 60000);
-            }
-
-            initGeminiModels() {
-                const select = this.dom.geminiModelSelect;
-                const models = this.gemini.getAvailableModels();
-                const current = this.gemini.getCurrentModel();
-
-                select.innerHTML = '';
-                models.forEach(m => {
-                    const option = document.createElement('option');
-                    option.value = m.id;
-                    option.textContent = `${m.name} (${m.id})`;
-                    if (m.id === current) {
-                        option.selected = true;
-                    }
-                    select.appendChild(option);
-                });
             }
 
             // ============================================
@@ -2935,9 +2337,7 @@
                 this.dom.loginPage.style.display = 'flex';
                 this.dom.timeRestriction.classList.remove('active');
                 this.updateTimeStatus();
-                this.closePopup();
-                this.closeTelegramModal();
-                this.closeGeminiModal();
+                this.closeExportModal();
                 this.closeForgotPasswordModal();
                 this.closeConfirmDelete();
             }
@@ -2959,12 +2359,10 @@
 
                 this.updateTimeStatus();
                 await this.fetchAllAccounts();
-                await this.loadAdminNotification();
-                await this.checkTelegramStatus();
             }
 
             // ============================================
-            // ACCOUNT OPERATIONS - v3.0
+            // ACCOUNT OPERATIONS
             // ============================================
 
             async fetchAllAccounts(forceRefresh = false) {
@@ -2995,7 +2393,9 @@
                     let loadedCount = 0;
                     const accounts = await this.firebase.fetchAllAccounts(collection, (progress) => {
                         loadedCount = progress.loaded;
-                        this.showNotification(`📥 Đang tải... ${loadedCount} tài khoản`, 'info');
+                        if (loadedCount % 50 === 0) {
+                            this.showNotification(`📥 Đang tải... ${loadedCount} tài khoản`, 'info');
+                        }
                     });
 
                     accounts.sort((a, b) => {
@@ -3024,141 +2424,8 @@
                 }
             }
 
-            // NEW: Download exactly 500 accounts and save as TXT file
-            async downloadBatch() {
-                if (this.isDownloading) return;
-                if (!this.currentUser) return;
-
-                this.isDownloading = true;
-                this.dom.downloadBtn.disabled = true;
-                this.dom.downloadBtn.classList.add('loading');
-                this.dom.downloadBtn.textContent = 'Đang tải...';
-
-                try {
-                    const collection = this.firebase.getUserCollection(this.currentUser.email);
-                    const batchSize = CONFIG.app.downloadBatchSize;
-
-                    // Fetch exactly batchSize accounts
-                    let loadedCount = 0;
-                    const accounts = await this.firebase.fetchBatchAccounts(collection, batchSize, (progress) => {
-                        loadedCount = progress.loaded;
-                        this.dom.downloadBtn.textContent = `📥 Đang tải... ${loadedCount}/${batchSize}`;
-                    });
-
-                    const count = accounts.length;
-
-                    if (count === 0) {
-                        this.showNotification('📭 Không có tài khoản nào để tải!', 'warning');
-                        this.isDownloading = false;
-                        this.dom.downloadBtn.disabled = false;
-                        this.dom.downloadBtn.classList.remove('loading');
-                        this.dom.downloadBtn.textContent = '📥 Tải 500 acc';
-                        return;
-                    }
-
-                    // === TẠO FILE TXT VÀ TẢI XUỐNG ===
-                    const filename = `garena_accounts_${Date.now()}.txt`;
-                    let content = '';
-                    accounts.forEach(acc => {
-                        content += `${acc.username || ''}|${acc.password || ''}\n`;
-                    });
-
-                    // Tải file xuống
-                    this.downloadFile(content, filename, 'text/plain');
-
-                    // Lưu để xóa sau nếu cần
-                    this.pendingDeleteAccounts = accounts;
-
-                    // Show confirmation with file info
-                    this.showConfirmDelete(count, filename);
-
-                    // Also show the accounts in table
-                    this.allAccounts = accounts;
-                    this.cache.data = accounts;
-                    this.cache.timestamp = Date.now();
-                    this.cache.userEmail = this.currentUser.email;
-                    this.applyFilters();
-
-                    this.showNotification(`✅ Đã tải ${count} tài khoản! File: ${filename}`, 'success');
-
-                } catch (error) {
-                    console.error('❌ Lỗi download:', error);
-                    this.showNotification('❌ Lỗi tải: ' + error.message, 'error');
-                } finally {
-                    this.isDownloading = false;
-                    this.dom.downloadBtn.disabled = false;
-                    this.dom.downloadBtn.classList.remove('loading');
-                    this.dom.downloadBtn.textContent = '📥 Tải 500 acc';
-                }
-            }
-
-            // NEW: Show confirm delete modal with file info
-            showConfirmDelete(count, filename) {
-                this.dom.deleteCount.textContent = count;
-                this.dom.fileName.textContent = filename;
-                this.dom.deleteProgressContainer.classList.remove('show');
-                this.dom.deleteProgressFill.style.width = '0%';
-                this.dom.deleteProgressText.textContent = 'Đang xóa... 0%';
-                this.dom.confirmDeleteModal.classList.add('show');
-                this.dom.confirmDeleteYes.disabled = false;
-                this.dom.confirmDeleteYes.textContent = '🗑️ Xóa trên database';
-            }
-
-            closeConfirmDelete() {
-                this.dom.confirmDeleteModal.classList.remove('show');
-                this.pendingDeleteAccounts = [];
-            }
-
-            // NEW: Execute delete batch
-            async executeDeleteBatch() {
-                if (this.pendingDeleteAccounts.length === 0) {
-                    this.closeConfirmDelete();
-                    return;
-                }
-
-                const collection = this.firebase.getUserCollection(this.currentUser.email);
-                const docIds = this.pendingDeleteAccounts.map(acc => acc.docId);
-                const total = docIds.length;
-
-                this.dom.confirmDeleteYes.disabled = true;
-                this.dom.confirmDeleteYes.textContent = '⏳ Đang xóa...';
-                this.dom.deleteProgressContainer.classList.add('show');
-
-                try {
-                    const deleted = await this.firebase.deleteBatch(collection, docIds, (progress) => {
-                        this.dom.deleteProgressFill.style.width = progress.percent + '%';
-                        this.dom.deleteProgressText.textContent =
-                            `Đang xóa... ${progress.deleted}/${progress.total} (${progress.percent}%)`;
-                    });
-
-                    this.dom.deleteProgressFill.style.width = '100%';
-                    this.dom.deleteProgressText.textContent =
-                        `✅ Đã xóa ${deleted}/${total} tài khoản khỏi database!`;
-
-                    this.showNotification(`✅ Đã xóa ${deleted} tài khoản khỏi database!`, 'success');
-
-                    // Clear pending
-                    this.pendingDeleteAccounts = [];
-
-                    setTimeout(() => {
-                        this.closeConfirmDelete();
-                        // Refresh to show updated data
-                        this.fetchAllAccounts(true);
-                    }, 1500);
-
-                } catch (error) {
-                    console.error('❌ Lỗi xóa:', error);
-                    this.showNotification('❌ Lỗi xóa: ' + error.message, 'error');
-                    this.dom.confirmDeleteYes.disabled = false;
-                    this.dom.confirmDeleteYes.textContent = '🗑️ Thử lại';
-                }
-            }
-
             applyFilters() {
                 const search = this.dom.searchInput.value.toLowerCase().trim();
-                const status = this.dom.statusFilter.value;
-                const fromDate = this.dom.dateFrom.value;
-                const toDate = this.dom.dateTo.value;
 
                 this.filteredAccounts = this.allAccounts.filter(acc => {
                     if (search) {
@@ -3168,23 +2435,6 @@
                             return false;
                         }
                     }
-
-                    if (status !== 'all') {
-                        const accStatus = (acc.status || 'success').toLowerCase();
-                        if (accStatus !== status.toLowerCase()) {
-                            return false;
-                        }
-                    }
-
-                    if (fromDate && acc.registeredAt) {
-                        const accDate = acc.registeredAt.split('T')[0];
-                        if (accDate < fromDate) return false;
-                    }
-                    if (toDate && acc.registeredAt) {
-                        const accDate = acc.registeredAt.split('T')[0];
-                        if (accDate > toDate) return false;
-                    }
-
                     return true;
                 });
 
@@ -3230,9 +2480,10 @@
                             <td>${date}</td>
                             <td class="note-cell" title="${this.escapeHtml(acc.note || '')}">${this.escapeHtml(acc.note || '')}</td>
                             <td>
-                                <button class="edit-btn" onclick="window.app.startEdit('${acc.docId || ''}')">✏️</button>
-                                <button class="copy-btn" onclick='window.app.copyText("${this.escapeHtml(acc.username)}:${this.escapeHtml(acc.password)}")'>📋</button>
-                                <button class="delete-btn" onclick="window.app.deleteAccount('${acc.docId || ''}', '${this.escapeHtml(acc.username)}')">🗑️</button>
+                                <div class="action-btns">
+                                    <button class="btn btn-warning btn-sm copy-btn" onclick='window.app.copyText("${this.escapeHtml(acc.username)}:${this.escapeHtml(acc.password)}")'>📋</button>
+                                    <button class="btn btn-danger btn-sm delete-btn" onclick="window.app.deleteAccount('${acc.docId || ''}', '${this.escapeHtml(acc.username)}')">🗑️</button>
+                                </div>
                             </td>
                         </tr>
                     `;
@@ -3280,14 +2531,7 @@
 
             updateStats() {
                 const total = this.allAccounts.length;
-                const success = this.allAccounts.filter(a => (a.status || 'success') === 'success').length;
-                const pending = this.allAccounts.filter(a => (a.status || '').toLowerCase() === 'pending').length;
-                const locked = this.allAccounts.filter(a => (a.status || '').toLowerCase() === 'locked').length;
-
                 this.dom.totalCount.textContent = total;
-                this.dom.successCount.textContent = success;
-                this.dom.pendingCount.textContent = pending;
-                this.dom.lockedCount.textContent = locked;
             }
 
             updatePaginationInfo() {
@@ -3309,84 +2553,6 @@
             // ============================================
             // CRUD OPERATIONS
             // ============================================
-
-            startEdit(docId) {
-                if (this.editingRow) {
-                    this.cancelEdit();
-                }
-
-                const rows = document.querySelectorAll('tr');
-                let targetRow = null;
-                let account = null;
-
-                for (const row of rows) {
-                    if (row.dataset.docid === docId) {
-                        targetRow = row;
-                        const data = this.allAccounts.find(a => (a.docId || a.username) === docId);
-                        if (data) account = data;
-                        break;
-                    }
-                }
-
-                if (!targetRow || !account) return;
-
-                this.editingRow = targetRow;
-                targetRow.classList.add('editing');
-
-                const cells = targetRow.querySelectorAll('td');
-
-                cells[2].innerHTML = `<input class="edit-input" id="editUsername" value="${this.escapeHtml(account.username)}">`;
-                cells[3].innerHTML = `<input class="edit-input" id="editPassword" value="${this.escapeHtml(account.password)}">`;
-                cells[4].innerHTML = `<input class="edit-input" id="editEmail" value="${this.escapeHtml(account.email)}">`;
-                cells[5].innerHTML =
-                `<input class="edit-input" id="editEmailPass" value="${this.escapeHtml(account.emailPassword)}">`;
-                cells[6].innerHTML =
-                    `<input class="edit-input" id="editDate" value="${account.registeredAt ? account.registeredAt.split('T')[0] : ''}" type="date">`;
-                cells[7].innerHTML =
-                    `<input class="edit-input" id="editNote" value="${this.escapeHtml(account.note || '')}" placeholder="Ghi chú...">`;
-                cells[8].innerHTML = `
-                    <button class="save-edit-btn" onclick="window.app.saveEdit()">💾 Lưu</button>
-                    <button class="cancel-edit-btn" onclick="window.app.cancelEdit()">❌</button>
-                `;
-            }
-
-            async saveEdit() {
-                if (!this.editingRow) return;
-
-                const docId = this.editingRow.dataset.docid;
-                const newData = {
-                    username: document.getElementById('editUsername').value.trim(),
-                    password: document.getElementById('editPassword').value.trim(),
-                    email: document.getElementById('editEmail').value.trim(),
-                    emailPassword: document.getElementById('editEmailPass').value.trim(),
-                    registeredAt: document.getElementById('editDate').value ?
-                        new Date(document.getElementById('editDate').value).toISOString() : new Date().toISOString(),
-                    note: document.getElementById('editNote').value.trim()
-                };
-
-                if (!newData.username || !newData.password) {
-                    this.showNotification('⚠️ Username và Password không được để trống!', 'warning');
-                    return;
-                }
-
-                try {
-                    const collection = this.firebase.getUserCollection(this.currentUser.email);
-                    await this.firebase.saveData(collection, docId, newData);
-                    this.showNotification(`✅ Đã cập nhật tài khoản ${newData.username}!`, 'success');
-                    await this.fetchAllAccounts(true);
-                    this.cancelEdit();
-                } catch (error) {
-                    this.showNotification('❌ Lỗi: ' + error.message, 'error');
-                }
-            }
-
-            cancelEdit() {
-                if (this.editingRow) {
-                    this.editingRow.classList.remove('editing');
-                    this.editingRow = null;
-                }
-                this.renderTable();
-            }
 
             async deleteAccount(docId, username) {
                 if (!confirm(`⚠️ Bạn có chắc muốn xóa tài khoản "${username}"?`)) return;
@@ -3439,46 +2605,6 @@
                 }
             }
 
-            async batchLock() {
-                const selected = this.getSelectedAccountsData();
-                if (selected.length === 0) {
-                    this.showNotification('⚠️ Vui lòng chọn tài khoản để khóa!', 'warning');
-                    return;
-                }
-
-                try {
-                    const collection = this.firebase.getUserCollection(this.currentUser.email);
-                    for (const acc of selected) {
-                        await this.firebase.saveData(collection, acc.docId, { ...acc, status: 'locked' });
-                    }
-                    this.showNotification(`🔒 Đã khóa ${selected.length} tài khoản!`, 'success');
-                    this.selectedAccounts.clear();
-                    await this.fetchAllAccounts(true);
-                } catch (error) {
-                    this.showNotification('❌ Lỗi: ' + error.message, 'error');
-                }
-            }
-
-            async batchUnlock() {
-                const selected = this.getSelectedAccountsData();
-                if (selected.length === 0) {
-                    this.showNotification('⚠️ Vui lòng chọn tài khoản để mở khóa!', 'warning');
-                    return;
-                }
-
-                try {
-                    const collection = this.firebase.getUserCollection(this.currentUser.email);
-                    for (const acc of selected) {
-                        await this.firebase.saveData(collection, acc.docId, { ...acc, status: 'success' });
-                    }
-                    this.showNotification(`🔓 Đã mở khóa ${selected.length} tài khoản!`, 'success');
-                    this.selectedAccounts.clear();
-                    await this.fetchAllAccounts(true);
-                } catch (error) {
-                    this.showNotification('❌ Lỗi: ' + error.message, 'error');
-                }
-            }
-
             batchCopy() {
                 const selected = this.getSelectedAccountsData();
                 if (selected.length === 0) {
@@ -3492,8 +2618,93 @@
             }
 
             // ============================================
-            // EXPORT / IMPORT
+            // EXPORT / IMPORT - v4.0
             // ============================================
+
+            showExportModal() {
+                this.dom.exportDateFrom.value = '';
+                this.dom.exportDateTo.value = '';
+                this.dom.exportFormat.value = 'simple';
+                this.dom.exportDeleteAfter.checked = false;
+                this.dom.exportModal.classList.add('show');
+            }
+
+            closeExportModal() {
+                this.dom.exportModal.classList.remove('show');
+            }
+
+            async handleExport() {
+                const fromDate = this.dom.exportDateFrom.value;
+                const toDate = this.dom.exportDateTo.value;
+                const format = this.dom.exportFormat.value;
+                const deleteAfter = this.dom.exportDeleteAfter.checked;
+
+                if (this.isDownloading) return;
+
+                this.isDownloading = true;
+                this.dom.exportConfirmBtn.disabled = true;
+                this.dom.exportConfirmBtn.textContent = '⏳ Đang xử lý...';
+
+                try {
+                    const collection = this.firebase.getUserCollection(this.currentUser.email);
+
+                    let accounts;
+                    if (fromDate || toDate) {
+                        accounts = await this.firebase.fetchAccountsByDate(collection, fromDate, toDate);
+                    } else {
+                        accounts = await this.firebase.fetchAllAccounts(collection);
+                    }
+
+                    if (accounts.length === 0) {
+                        this.showNotification('📭 Không có tài khoản nào trong khoảng thời gian này!', 'warning');
+                        this.isDownloading = false;
+                        this.dom.exportConfirmBtn.disabled = false;
+                        this.dom.exportConfirmBtn.textContent = '📤 Xuất file';
+                        return;
+                    }
+
+                    // Generate content based on format
+                    let content = '';
+                    if (format === 'simple') {
+                        accounts.forEach(acc => {
+                            content += `${acc.username || ''}|${acc.password || ''}\n`;
+                        });
+                    } else {
+                        accounts.forEach(acc => {
+                            content +=
+                                `${acc.username || ''}|${acc.password || ''}|${acc.email || ''}|${acc.emailPassword || ''}\n`;
+                        });
+                    }
+
+                    // Download file
+                    const filename = `garena_accounts_${Date.now()}.txt`;
+                    this.downloadFile(content, filename, 'text/plain');
+
+                    // Store for deletion
+                    this.pendingDeleteAccounts = accounts;
+
+                    // Close export modal
+                    this.closeExportModal();
+
+                    if (deleteAfter) {
+                        // Show delete confirmation
+                        this.showConfirmDelete(accounts.length, filename);
+                    } else {
+                        this.showNotification(`✅ Đã xuất ${accounts.length} tài khoản! File: ${filename}`, 'success');
+                    }
+
+                    // Refresh data
+                    await this.fetchAllAccounts(true);
+
+                } catch (error) {
+                    console.error('❌ Lỗi export:', error);
+                    this.showNotification('❌ Lỗi: ' + error.message, 'error');
+                } finally {
+                    this.isDownloading = false;
+                    this.dom.exportConfirmBtn.disabled = false;
+                    this.dom.exportConfirmBtn.textContent = '📤 Xuất file';
+                }
+            }
 
             exportTXT() {
                 if (this.allAccounts.length === 0) {
@@ -3560,18 +2771,33 @@
                             accounts = JSON.parse(text);
                         } else {
                             const lines = text.split('\n').filter(l => l.trim());
-                            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-
-                            for (let i = 1; i < lines.length; i++) {
-                                const values = lines[i].split(',').map(v => v.trim());
-                                const acc = {};
-                                headers.forEach((h, idx) => {
-                                    acc[h] = values[idx] || '';
-                                });
-                                if (acc.username && acc.password) {
-                                    acc.status = acc.status || 'success';
-                                    acc.registeredAt = acc.registeredAt || new Date().toISOString();
-                                    accounts.push(acc);
+                            if (lines.length > 0 && lines[0].includes(',')) {
+                                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                                for (let i = 1; i < lines.length; i++) {
+                                    const values = lines[i].split(',').map(v => v.trim());
+                                    const acc = {};
+                                    headers.forEach((h, idx) => {
+                                        acc[h] = values[idx] || '';
+                                    });
+                                    if (acc.username && acc.password) {
+                                        acc.status = acc.status || 'success';
+                                        acc.registeredAt = acc.registeredAt || new Date().toISOString();
+                                        accounts.push(acc);
+                                    }
+                                }
+                            } else {
+                                for (const line of lines) {
+                                    const parts = line.split('|').map(p => p.trim());
+                                    if (parts.length >= 2) {
+                                        accounts.push({
+                                            username: parts[0],
+                                            password: parts[1],
+                                            email: parts[2] || '',
+                                            emailPassword: parts[3] || '',
+                                            status: 'success',
+                                            registeredAt: new Date().toISOString()
+                                        });
+                                    }
                                 }
                             }
                         }
@@ -3613,431 +2839,65 @@
             }
 
             // ============================================
-            // TELEGRAM
+            // CONFIRM DELETE
             // ============================================
 
-            async checkTelegramStatus() {
-                const config = await this.firebase.getUserTelegramConfig(this.currentUser.email);
-                if (config && config.enabled) {
-                    this.dom.telegramBtn.textContent = '🤖 Telegram ✅';
-                    this.dom.telegramBtn.className = 'btn btn-telegram active';
-                } else {
-                    this.dom.telegramBtn.textContent = '🤖 Telegram';
-                    this.dom.telegramBtn.className = 'btn btn-telegram';
-                }
+            showConfirmDelete(count, filename) {
+                this.dom.deleteCount.textContent = count;
+                this.dom.fileName.textContent = filename;
+                this.dom.deleteProgressContainer.classList.remove('show');
+                this.dom.deleteProgressFill.style.width = '0%';
+                this.dom.deleteProgressText.textContent = 'Đang xóa... 0%';
+                this.dom.confirmDeleteModal.classList.add('show');
+                this.dom.confirmDeleteYes.disabled = false;
+                this.dom.confirmDeleteYes.textContent = '🗑️ Xóa trên database';
             }
 
-            async sendTelegramMessage(chatId, message) {
-                try {
-                    this.telegram.setBotToken(this.telegramConfig.botToken);
-                    return await this.telegram.sendMessage(chatId, message);
-                } catch (error) {
-                    console.error('Lỗi gửi Telegram:', error);
-                    return null;
-                }
+            closeConfirmDelete() {
+                this.dom.confirmDeleteModal.classList.remove('show');
+                this.pendingDeleteAccounts = [];
             }
 
-            async sendTelegramFile(chatId, content, filename) {
-                try {
-                    this.telegram.setBotToken(this.telegramConfig.botToken);
-                    return await this.telegram.sendFile(chatId, content, filename);
-                } catch (error) {
-                    console.error('Lỗi gửi file Telegram:', error);
-                    return null;
-                }
-            }
-
-            showTelegramConfig() {
-                this.firebase.getUserTelegramConfig(this.currentUser.email).then(config => {
-                    this.telegramConfig = config || { botToken: '', chatId: '', enabled: false };
-
-                    this.dom.telegramBotToken.value = this.telegramConfig.botToken || '';
-                    this.dom.telegramChatId.value = this.telegramConfig.chatId || '';
-                    this.dom.telegramEnabled.checked = this.telegramConfig.enabled || false;
-
-                    this.updateTelegramStatus();
-                    this.dom.telegramModal.classList.add('show');
-                });
-            }
-
-            closeTelegramModal() {
-                this.dom.telegramModal.classList.remove('show');
-            }
-
-            updateTelegramStatus() {
-                const statusEl = this.dom.telegramStatus;
-                const enabled = this.dom.telegramEnabled.checked;
-                const botToken = this.dom.telegramBotToken.value.trim();
-                const chatId = this.dom.telegramChatId.value.trim();
-
-                if (enabled && botToken && chatId) {
-                    statusEl.className = 'telegram-status active';
-                    statusEl.innerHTML = `
-                        <span class="status-icon">✅</span>
-                        <span>Đã kết nối Telegram! Bạn sẽ nhận báo cáo lúc 19:00 hàng ngày</span>
-                    `;
-                } else if (enabled && (!botToken || !chatId)) {
-                    statusEl.className = 'telegram-status inactive';
-                    statusEl.innerHTML = `
-                        <span class="status-icon">⚠️</span>
-                        <span>Đã bật nhưng chưa nhập đầy đủ Bot Token và Chat ID</span>
-                    `;
-                } else {
-                    statusEl.className = 'telegram-status inactive';
-                    statusEl.innerHTML = `
-                        <span class="status-icon">⏳</span>
-                        <span>Chưa cấu hình</span>
-                    `;
-                }
-            }
-
-            async saveTelegramConfig() {
-                const botToken = this.dom.telegramBotToken.value.trim();
-                const chatId = this.dom.telegramChatId.value.trim();
-                const enabled = this.dom.telegramEnabled.checked;
-
-                if (enabled && (!botToken || !chatId)) {
-                    this.showNotification('⚠️ Vui lòng nhập Bot Token và Chat ID!', 'warning');
+            async executeDeleteBatch() {
+                if (this.pendingDeleteAccounts.length === 0) {
+                    this.closeConfirmDelete();
                     return;
                 }
 
-                const config = { botToken, chatId, enabled };
-                const success = await this.firebase.saveUserTelegramConfig(this.currentUser.email, config);
+                const collection = this.firebase.getUserCollection(this.currentUser.email);
+                const docIds = this.pendingDeleteAccounts.map(acc => acc.docId);
+                const total = docIds.length;
 
-                if (success) {
-                    this.telegramConfig = config;
-                    this.telegram.setBotToken(botToken);
-                    this.closeTelegramModal();
-                    this.showNotification('✅ Đã lưu cấu hình Telegram!', 'success');
-                    await this.checkTelegramStatus();
-
-                    if (enabled && chatId) {
-                        const testMsg = `
-                            ✅ <b>Kết nối thành công!</b>
-                            👤 User: ${this.currentUser.email}
-                            🕐 Thời gian: ${new Date().toLocaleString()}
-
-                            📌 Bạn sẽ nhận báo cáo tự động lúc <b>19:00</b> mỗi ngày
-                            💡 Để xóa toàn bộ data, gửi lệnh: <code>/delete_all_data</code>
-                        `;
-                        await this.sendTelegramMessage(chatId, testMsg);
-                    }
-                } else {
-                    this.showNotification('❌ Lỗi lưu cấu hình!', 'error');
-                }
-            }
-
-            async testTelegramConnection() {
-                const botToken = this.dom.telegramBotToken.value.trim();
-                const chatId = this.dom.telegramChatId.value.trim();
-
-                if (!botToken || !chatId) {
-                    this.showNotification('⚠️ Vui lòng nhập Bot Token và Chat ID!', 'warning');
-                    return;
-                }
+                this.dom.confirmDeleteYes.disabled = true;
+                this.dom.confirmDeleteYes.textContent = '⏳ Đang xóa...';
+                this.dom.deleteProgressContainer.classList.add('show');
 
                 try {
-                    this.telegram.setBotToken(botToken);
-                    const success = await this.telegram.testConnection(chatId);
-                    if (success) {
-                        this.showNotification('✅ Gửi tin nhắn test thành công!', 'success');
-                    } else {
-                        this.showNotification('❌ Lỗi kết nối!', 'error');
-                    }
-                } catch (error) {
-                    this.showNotification('❌ Lỗi kết nối: ' + error.message, 'error');
-                }
-            }
-
-            async sendTelegramTestData() {
-                const chatId = this.dom.telegramChatId.value.trim();
-                if (!chatId) {
-                    this.showNotification('⚠️ Vui lòng nhập Chat ID trước!', 'warning');
-                    return;
-                }
-
-                if (this.allAccounts.length === 0) {
-                    this.showNotification('📭 Không có data để gửi!', 'warning');
-                    return;
-                }
-
-                try {
-                    let content = '';
-                    this.allAccounts.slice(0, 10).forEach(acc => {
-                        content += `${acc.username}|${acc.password}\n`;
+                    const deleted = await this.firebase.deleteBatch(collection, docIds, (progress) => {
+                        this.dom.deleteProgressFill.style.width = progress.percent + '%';
+                        this.dom.deleteProgressText.textContent =
+                            `Đang xóa... ${progress.deleted}/${progress.total} (${progress.percent}%)`;
                     });
 
-                    if (this.allAccounts.length > 10) {
-                        content += `\n... và ${this.allAccounts.length - 10} tài khoản khác`;
-                    }
+                    this.dom.deleteProgressFill.style.width = '100%';
+                    this.dom.deleteProgressText.textContent =
+                        `✅ Đã xóa ${deleted}/${total} tài khoản khỏi database!`;
 
-                    await this.sendTelegramFile(chatId, content, `test_data_${Date.now()}.txt`);
-                    this.showNotification(`✅ Đã gửi ${Math.min(10, this.allAccounts.length)} tài khoản test!`,
-                        'success');
+                    this.showNotification(`✅ Đã xóa ${deleted} tài khoản khỏi database!`, 'success');
+
+                    this.pendingDeleteAccounts = [];
+
+                    setTimeout(() => {
+                        this.closeConfirmDelete();
+                        this.fetchAllAccounts(true);
+                    }, 1500);
+
                 } catch (error) {
-                    this.showNotification('❌ Lỗi: ' + error.message, 'error');
+                    console.error('❌ Lỗi xóa:', error);
+                    this.showNotification('❌ Lỗi xóa: ' + error.message, 'error');
+                    this.dom.confirmDeleteYes.disabled = false;
+                    this.dom.confirmDeleteYes.textContent = '🗑️ Thử lại';
                 }
-            }
-
-            // ============================================
-            // GEMINI CHAT
-            // ============================================
-
-            showGeminiChat() {
-                const container = this.dom.geminiChatContainer;
-                container.innerHTML = `
-                    <div style="text-align:center;color:#8b949e;padding:20px;">
-                        💬 Hỏi Gemini bất kỳ điều gì về Garena, game, hoặc cuộc sống
-                    </div>
-                `;
-                this.dom.geminiInput.value = '';
-                this.dom.geminiModal.classList.add('show');
-                this.dom.geminiInput.focus();
-            }
-
-            closeGeminiModal() {
-                this.dom.geminiModal.classList.remove('show');
-            }
-
-            async sendGeminiMessage() {
-                const input = this.dom.geminiInput;
-                const container = this.dom.geminiChatContainer;
-                const message = input.value.trim();
-
-                if (!message) return;
-
-                const userMsg = document.createElement('div');
-                userMsg.className = 'user-msg';
-                userMsg.textContent = message;
-                container.appendChild(userMsg);
-                container.scrollTop = container.scrollHeight;
-
-                input.value = '';
-                input.disabled = true;
-                this.dom.geminiSendBtn.disabled = true;
-
-                const loading = document.createElement('div');
-                loading.className = 'loading-msg';
-                loading.innerHTML =
-                    '<span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid #f0883e;border-radius:50%;border-top-color:transparent;animation:spin 0.8s linear infinite;"></span> Đang suy nghĩ...';
-                container.appendChild(loading);
-                container.scrollTop = container.scrollHeight;
-
-                try {
-                    const model = this.dom.geminiModelSelect.value;
-                    const result = await this.gemini.chat(message, model);
-
-                    loading.remove();
-
-                    if (result.success) {
-                        const aiMsg = document.createElement('div');
-                        aiMsg.className = 'ai-msg';
-                        aiMsg.textContent = result.message;
-                        container.appendChild(aiMsg);
-                        container.scrollTop = container.scrollHeight;
-                    } else {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'ai-msg';
-                        errorMsg.style.background = '#da3633';
-                        errorMsg.textContent = '❌ ' + result.error;
-                        container.appendChild(errorMsg);
-                        container.scrollTop = container.scrollHeight;
-                    }
-                } catch (error) {
-                    loading.innerHTML = `❌ Lỗi: ${error.message}`;
-                }
-
-                input.disabled = false;
-                this.dom.geminiSendBtn.disabled = false;
-                input.focus();
-            }
-
-            resetGeminiChat() {
-                this.gemini.resetHistory();
-                const container = this.dom.geminiChatContainer;
-                container.innerHTML = `
-                    <div style="text-align:center;color:#8b949e;padding:20px;">
-                        ✅ Đã reset lịch sử hội thoại
-                    </div>
-                `;
-                this.showNotification('✅ Đã reset lịch sử chat!', 'success');
-            }
-
-            // ============================================
-            // ADMIN NOTIFICATION
-            // ============================================
-
-            async loadAdminNotification() {
-                try {
-                    const url = 'https://raw.githubusercontent.com/tuquangnam-developer/Garena-Auto-Register-Pro-Data/refs/heads/main/Notification/index.html';
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error('Không thể tải thông báo');
-
-                    const html = await response.text();
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-
-                    const content = doc.querySelector('.content') || doc.querySelector('body');
-                    const time = doc.querySelector('.time') || doc.querySelector('.timestamp');
-
-                    let contentText = '';
-                    let timeText = '';
-
-                    if (content) {
-                        contentText = content.innerHTML || content.textContent;
-                    } else if (html.trim()) {
-                        contentText = html.trim();
-                    }
-
-                    if (time) {
-                        timeText = '📅 ' + (time.textContent || new Date().toLocaleString());
-                    } else {
-                        timeText = '📅 ' + new Date().toLocaleString();
-                    }
-
-                    if (!this.notificationShown && contentText) {
-                        this.dom.popupContent.innerHTML = contentText;
-                        this.dom.popupTime.textContent = timeText;
-                        this.dom.popupNotification.classList.add('show');
-                        this.notificationShown = true;
-                    }
-                } catch (error) {
-                    console.log('Không thể tải thông báo admin:', error);
-                }
-            }
-
-            closePopup() {
-                this.dom.popupNotification.classList.remove('show');
-            }
-
-            // ============================================
-            // MODAL HELPERS
-            // ============================================
-
-            closeModal() {
-                this.dom.modalOverlay.classList.remove('show');
-            }
-
-            showAddModal() {
-                this.dom.modalTitle.textContent = '➕ Thêm tài khoản mới';
-                this.dom.modalBody.innerHTML = `
-                    <div class="form-group">
-                        <label>👤 Username *</label>
-                        <input id="addUsername" placeholder="Tên đăng nhập Garena">
-                    </div>
-                    <div class="form-group">
-                        <label>🔑 Password *</label>
-                        <input id="addPassword" placeholder="Mật khẩu" type="password">
-                    </div>
-                    <div class="form-group">
-                        <label>📧 Email</label>
-                        <input id="addEmail" placeholder="Email đăng ký">
-                    </div>
-                    <div class="form-group">
-                        <label>🔐 Email Password</label>
-                        <input id="addEmailPass" placeholder="Mật khẩu email" type="password">
-                    </div>
-                    <div class="form-group">
-                        <label>📝 Ghi chú</label>
-                        <input id="addNote" placeholder="Ghi chú...">
-                    </div>
-                `;
-                this.dom.modalOverlay.classList.add('show');
-
-                this.dom.modalConfirm.onclick = async () => {
-                    const newAcc = {
-                        username: document.getElementById('addUsername').value.trim(),
-                        password: document.getElementById('addPassword').value.trim(),
-                        email: document.getElementById('addEmail').value.trim(),
-                        emailPassword: document.getElementById('addEmailPass').value.trim(),
-                        note: document.getElementById('addNote').value.trim(),
-                        status: 'success',
-                        registeredAt: new Date().toISOString()
-                    };
-
-                    if (!newAcc.username || !newAcc.password) {
-                        this.showNotification('⚠️ Username và Password không được để trống!', 'warning');
-                        return;
-                    }
-
-                    try {
-                        const collection = this.firebase.getUserCollection(this.currentUser.email);
-                        const docId = this.firebase.generateDocId();
-                        await this.firebase.saveData(collection, docId, newAcc);
-                        this.showNotification(`✅ Đã thêm tài khoản ${newAcc.username}!`, 'success');
-                        this.closeModal();
-                        this.showConfetti();
-                        await this.fetchAllAccounts(true);
-                    } catch (error) {
-                        this.showNotification('❌ Lỗi: ' + error.message, 'error');
-                    }
-                };
-            }
-
-            showDeleteByDateModal() {
-                this.dom.modalTitle.textContent = '🗑️ Xóa tài khoản theo ngày';
-                this.dom.modalBody.innerHTML = `
-                    <div class="form-group">
-                        <label>📅 Từ ngày</label>
-                        <input type="date" id="deleteFromDate">
-                    </div>
-                    <div class="form-group">
-                        <label>📅 Đến ngày</label>
-                        <input type="date" id="deleteToDate">
-                    </div>
-                    <div class="form-group">
-                        <label>📊 Status (tùy chọn)</label>
-                        <select id="deleteStatus">
-                            <option value="all">Tất cả</option>
-                            <option value="success">✅ Thành công</option>
-                            <option value="pending">⏳ Pending</option>
-                            <option value="failed">❌ Thất bại</option>
-                            <option value="locked">🔒 Đã khóa</option>
-                        </select>
-                    </div>
-                    <p style="color:#f85149;font-size:13px;">⚠️ Hành động này không thể hoàn tác!</p>
-                `;
-                this.dom.modalOverlay.classList.add('show');
-
-                this.dom.modalConfirm.onclick = async () => {
-                    const from = document.getElementById('deleteFromDate').value;
-                    const to = document.getElementById('deleteToDate').value;
-                    const status = document.getElementById('deleteStatus').value;
-
-                    if (!from && !to) {
-                        this.showNotification('⚠️ Vui lòng chọn ít nhất một mốc ngày!', 'warning');
-                        return;
-                    }
-
-                    let toDelete = this.allAccounts.filter(acc => {
-                        if (!acc.registeredAt) return false;
-                        const date = acc.registeredAt.split('T')[0];
-                        if (from && date < from) return false;
-                        if (to && date > to) return false;
-                        if (status !== 'all' && (acc.status || 'success') !== status) return false;
-                        return true;
-                    });
-
-                    if (toDelete.length === 0) {
-                        this.showNotification('📭 Không tìm thấy tài khoản nào!', 'info');
-                        this.closeModal();
-                        return;
-                    }
-
-                    if (!confirm(`⚠️ Xóa ${toDelete.length} tài khoản trong khoảng thời gian này?`)) return;
-
-                    try {
-                        const collection = this.firebase.getUserCollection(this.currentUser.email);
-                        for (const acc of toDelete) {
-                            await this.firebase.deleteData(collection, acc.docId);
-                        }
-                        this.showNotification(`✅ Đã xóa ${toDelete.length} tài khoản!`, 'success');
-                        this.closeModal();
-                        await this.fetchAllAccounts(true);
-                    } catch (error) {
-                        this.showNotification('❌ Lỗi: ' + error.message, 'error');
-                    }
-                };
             }
 
             // ============================================
@@ -4134,8 +2994,8 @@
             }
 
             showConfetti() {
-                const colors = ['#f0883e', '#3fb950', '#58a6ff', '#f85149', '#d29922', '#8b5cf6'];
-                for (let i = 0; i < 40; i++) {
+                const colors = ['#f0883e', '#3fb950', '#58a6ff', '#f85149', '#d29922', '#8b5cf6', '#f97316', '#ec4899'];
+                for (let i = 0; i < 50; i++) {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
                     confetti.style.left = Math.random() * 100 + '%';
